@@ -166,7 +166,7 @@ export const AvatarInfoWidgetAvatarView: FC<AvatarInfoWidgetAvatarViewProps> = p
                                 <ContextMenuListItemView disabled={combatDelay.combatBlocked} onClick={() => !combatDelay.combatBlocked && processAction('attack')}>
                                     {
                                         combatDelay.combatBlocked
-                                            ? LocalizeText('infostand.button.attack_delay').replace(':secs', combatDelay.combatDelayRemaining.toString())
+                                            ? LocalizeText('infostand.button.attack_delay').replace(':delay', combatDelay.combatDelayRemaining.toString())
                                             : LocalizeText('infostand.button.attack')
                                     }
                                 </ContextMenuListItemView>

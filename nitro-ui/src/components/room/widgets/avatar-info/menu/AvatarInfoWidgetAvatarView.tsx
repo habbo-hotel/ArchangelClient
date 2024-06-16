@@ -18,6 +18,7 @@ import { PoliceCuffUser } from '../../../../../api/roleplay/police/PoliceCuffUse
 import { PoliceStunUser } from '../../../../../api/roleplay/police/PoliceStunUser';
 import { PoliceEscortUser } from '../../../../../api/roleplay/police/PoliceEscortUser';
 import { useCrimes } from '../../../../../api/roleplay/police/GetCrimes';
+import { useCombatDelay } from '../../../../../hooks/roleplay/use-combat-delay';
 
 interface AvatarInfoWidgetAvatarViewProps {
     avatarInfo: AvatarInfoUser;
@@ -34,6 +35,7 @@ export const AvatarInfoWidgetAvatarView: FC<AvatarInfoWidgetAvatarViewProps> = p
     const { userInfo: sessionInfo } = useSessionInfo();
     const { avatarInfo = null, onClose = null } = props;
     const roleplayStats = useRoleplayStats(avatarInfo?.webID);
+    const combatDelay = useCombatDelay();
     const sessionRoleplayStats = useRoleplayStats(sessionInfo?.userId);
     const [mode, setMode] = useState(MODE_NORMAL);
     const { canRequestFriend = null } = useFriends();
@@ -64,6 +66,9 @@ export const AvatarInfoWidgetAvatarView: FC<AvatarInfoWidgetAvatarViewProps> = p
                     break;
                 case 'attack':
                     hideMenu = false
+                    if (combatDelay.combatBlocked) {
+                        return;
+                    }
                     AttackUser(avatarInfo.name);
                     break;
                 case 'view_business':
@@ -158,8 +163,12 @@ export const AvatarInfoWidgetAvatarView: FC<AvatarInfoWidgetAvatarViewProps> = p
                         }
                         {(mode === MODE_NORMAL) &&
                             <>
-                                <ContextMenuListItemView onClick={() => processAction('attack')}>
-                                    {LocalizeText('infostand.button.attack')}
+                                <ContextMenuListItemView disabled={combatDelay.combatBlocked} onClick={() => !combatDelay.combatBlocked && processAction('attack')}>
+                                    {
+                                        combatDelay.combatBlocked
+                                            ? LocalizeText('infostand.button.attack_delay').replace(':secs', combatDelay.combatDelayRemaining.toString())
+                                            : LocalizeText('infostand.button.attack')
+                                    }
                                 </ContextMenuListItemView>
                                 {
                                     sessionRoleplayStats.isWorking && (

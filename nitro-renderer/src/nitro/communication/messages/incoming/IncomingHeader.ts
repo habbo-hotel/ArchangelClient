@@ -478,4 +478,5 @@ export class IncomingHeader {
     public static TIME_OF_DAY_QUERY = 9006;
     public static MY_WEAPON_LIST_QUERY = 9007;
     public static COMBAT_DELAY_QUERY = 9008;
+    public static CASH_REGISTER_QUERY = 9009;
 }

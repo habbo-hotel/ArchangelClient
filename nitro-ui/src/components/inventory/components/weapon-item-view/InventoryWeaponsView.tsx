@@ -2,6 +2,8 @@ import { useMyWeaponList } from '../../../../hooks/roleplay/use-my-weapon-list';
 import { AutoGrid, Column, Grid, LayoutGridItem } from '../../../../common';
 import { EquipWeapon } from '../../../../api/roleplay/combat/EquipWeapon';
 import { useCallback, useState } from 'react';
+import { InventoryCategoryEmptyView } from '../InventoryCategoryEmptyView';
+import { LocalizeText } from '../../../../api';
 
 export function InventoryWeaponsView() {
     const weaponList = useMyWeaponList();
@@ -12,6 +14,7 @@ export function InventoryWeaponsView() {
         setEquippedWeapon(uniqueName);
     }, []);
 
+    if (!weaponList.length) return <InventoryCategoryEmptyView title={LocalizeText('inventory.empty.weapons.title')} desc={LocalizeText('inventory.empty.weapons.desc')} />;
     return (
         <Grid>
             <Column size={5} overflow="hidden">

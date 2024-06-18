@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { NitroCardContentView, NitroCardTabsItemView, NitroCardTabsView } from '../../../common';
 import { Tab } from '../Inventory.types';
 import { InventoryFurnitureView } from '../components/furniture-item-view/InventoryFurnitureView';
+import { InventoryWeaponsView } from '../components/weapon-item-view/InventoryWeaponsView';
 
 
 export function UserInventory() {
@@ -12,7 +13,7 @@ export function UserInventory() {
         },
         {
             label: 'Weapons',
-            children: <p>Weapons</p>
+            children: <InventoryWeaponsView />
         },
         {
             label: 'Apparel',

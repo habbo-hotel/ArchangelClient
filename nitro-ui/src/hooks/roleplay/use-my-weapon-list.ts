@@ -7,15 +7,12 @@ import { ListMyWeapons } from "../../api/roleplay/combat/ListMyWeapons";
 export function useMyWeaponList(): MyWeaponData[] {
     const [weaponList, setWeaponList] = useState<MyWeaponData[]>([]);
 
-    console.log(weaponList)
-
     useEffect(() => {
         ListMyWeapons();
     }, []);
 
     useMessageEvent<MyWeaponListEvent>(MyWeaponListEvent, event => {
         const eventData: MyWeaponData[] = event.getParser().data;
-        console.log(eventData, 'why')
         setWeaponList(eventData);
     });
 

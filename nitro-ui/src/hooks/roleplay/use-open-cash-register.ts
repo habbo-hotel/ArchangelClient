@@ -8,7 +8,6 @@ export function useCashRegister(): CashRegisterData | undefined {
 
     useMessageEvent<CashRegisterEvent>(CashRegisterEvent, event => {
         const eventData: CashRegisterData = event.getParser().data;
-        console.log(eventData, 'why')
         setCashRegister(eventData);
     });
 

@@ -6,22 +6,19 @@ import { useInventoryBots, useInventoryUnseenTracker } from '../../../../hooks';
 import { InventoryCategoryEmptyView } from '../InventoryCategoryEmptyView';
 import { InventoryBotItemView } from './InventoryBotItemView';
 
-interface InventoryBotViewProps
-{
+interface InventoryBotViewProps {
     roomSession: IRoomSession;
     roomPreviewer: RoomPreviewer;
 }
 
-export const InventoryBotView: FC<InventoryBotViewProps> = props =>
-{
+export const InventoryBotView: FC<InventoryBotViewProps> = props => {
     const { roomSession = null, roomPreviewer = null } = props;
-    const [ isVisible, setIsVisible ] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
     const { botItems = [], selectedBot = null, activate = null, deactivate = null } = useInventoryBots();
     const { isUnseen = null, removeUnseen = null } = useInventoryUnseenTracker();
 
-    useEffect(() =>
-    {
-        if(!selectedBot || !roomPreviewer) return;
+    useEffect(() => {
+        if (!selectedBot || !roomPreviewer) return;
 
         const botData = selectedBot.botData;
 
@@ -39,52 +36,49 @@ export const InventoryBotView: FC<InventoryBotViewProps> = props =>
         roomPreviewer.updateRoomWallsAndFloorVisibility(true, true);
         roomPreviewer.updateObjectRoom(floorType, wallType, landscapeType);
         roomPreviewer.addAvatarIntoRoom(botData.figure, 0);
-    }, [ roomPreviewer, selectedBot ]);
+    }, [roomPreviewer, selectedBot]);
 
-    useEffect(() =>
-    {
-        if(!selectedBot || !isUnseen(UnseenItemCategory.BOT, selectedBot.botData.id)) return;
+    useEffect(() => {
+        if (!selectedBot || !isUnseen(UnseenItemCategory.BOT, selectedBot.botData.id)) return;
 
         removeUnseen(UnseenItemCategory.BOT, selectedBot.botData.id);
-    }, [ selectedBot, isUnseen, removeUnseen ]);
+    }, [selectedBot, isUnseen, removeUnseen]);
 
-    useEffect(() =>
-    {
-        if(!isVisible) return;
+    useEffect(() => {
+        if (!isVisible) return;
 
         const id = activate();
 
         return () => deactivate(id);
-    }, [ isVisible, activate, deactivate ]);
+    }, [isVisible, activate, deactivate]);
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         setIsVisible(true);
 
         return () => setIsVisible(false);
     }, []);
 
-    if(!botItems || !botItems.length) return <InventoryCategoryEmptyView title={ LocalizeText('inventory.empty.bots.title') } desc={ LocalizeText('inventory.empty.bots.desc') } />;
+    if (!botItems || !botItems.length) return <InventoryCategoryEmptyView title={LocalizeText('inventory.empty.bots.title')} desc={LocalizeText('inventory.empty.bots.desc')} />;
 
     return (
         <Grid>
-            <Column size={ 7 } overflow="hidden">
-                <AutoGrid columnCount={ 5 }>
-                    { botItems && (botItems.length > 0) && botItems.map(item => <InventoryBotItemView key={ item.botData.id } botItem={ item } />) }
+            <Column size={7} overflow="hidden">
+                <AutoGrid columnCount={5}>
+                    {botItems && (botItems.length > 0) && botItems.map(item => <InventoryBotItemView key={item.botData.id} botItem={item} />)}
                 </AutoGrid>
             </Column>
-            <Column size={ 5 } overflow="auto">
+            <Column size={5} overflow="auto">
                 <Column overflow="hidden" position="relative">
-                    <LayoutRoomPreviewerView roomPreviewer={ roomPreviewer } height={ 140 } />
+                    <LayoutRoomPreviewerView roomPreviewer={roomPreviewer} height={140} />
                 </Column>
-                { selectedBot &&
-                    <Column grow justifyContent="between" gap={ 2 }>
-                        <Text grow truncate>{ selectedBot.botData.name }</Text>
-                        { !!roomSession &&
-                            <Button variant="success" onClick={ event => attemptBotPlacement(selectedBot) }>
-                                { LocalizeText('inventory.furni.placetoroom') }
-                            </Button> }
-                    </Column> }
+                {selectedBot &&
+                    <Column grow justifyContent="between" gap={2}>
+                        <Text grow truncate>{selectedBot.botData.name}</Text>
+                        {!!roomSession &&
+                            <Button variant="success" onClick={event => attemptBotPlacement(selectedBot)}>
+                                {LocalizeText('inventory.furni.placetoroom')}
+                            </Button>}
+                    </Column>}
             </Column>
         </Grid>
     );

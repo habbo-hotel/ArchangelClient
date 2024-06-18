@@ -14,7 +14,6 @@ import { FriendsView } from '../friends/FriendsView';
 import { GroupsView } from '../groups/GroupsView';
 import { HcCenterView } from '../hc-center/HcCenterView';
 import { HelpView } from '../help/HelpView';
-import { InventoryView } from '../inventory/InventoryView';
 import { ModToolsView } from '../mod-tools/ModToolsView';
 import { NavigatorView } from '../navigator/NavigatorView';
 import { NitropediaView } from '../nitropedia/NitropediaView';
@@ -26,6 +25,8 @@ import { UserSettingsView } from '../user-settings/UserSettingsView';
 import { WiredView } from '../wired/WiredView';
 import { LeftSideView } from '../left-side/LeftSideView';
 import { CorpTools } from '../corp-tools/CorpTools';
+import { Billing } from '../billing/Billing';
+import { InventoryView } from '../inventory/InventoryView';
 
 export const MainView: FC<{}> = props => {
     const [isReady, setIsReady] = useState(false);
@@ -96,6 +97,7 @@ export const MainView: FC<{}> = props => {
             <CampaignView />
             <FloorplanEditorView />
             <CorpTools />
+            <Billing />
         </Base>
     );
 }

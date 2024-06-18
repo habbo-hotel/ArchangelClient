@@ -8,26 +8,22 @@ import { useConfigurationEvent, useLocalizationEvent, useMainEvent, useRoomEngin
 
 NitroVersion.UI_VERSION = GetUIVersion();
 
-export const App: FC<{}> = props =>
-{
-    const [ isReady, setIsReady ] = useState(false);
-    const [ isError, setIsError ] = useState(false);
-    const [ message, setMessage ] = useState('Getting Ready');
-    const [ percent, setPercent ] = useState(0);
-    const [ imageRendering, setImageRendering ] = useState<boolean>(true);
+export const App: FC<{}> = props => {
+    const [isReady, setIsReady] = useState(false);
+    const [isError, setIsError] = useState(false);
+    const [message, setMessage] = useState('Getting Ready');
+    const [percent, setPercent] = useState(0);
+    const [imageRendering, setImageRendering] = useState<boolean>(true);
 
-    if(!GetNitroInstance())
-    {
+    if (!GetNitroInstance()) {
         //@ts-ignore
-        if(!NitroConfig) throw new Error('NitroConfig is not defined!');
+        if (!NitroConfig) throw new Error('NitroConfig is not defined!');
 
         Nitro.bootstrap();
     }
 
-    const handler = useCallback(async (event: NitroEvent) =>
-    {
-        switch(event.type)
-        {
+    const handler = useCallback(async (event: NitroEvent) => {
+        switch (event.type) {
             case ConfigurationEvent.LOADED:
                 GetNitroInstance().localization.init();
                 setPercent(prevValue => (prevValue + 20));
@@ -58,7 +54,7 @@ export const App: FC<{}> = props =>
 
                 GetNitroInstance().init();
 
-                if(LegacyExternalInterface.available) LegacyExternalInterface.call('legacyTrack', 'authentication', 'authok', []);
+                if (LegacyExternalInterface.available) LegacyExternalInterface.call('legacyTrack', 'authentication', 'authok', []);
                 return;
             case NitroCommunicationDemoEvent.CONNECTION_ERROR:
                 setIsError(true);
@@ -80,18 +76,16 @@ export const App: FC<{}> = props =>
                 const assetUrls = GetConfiguration<string[]>('preload.assets.urls');
                 const urls: string[] = [];
 
-                if(assetUrls && assetUrls.length) for(const url of assetUrls) urls.push(NitroConfiguration.interpolate(url));
+                if (assetUrls && assetUrls.length) for (const url of assetUrls) urls.push(NitroConfiguration.interpolate(url));
 
                 const status = await GetAssetManager().downloadAssets(urls);
-                
-                if(status)
-                {
+
+                if (status) {
                     GetCommunication().init();
 
                     setPercent(prevValue => (prevValue + 20))
                 }
-                else
-                {
+                else {
                     setIsError(true);
                     setMessage('Assets Failed');
                 }
@@ -112,27 +106,25 @@ export const App: FC<{}> = props =>
     useConfigurationEvent(ConfigurationEvent.LOADED, handler);
     useConfigurationEvent(ConfigurationEvent.FAILED, handler);
 
-    useEffect(() =>
-    {
+    useEffect(() => {
         GetNitroInstance().core.configuration.init();
-    
+
         const resize = (event: UIEvent) => setImageRendering(!(window.devicePixelRatio % 1));
 
         window.addEventListener('resize', resize);
 
         resize(null);
 
-        return () =>
-        {
+        return () => {
             window.removeEventListener('resize', resize);
         }
     }, []);
-    
+
     return (
-        <Base fit overflow="hidden" className={ imageRendering && 'image-rendering-pixelated' }>
-            { (!isReady || isError) &&
-                <LoadingView isError={ isError } message={ message } percent={ percent } /> }
-            <TransitionAnimation type={ TransitionAnimationTypes.FADE_IN } inProp={ (isReady) }>
+        <Base fit overflow="hidden" className={imageRendering && 'image-rendering-pixelated'}>
+            {(!isReady || isError) &&
+                <LoadingView isError={isError} message={message} percent={percent} />}
+            <TransitionAnimation type={TransitionAnimationTypes.FADE_IN} inProp={(isReady)}>
                 <MainView />
             </TransitionAnimation>
             <Base id="draggable-windows-container" />

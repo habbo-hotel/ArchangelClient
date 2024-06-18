@@ -1,8 +1,8 @@
-import { ILinkEventTracker } from '@nitro-rp/renderer';
+import { BadgePointLimitsEvent, ILinkEventTracker, IRoomSession, RoomEngineObjectEvent, RoomEngineObjectPlacedEvent, RoomPreviewer, RoomSessionEvent } from '@nitro-rp/renderer';
 import { FC, useEffect, useMemo, useState } from 'react';
-import { AddEventLinkTracker, LocalizeText, RemoveLinkEventTracker } from '../../api';
+import { AddEventLinkTracker, GetLocalization, GetRoomEngine, LocalizeText, RemoveLinkEventTracker, isObjectMoverRequested, setObjectMoverRequested } from '../../api';
 import { AutoGrid, Column, Grid, LayoutAvatarImageView, LayoutGridItem, NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../common';
-import { useInventoryTrade, useSessionInfo } from '../../hooks';
+import { useInventoryTrade, useMessageEvent, useRoomEngineEvent, useRoomSessionManagerEvent, useSessionInfo } from '../../hooks';
 import { UserInventory } from './views/UserInventory';
 import { Tab } from './Inventory.types';
 import { CorpInventory } from './views/CorpInventory';
@@ -17,13 +17,15 @@ export const InventoryView: FC<{}> = () => {
     const roleplayStats = useRoleplayStats(userInfo?.userId);
     const [isVisible, setIsVisible] = useState(false);
     const { isTrading = false, stopTrading = null } = useInventoryTrade();
+    const [roomSession, setRoomSession] = useState<IRoomSession>(null);
+    const [roomPreviewer, setRoomPreviewer] = useState<RoomPreviewer>(null);
     const inventoryTabs: Tab[] = useMemo(() => {
         const allTabs: Tab[] = [
             {
                 label: (
                     <LayoutAvatarImageView figure={roleplayStats.figure} direction={4} />
                 ),
-                children: <UserInventory />
+                children: <UserInventory roomSession={roomSession} roomPreviewer={roomPreviewer} />
             },
         ]
 
@@ -44,7 +46,7 @@ export const InventoryView: FC<{}> = () => {
         }
 
         return allTabs;
-    }, [roleplayStats]);
+    }, [roleplayStats, roomSession, roomPreviewer]);
     const [currentTab, setCurrentTab] = useState<Tab>(inventoryTabs[0]);
 
     const onClose = () => {
@@ -52,6 +54,35 @@ export const InventoryView: FC<{}> = () => {
 
         setIsVisible(false);
     }
+
+    useRoomEngineEvent<RoomEngineObjectPlacedEvent>(RoomEngineObjectEvent.PLACED, event => {
+        if (!isObjectMoverRequested()) return;
+
+        setObjectMoverRequested(false);
+
+        if (!event.placedInRoom) setIsVisible(true);
+    });
+
+    useRoomSessionManagerEvent<RoomSessionEvent>([
+        RoomSessionEvent.CREATED,
+        RoomSessionEvent.ENDED
+    ], event => {
+        switch (event.type) {
+            case RoomSessionEvent.CREATED:
+                setRoomSession(event.session);
+                return;
+            case RoomSessionEvent.ENDED:
+                setRoomSession(null);
+                setIsVisible(false);
+                return;
+        }
+    });
+
+    useMessageEvent<BadgePointLimitsEvent>(BadgePointLimitsEvent, event => {
+        const parser = event.getParser();
+
+        for (const data of parser.data) GetLocalization().setBadgePointLimit(data.badgeId, data.limit);
+    });
 
     useEffect(() => {
         const linkTracker: ILinkEventTracker = {
@@ -78,6 +109,18 @@ export const InventoryView: FC<{}> = () => {
         AddEventLinkTracker(linkTracker);
 
         return () => RemoveLinkEventTracker(linkTracker);
+    }, []);
+
+    useEffect(() => {
+        setRoomPreviewer(new RoomPreviewer(GetRoomEngine(), ++RoomPreviewer.PREVIEW_COUNTER));
+
+        return () => {
+            setRoomPreviewer(prevValue => {
+                prevValue.dispose();
+
+                return null;
+            });
+        }
     }, []);
 
     useEffect(() => {

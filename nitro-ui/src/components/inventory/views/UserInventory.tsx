@@ -1,15 +1,20 @@
 import { useMemo, useState } from 'react';
 import { NitroCardContentView, NitroCardTabsItemView, NitroCardTabsView } from '../../../common';
 import { Tab } from '../Inventory.types';
-import { InventoryFurnitureView } from '../components/furniture-item-view/InventoryFurnitureView';
+import { InventoryFurnitureView } from '../components/furniture/InventoryFurnitureView';
 import { InventoryWeaponsView } from '../components/weapon-item-view/InventoryWeaponsView';
+import { IRoomSession, RoomPreviewer } from '@nitro-rp/renderer';
 
+interface UserInventoryProps {
+    roomSession: IRoomSession;
+    roomPreviewer: RoomPreviewer;
+}
 
-export function UserInventory() {
+export function UserInventory({ roomSession, roomPreviewer }: UserInventoryProps) {
     const inventoryTabs: Tab[] = useMemo(() => [
         {
             label: 'Furniture',
-            children: <InventoryFurnitureView />
+            children: <InventoryFurnitureView roomSession={roomSession} roomPreviewer={roomPreviewer} />
         },
         {
             label: 'Weapons',

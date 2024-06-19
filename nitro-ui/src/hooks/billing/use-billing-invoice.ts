@@ -12,8 +12,6 @@ export function useBillingInvoice(): BillingInvoice {
         description: '',
         amountOwed: 0,
         amountPaid: 0,
-        createdAt: 0,
-        updatedAt: 0,
     })
 
     useMessageEvent<BillingInvoiceQueryEvent>(BillingInvoiceQueryEvent, event => {

@@ -1,4 +1,3 @@
-import { wrap } from "module";
 import { IMessageDataWrapper, IMessageParser } from "../../../../../../api";
 
 export interface BillingInvoice {
@@ -41,10 +40,10 @@ export class BillingInvoiceQueryEventParser implements IMessageParser {
         this._userID = wrapper.readInt();
         this._title = wrapper.readString();
         this._description = wrapper.readString();
+        this._chargedByUserID = wrapper.readInt();
+        this._chargedByUserID = wrapper.readInt();
         this._amountOwed = wrapper.readInt();
         this._amountPaid = wrapper.readInt();
-        this._chargedByUserID = wrapper.readInt();
-        this._chargedByUserID = wrapper.readInt();
 
         return true;
     }

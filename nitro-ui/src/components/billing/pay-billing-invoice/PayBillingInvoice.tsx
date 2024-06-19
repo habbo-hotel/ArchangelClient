@@ -14,7 +14,7 @@ export function PayBillingInvoice() {
         setIsVisible(true);
     }, [billingInvoice]);
 
-    if (!billingInvoice) {
+    if (!billingInvoice.id) {
         return null;
     }
 

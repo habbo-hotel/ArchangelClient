@@ -10,8 +10,6 @@ export interface BillingInvoice {
     chargedByCorpID: number;
     amountOwed: number;
     amountPaid: number;
-    createdAt: number;
-    updatedAt: number;
 }
 
 export class BillingInvoiceQueryEventParser implements IMessageParser {
@@ -23,8 +21,6 @@ export class BillingInvoiceQueryEventParser implements IMessageParser {
     private _chargedByCorpID: number;
     private _amountOwed: number;
     private _amountPaid: number;
-    private _createdAt: number;
-    private _updatedAt: number;
 
     public flush(): boolean {
         this._id = -1;
@@ -35,8 +31,6 @@ export class BillingInvoiceQueryEventParser implements IMessageParser {
         this._amountPaid = -1;
         this._chargedByUserID = -1;
         this._chargedByCorpID = -1;
-        this._createdAt = 0;
-        this._updatedAt = 0;
         return true;
     }
 
@@ -65,8 +59,6 @@ export class BillingInvoiceQueryEventParser implements IMessageParser {
             chargedByUserID: this._chargedByUserID,
             amountOwed: this._amountOwed,
             amountPaid: this._amountPaid,
-            createdAt: this._createdAt,
-            updatedAt: this._updatedAt,
         }
     }
 }

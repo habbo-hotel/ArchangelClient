@@ -1,8 +1,6 @@
-import { HabboWebTools, ILinkEventTracker, RoomSessionEvent } from '@nitro-rp/renderer';
-import { FC, useEffect, useState } from 'react';
-import { AddEventLinkTracker, GetCommunication, RemoveLinkEventTracker } from '../../api';
+import { useEffect } from 'react';
+import { GetCommunication } from '../../api';
 import { Base } from '../../common';
-import { useRoomSessionManagerEvent } from '../../hooks';
 import { AchievementsView } from '../achievements/AchievementsView';
 import { AvatarEditorView } from '../avatar-editor/AvatarEditorView';
 import { CameraWidgetView } from '../camera/CameraWidgetView';
@@ -28,53 +26,15 @@ import { CorpTools } from '../corp-tools/CorpTools';
 import { Billing } from '../billing/Billing';
 import { InventoryView } from '../inventory/InventoryView';
 
-export const MainView: FC<{}> = props => {
-    const [isReady, setIsReady] = useState(false);
-    const [landingViewVisible, setLandingViewVisible] = useState(true);
-
-    useRoomSessionManagerEvent<RoomSessionEvent>(RoomSessionEvent.CREATED, event => setLandingViewVisible(false));
-    useRoomSessionManagerEvent<RoomSessionEvent>(RoomSessionEvent.ENDED, event => setLandingViewVisible(event.openLandingView));
+export function MainView() {
 
     useEffect(() => {
-        setIsReady(true);
-
         GetCommunication().connection.onReady();
-    }, []);
-
-    useEffect(() => {
-        const linkTracker: ILinkEventTracker = {
-            linkReceived: (url: string) => {
-                const parts = url.split('/');
-
-                if (parts.length < 2) return;
-
-                switch (parts[1]) {
-                    case 'open':
-                        if (parts.length > 2) {
-                            switch (parts[2]) {
-                                case 'credits':
-                                    //HabboWebTools.openWebPageAndMinimizeClient(this._windowManager.getProperty(ExternalVariables.WEB_SHOP_RELATIVE_URL));
-                                    break;
-                                default: {
-                                    const name = parts[2];
-                                    HabboWebTools.openHabblet(name);
-                                }
-                            }
-                        }
-                        return;
-                }
-            },
-            eventUrlPrefix: 'habblet/'
-        };
-
-        AddEventLinkTracker(linkTracker);
-
-        return () => RemoveLinkEventTracker(linkTracker);
     }, []);
 
     return (
         <Base fit>
-            <ToolbarView isInRoom={!landingViewVisible} />
+            <ToolbarView />
             <ModToolsView />
             <RoomView />
             <ChatHistoryView />

@@ -5,15 +5,13 @@ import { CreateLinkEvent, CreateRoomSession, DoorStateType, GetConfiguration, Ge
 import { useMessageEvent } from '../events';
 import { useNotification } from '../notification';
 
-const useNavigatorState = () =>
-{
-    const [ categories, setCategories ] = useState<NavigatorCategoryDataParser[]>(null);
-    const [ eventCategories, setEventCategories ] = useState<NavigatorEventCategoryDataParser[]>(null);
-    const [ topLevelContext, setTopLevelContext ] = useState<NavigatorTopLevelContext>(null);
-    const [ topLevelContexts, setTopLevelContexts ] = useState<NavigatorTopLevelContext[]>(null);
-    const [ doorData, setDoorData ] = useState<{ roomInfo: RoomDataParser, state: number }>({ roomInfo: null, state: DoorStateType.NONE });
-    const [ searchResult, setSearchResult ] = useState<NavigatorSearchResultSet>(null);
-    const [ navigatorData, setNavigatorData ] = useState<INavigatorData>({
+const useNavigatorState = () => {
+    const [categories, setCategories] = useState<NavigatorCategoryDataParser[]>(null);
+    const [topLevelContext, setTopLevelContext] = useState<NavigatorTopLevelContext>(null);
+    const [topLevelContexts, setTopLevelContexts] = useState<NavigatorTopLevelContext[]>(null);
+    const [doorData, setDoorData] = useState<{ roomInfo: RoomDataParser, state: number }>({ roomInfo: null, state: DoorStateType.NONE });
+    const [searchResult, setSearchResult] = useState<NavigatorSearchResultSet>(null);
+    const [navigatorData, setNavigatorData] = useState<INavigatorData>({
         settingsReceived: false,
         homeRoomId: 0,
         enteredGuestRoom: null,
@@ -29,39 +27,33 @@ const useNavigatorState = () =>
     });
     const { simpleAlert = null } = useNotification();
 
-    useMessageEvent<RoomSettingsUpdatedEvent>(RoomSettingsUpdatedEvent, event =>
-    {
+    useMessageEvent<RoomSettingsUpdatedEvent>(RoomSettingsUpdatedEvent, event => {
         const parser = event.getParser();
 
         SendMessageComposer(new GetGuestRoomMessageComposer(parser.roomId, false, false));
     });
 
-    useMessageEvent<CanCreateRoomEventEvent>(CanCreateRoomEventEvent, event =>
-    {
+    useMessageEvent<CanCreateRoomEventEvent>(CanCreateRoomEventEvent, event => {
         const parser = event.getParser();
 
-        if(parser.canCreate)
-        {
+        if (parser.canCreate) {
             // show room event cvreate
 
             return;
         }
 
-        simpleAlert(LocalizeText(`navigator.cannotcreateevent.error.${ parser.errorCode }`), null, null, null, LocalizeText('navigator.cannotcreateevent.title'));
+        simpleAlert(LocalizeText(`navigator.cannotcreateevent.error.${parser.errorCode}`), null, null, null, LocalizeText('navigator.cannotcreateevent.title'));
     });
 
-    useMessageEvent<UserInfoEvent>(UserInfoEvent, event =>
-    {
+    useMessageEvent<UserInfoEvent>(UserInfoEvent, event => {
         SendMessageComposer(new GetUserFlatCatsMessageComposer());
         SendMessageComposer(new GetUserEventCatsMessageComposer());
     });
 
-    useMessageEvent<UserPermissionsEvent>(UserPermissionsEvent, event =>
-    {
+    useMessageEvent<UserPermissionsEvent>(UserPermissionsEvent, event => {
         const parser = event.getParser();
 
-        setNavigatorData(prevValue =>
-        {
+        setNavigatorData(prevValue => {
             const newValue = { ...prevValue };
 
             newValue.eventMod = (parser.securityLevel >= SecurityLevel.MODERATOR);
@@ -71,19 +63,16 @@ const useNavigatorState = () =>
         });
     });
 
-    useMessageEvent<RoomForwardEvent>(RoomForwardEvent, event =>
-    {
+    useMessageEvent<RoomForwardEvent>(RoomForwardEvent, event => {
         const parser = event.getParser();
 
         TryVisitRoom(parser.roomId);
     });
 
-    useMessageEvent<RoomEntryInfoMessageEvent>(RoomEntryInfoMessageEvent, event =>
-    {
+    useMessageEvent<RoomEntryInfoMessageEvent>(RoomEntryInfoMessageEvent, event => {
         const parser = event.getParser();
 
-        setNavigatorData(prevValue =>
-        {
+        setNavigatorData(prevValue => {
             const newValue = { ...prevValue };
 
             newValue.enteredGuestRoom = null;
@@ -99,19 +88,16 @@ const useNavigatorState = () =>
 
         SendMessageComposer(new GetGuestRoomMessageComposer(parser.roomId, true, false));
 
-        if(LegacyExternalInterface.available) LegacyExternalInterface.call('legacyTrack', 'navigator', 'private', [ parser.roomId ]);
+        if (LegacyExternalInterface.available) LegacyExternalInterface.call('legacyTrack', 'navigator', 'private', [parser.roomId]);
     });
 
-    useMessageEvent<GetGuestRoomResultEvent>(GetGuestRoomResultEvent, event =>
-    {
+    useMessageEvent<GetGuestRoomResultEvent>(GetGuestRoomResultEvent, event => {
         const parser = event.getParser();
 
-        if(parser.roomEnter)
-        {
+        if (parser.roomEnter) {
             setDoorData({ roomInfo: null, state: DoorStateType.NONE });
 
-            setNavigatorData(prevValue =>
-            {
+            setNavigatorData(prevValue => {
                 const newValue = { ...prevValue };
 
                 newValue.enteredGuestRoom = parser.data;
@@ -119,30 +105,24 @@ const useNavigatorState = () =>
 
                 const isCreated = (newValue.createdFlatId === parser.data.roomId);
 
-                if(!isCreated && parser.data.displayRoomEntryAd)
-                {
-                    if(GetConfiguration<boolean>('roomenterad.habblet.enabled', false)) HabboWebTools.openRoomEnterAd();
+                if (!isCreated && parser.data.displayRoomEntryAd) {
+                    if (GetConfiguration<boolean>('roomenterad.habblet.enabled', false)) HabboWebTools.openRoomEnterAd();
                 }
 
                 newValue.createdFlatId = 0;
 
-                if(newValue.enteredGuestRoom && (newValue.enteredGuestRoom.habboGroupId > 0))
-                {
+                if (newValue.enteredGuestRoom && (newValue.enteredGuestRoom.habboGroupId > 0)) {
                     // close event info
                 }
 
                 return newValue;
             });
         }
-        else if(parser.roomForward)
-        {
-            if((parser.data.ownerName !== GetSessionDataManager().userName) && !parser.isGroupMember)
-            {
-                switch(parser.data.doorMode)
-                {
+        else if (parser.roomForward) {
+            if ((parser.data.ownerName !== GetSessionDataManager().userName) && !parser.isGroupMember) {
+                switch (parser.data.doorMode) {
                     case RoomDataParser.DOORBELL_STATE:
-                        setDoorData(prevValue =>
-                        {
+                        setDoorData(prevValue => {
                             const newValue = { ...prevValue };
 
                             newValue.roomInfo = parser.data;
@@ -152,8 +132,7 @@ const useNavigatorState = () =>
                         });
                         return;
                     case RoomDataParser.PASSWORD_STATE:
-                        setDoorData(prevValue =>
-                        {
+                        setDoorData(prevValue => {
                             const newValue = { ...prevValue };
 
                             newValue.roomInfo = parser.data;
@@ -165,14 +144,12 @@ const useNavigatorState = () =>
                 }
             }
 
-            if((parser.data.doorMode === RoomDataParser.NOOB_STATE) && !GetSessionDataManager().isAmbassador && !GetSessionDataManager().isRealNoob && !GetSessionDataManager().isModerator) return;
+            if ((parser.data.doorMode === RoomDataParser.NOOB_STATE) && !GetSessionDataManager().isAmbassador && !GetSessionDataManager().isRealNoob && !GetSessionDataManager().isModerator) return;
 
             CreateRoomSession(parser.data.roomId);
         }
-        else
-        {
-            setNavigatorData(prevValue =>
-            {
+        else {
+            setNavigatorData(prevValue => {
                 const newValue = { ...prevValue };
 
                 newValue.enteredGuestRoom = parser.data;
@@ -183,12 +160,10 @@ const useNavigatorState = () =>
         }
     });
 
-    useMessageEvent<RoomScoreEvent>(RoomScoreEvent, event =>
-    {
+    useMessageEvent<RoomScoreEvent>(RoomScoreEvent, event => {
         const parser = event.getParser();
 
-        setNavigatorData(prevValue =>
-        {
+        setNavigatorData(prevValue => {
             const newValue = { ...prevValue };
 
             newValue.currentRoomRating = parser.totalLikes;
@@ -198,14 +173,11 @@ const useNavigatorState = () =>
         });
     });
 
-    useMessageEvent<DoorbellMessageEvent>(DoorbellMessageEvent, event => 
-    {
+    useMessageEvent<DoorbellMessageEvent>(DoorbellMessageEvent, event => {
         const parser = event.getParser();
 
-        if(!parser.userName || (parser.userName.length === 0))
-        {
-            setDoorData(prevValue =>
-            {
+        if (!parser.userName || (parser.userName.length === 0)) {
+            setDoorData(prevValue => {
                 const newValue = { ...prevValue };
 
                 newValue.state = DoorStateType.STATE_WAITING;
@@ -215,14 +187,11 @@ const useNavigatorState = () =>
         }
     });
 
-    useMessageEvent<RoomDoorbellAcceptedEvent>(RoomDoorbellAcceptedEvent, event =>
-    {
+    useMessageEvent<RoomDoorbellAcceptedEvent>(RoomDoorbellAcceptedEvent, event => {
         const parser = event.getParser();
 
-        if(!parser.userName || (parser.userName.length === 0))
-        {
-            setDoorData(prevValue =>
-            {
+        if (!parser.userName || (parser.userName.length === 0)) {
+            setDoorData(prevValue => {
                 const newValue = { ...prevValue };
 
                 newValue.state = DoorStateType.STATE_ACCEPTED;
@@ -232,14 +201,11 @@ const useNavigatorState = () =>
         }
     });
 
-    useMessageEvent<FlatAccessDeniedMessageEvent>(FlatAccessDeniedMessageEvent, event =>
-    {
+    useMessageEvent<FlatAccessDeniedMessageEvent>(FlatAccessDeniedMessageEvent, event => {
         const parser = event.getParser();
 
-        if(!parser.userName || (parser.userName.length === 0))
-        {
-            setDoorData(prevValue =>
-            {
+        if (!parser.userName || (parser.userName.length === 0)) {
+            setDoorData(prevValue => {
                 const newValue = { ...prevValue };
 
                 newValue.state = DoorStateType.STATE_NO_ANSWER;
@@ -249,15 +215,12 @@ const useNavigatorState = () =>
         }
     });
 
-    useMessageEvent<GenericErrorEvent>(GenericErrorEvent, event =>
-    {
+    useMessageEvent<GenericErrorEvent>(GenericErrorEvent, event => {
         const parser = event.getParser();
 
-        switch(parser.errorCode)
-        {
+        switch (parser.errorCode) {
             case -100002:
-                setDoorData(prevValue =>
-                {
+                setDoorData(prevValue => {
                     const newValue = { ...prevValue };
 
                     newValue.state = DoorStateType.STATE_WRONG_PASSWORD;
@@ -284,39 +247,33 @@ const useNavigatorState = () =>
         }
     });
 
-    useMessageEvent<NavigatorMetadataEvent>(NavigatorMetadataEvent, event =>
-    {
+    useMessageEvent<NavigatorMetadataEvent>(NavigatorMetadataEvent, event => {
         const parser = event.getParser();
 
         setTopLevelContexts(parser.topLevelContexts);
         setTopLevelContext(parser.topLevelContexts.length ? parser.topLevelContexts[0] : null);
     });
 
-    useMessageEvent<NavigatorSearchEvent>(NavigatorSearchEvent, event =>
-    {
+    useMessageEvent<NavigatorSearchEvent>(NavigatorSearchEvent, event => {
         const parser = event.getParser();
 
-        setTopLevelContext(prevValue =>
-        {
+        setTopLevelContext(prevValue => {
             let newValue = prevValue;
 
-            if(!newValue) newValue = ((topLevelContexts && topLevelContexts.length && topLevelContexts[0]) || null);
+            if (!newValue) newValue = ((topLevelContexts && topLevelContexts.length && topLevelContexts[0]) || null);
 
-            if(!newValue) return null;
+            if (!newValue) return null;
 
-            if((parser.result.code !== newValue.code) && topLevelContexts && topLevelContexts.length)
-            {
-                for(const context of topLevelContexts)
-                {
-                    if(context.code !== parser.result.code) continue;
+            if ((parser.result.code !== newValue.code) && topLevelContexts && topLevelContexts.length) {
+                for (const context of topLevelContexts) {
+                    if (context.code !== parser.result.code) continue;
 
                     newValue = context;
                 }
             }
 
-            for(const context of topLevelContexts)
-            {
-                if(context.code !== parser.result.code) continue;
+            for (const context of topLevelContexts) {
+                if (context.code !== parser.result.code) continue;
 
                 newValue = context;
             }
@@ -327,35 +284,24 @@ const useNavigatorState = () =>
         setSearchResult(parser.result);
     });
 
-    useMessageEvent<UserFlatCatsEvent>(UserFlatCatsEvent, event =>
-    {
+    useMessageEvent<UserFlatCatsEvent>(UserFlatCatsEvent, event => {
         const parser = event.getParser();
 
         setCategories(parser.categories);
     });
 
-    useMessageEvent<UserEventCatsEvent>(UserEventCatsEvent, event =>
-    {
-        const parser = event.getParser();
-
-        setEventCategories(parser.categories);
-    });
-
-    useMessageEvent<FlatCreatedEvent>(FlatCreatedEvent, event =>
-    {
+    useMessageEvent<FlatCreatedEvent>(FlatCreatedEvent, event => {
         const parser = event.getParser();
 
         CreateRoomSession(parser.roomId);
     });
 
-    useMessageEvent<NavigatorHomeRoomEvent>(NavigatorHomeRoomEvent, event =>
-    {
+    useMessageEvent<NavigatorHomeRoomEvent>(NavigatorHomeRoomEvent, event => {
         const parser = event.getParser();
 
         let prevSettingsReceived = false;
 
-        setNavigatorData(prevValue =>
-        {
+        setNavigatorData(prevValue => {
             prevSettingsReceived = prevValue.settingsReceived;
 
             const newValue = { ...prevValue };
@@ -366,8 +312,7 @@ const useNavigatorState = () =>
             return newValue;
         });
 
-        if(prevSettingsReceived)
-        {
+        if (prevSettingsReceived) {
             // refresh room info window
             return;
         }
@@ -375,50 +320,42 @@ const useNavigatorState = () =>
         let forwardType = -1;
         let forwardId = -1;
 
-        if((GetConfiguration<string>('friend.id') !== undefined) && (parseInt(GetConfiguration<string>('friend.id')) > 0))
-        {
+        if ((GetConfiguration<string>('friend.id') !== undefined) && (parseInt(GetConfiguration<string>('friend.id')) > 0)) {
             forwardType = 0;
             SendMessageComposer(new FollowFriendMessageComposer(parseInt(GetConfiguration<string>('friend.id'))));
         }
 
-        if((GetConfiguration<number>('forward.type') !== undefined) && (GetConfiguration<number>('forward.id') !== undefined))
-        {
+        if ((GetConfiguration<number>('forward.type') !== undefined) && (GetConfiguration<number>('forward.id') !== undefined)) {
             forwardType = parseInt(GetConfiguration<string>('forward.type'));
             forwardId = parseInt(GetConfiguration<string>('forward.id'))
         }
 
-        if(forwardType === 2)
-        {
+        if (forwardType === 2) {
             TryVisitRoom(forwardId);
         }
 
-        else if((forwardType === -1) && (parser.roomIdToEnter > 0))
-        {
+        else if ((forwardType === -1) && (parser.roomIdToEnter > 0)) {
             CreateLinkEvent('navigator/close');
 
-            if(parser.roomIdToEnter !== parser.homeRoomId)
-            {
+            if (parser.roomIdToEnter !== parser.homeRoomId) {
                 CreateRoomSession(parser.roomIdToEnter);
             }
-            else
-            {
+            else {
                 CreateRoomSession(parser.homeRoomId);
             }
         }
     });
 
-    useMessageEvent<RoomEnterErrorEvent>(RoomEnterErrorEvent, event =>
-    {
+    useMessageEvent<RoomEnterErrorEvent>(RoomEnterErrorEvent, event => {
         const parser = event.getParser();
 
-        switch(parser.reason)
-        {
+        switch (parser.reason) {
             case CantConnectMessageParser.REASON_FULL:
                 simpleAlert(LocalizeText('navigator.guestroomfull.text'), NotificationAlertType.DEFAULT, null, null, LocalizeText('navigator.guestroomfull.title'));
 
                 break;
             case CantConnectMessageParser.REASON_QUEUE_ERROR:
-                simpleAlert(LocalizeText(`room.queue.error.${ parser.parameter }`), NotificationAlertType.DEFAULT, null, null, LocalizeText('room.queue.error.title'));
+                simpleAlert(LocalizeText(`room.queue.error.${parser.parameter}`), NotificationAlertType.DEFAULT, null, null, LocalizeText('room.queue.error.title'));
 
                 break;
             case CantConnectMessageParser.REASON_BANNED:

@@ -11,6 +11,7 @@ export * from './corp/CorpOfferUserJobComposer';
 export * from './corp/CorpPromoteUserComposer';
 export * from './corp/CorpStartWorkComposer';
 export * from './corp/CorpStopWorkComposer';
+export * from './game/TaxiFeeQueryComposer';
 export * from './game/TimeOfDayQueryComposer';
 export * from './gang/GangDeclineInviteComposer';
 export * from './gang/GangDisbandComposer';

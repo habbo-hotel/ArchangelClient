@@ -1,21 +1,22 @@
-import { ConvertGlobalRoomIdMessageComposer, HabboWebTools, ILinkEventTracker, LegacyExternalInterface, NavigatorInitComposer, NavigatorSearchComposer, RoomSessionEvent } from '@nitro-rp/renderer';
+import { ConvertGlobalRoomIdMessageComposer, HabboWebTools, ILinkEventTracker, LegacyExternalInterface, NavigatorInitComposer, NavigatorSearchComposer, RoomSessionEvent, TaxiFeeEvent, TaxiFeeQueryComposer } from '@nitro-rp/renderer';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { AddEventLinkTracker, LocalizeText, RemoveLinkEventTracker, SendMessageComposer, TryVisitRoom } from '../../api';
 import { Base, Column, NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView } from '../../common';
-import { useNavigator, useRoomSessionManagerEvent } from '../../hooks';
+import { useMessageEvent, useNavigator, useRoomSessionManagerEvent } from '../../hooks';
 import { NavigatorDoorStateView } from './views/NavigatorDoorStateView';
 import { NavigatorRoomCreatorView } from './views/NavigatorRoomCreatorView';
 import { NavigatorRoomSettingsView } from './views/room-settings/NavigatorRoomSettingsView';
 import { NavigatorSearchResultView } from './views/search/NavigatorSearchResultView';
 import { NavigatorRoomInfoView } from './views/search/NavigatorRoomInfoView';
+import { taxiFeeQuery } from '../../api/roleplay/game/TaxiFeeQuery';
 
 export function NavigatorView() {
+    const [taxiFee, setTaxiFee] = useState(0);
     const [isVisible, setIsVisible] = useState(false);
     const [isReady, setIsReady] = useState(false);
     const [isCreatorOpen, setCreatorOpen] = useState(false);
     const [isRoomInfoOpen, setRoomInfoOpen] = useState(false);
-    const [isRoomLinkOpen, setRoomLinkOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [needsInit, setNeedsInit] = useState(true);
     const [needsSearch, setNeedsSearch] = useState(false);
@@ -91,9 +92,6 @@ export function NavigatorView() {
                     }
                     case 'toggle-room-info':
                         setRoomInfoOpen(value => !value);
-                        return;
-                    case 'toggle-room-link':
-                        setRoomLinkOpen(value => !value);
                         return;
                     case 'goto':
                         if (parts.length <= 2) return;
@@ -173,6 +171,16 @@ export function NavigatorView() {
         LegacyExternalInterface.addCallback(HabboWebTools.OPENROOM, (k: string, _arg_2: boolean = false, _arg_3: string = null) => SendMessageComposer(new ConvertGlobalRoomIdMessageComposer(k)));
     }, []);
 
+    useEffect(() => {
+        taxiFeeQuery();
+    }, []);
+
+    useMessageEvent<TaxiFeeEvent>(TaxiFeeEvent, event => {
+        const parser = event.getParser();
+        if (!parser) return;
+        setTaxiFee(parser.taxiFee);
+    });
+
     return (
         <>
             {isVisible &&
@@ -196,7 +204,7 @@ export function NavigatorView() {
                         {!isCreatorOpen &&
                             <>
                                 <Column innerRef={elementRef} overflow="auto">
-                                    {(searchResult && searchResult.results.map((result, index) => <NavigatorSearchResultView key={index} searchResult={result} />))}
+                                    {(searchResult && searchResult.results.map((result, index) => <NavigatorSearchResultView key={index} searchResult={result} taxiFee={taxiFee} />))}
                                 </Column>
                             </>}
                         {isCreatorOpen && <NavigatorRoomCreatorView />}

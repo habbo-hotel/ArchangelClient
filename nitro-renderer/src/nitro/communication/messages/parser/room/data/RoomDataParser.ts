@@ -1,7 +1,6 @@
 import { IMessageDataWrapper } from '../../../../../../api';
 
-export class RoomDataParser
-{
+export class RoomDataParser {
     public static THUMBNAIL_BITMASK = 1;
     public static GROUPDATA_BITMASK = 2;
     public static ROOMAD_BITMASK = 4;
@@ -45,16 +44,14 @@ export class RoomDataParser
 
     private _officialRoomPicRef: string;
 
-    constructor(wrapper: IMessageDataWrapper)
-    {
-        if(!wrapper) throw new Error('invalid_wrapper');
+    constructor(wrapper: IMessageDataWrapper) {
+        if (!wrapper) throw new Error('invalid_wrapper');
 
         this.flush();
         this.parse(wrapper);
     }
 
-    public flush(): boolean
-    {
+    public flush(): boolean {
         this._roomId = 0;
         this._roomName = null;
         this._ownerId = 0;
@@ -87,9 +84,8 @@ export class RoomDataParser
         return true;
     }
 
-    public parse(wrapper: IMessageDataWrapper): boolean
-    {
-        if(!wrapper) return false;
+    public parse(wrapper: IMessageDataWrapper): boolean {
+        if (!wrapper) return false;
 
         this._roomId = wrapper.readInt();
         this._roomName = wrapper.readString();
@@ -111,16 +107,14 @@ export class RoomDataParser
         return true;
     }
 
-    private parseTags(wrapper: IMessageDataWrapper): boolean
-    {
-        if(!wrapper) return false;
+    private parseTags(wrapper: IMessageDataWrapper): boolean {
+        if (!wrapper) return false;
 
         this._tags = [];
 
         let totalTags = wrapper.readInt();
 
-        while(totalTags > 0)
-        {
+        while (totalTags > 0) {
             this._tags.push(wrapper.readString());
 
             totalTags--;
@@ -129,23 +123,20 @@ export class RoomDataParser
         return true;
     }
 
-    private parseBitMask(wrapper: IMessageDataWrapper): boolean
-    {
-        if(!wrapper) return false;
+    private parseBitMask(wrapper: IMessageDataWrapper): boolean {
+        if (!wrapper) return false;
 
         this._bitMask = wrapper.readInt();
 
-        if(this._bitMask & RoomDataParser.THUMBNAIL_BITMASK) this._officialRoomPicRef = wrapper.readString();
+        if (this._bitMask & RoomDataParser.THUMBNAIL_BITMASK) this._officialRoomPicRef = wrapper.readString();
 
-        if(this._bitMask & RoomDataParser.GROUPDATA_BITMASK)
-        {
+        if (this._bitMask & RoomDataParser.GROUPDATA_BITMASK) {
             this._groupId = wrapper.readInt();
             this._groupName = wrapper.readString();
             this._groupBadge = wrapper.readString();
         }
 
-        if(this._bitMask & RoomDataParser.ROOMAD_BITMASK)
-        {
+        if (this._bitMask & RoomDataParser.ROOMAD_BITMASK) {
             this._adName = wrapper.readString();
             this._adDescription = wrapper.readString();
             this._adExpiresIn = wrapper.readInt();
@@ -159,143 +150,115 @@ export class RoomDataParser
         return true;
     }
 
-    public get roomId(): number
-    {
+    public get roomId(): number {
         return this._roomId;
     }
 
-    public get roomName(): string
-    {
+    public get roomName(): string {
         return this._roomName;
     }
 
-    public set roomName(name: string)
-    {
+    public set roomName(name: string) {
         this._roomName = name;
     }
 
-    public get ownerId(): number
-    {
+    public get ownerId(): number {
         return this._ownerId;
     }
 
-    public get ownerName(): string
-    {
+    public get ownerName(): string {
         return this._ownerName;
     }
 
-    public get doorMode(): number
-    {
+    public get doorMode(): number {
         return this._doorMode;
     }
 
-    public get userCount(): number
-    {
+    public get userCount(): number {
         return this._userCount;
     }
 
-    public get maxUserCount(): number
-    {
+    public get maxUserCount(): number {
         return this._maxUserCount;
     }
 
-    public get description(): string
-    {
+    public get description(): string {
         return this._description;
     }
 
-    public get tradeMode(): number
-    {
+    public get tradeMode(): number {
         return this._tradeMode;
     }
 
-    public get score(): number
-    {
+    public get score(): number {
         return this._score;
     }
 
-    public get ranking(): number
-    {
+    public get ranking(): number {
         return this._ranking;
     }
 
-    public get categoryId(): number
-    {
+    public get categoryId(): number {
         return this._categoryId;
     }
 
-    public get tags(): string[]
-    {
+    public get tags(): string[] {
         return this._tags;
     }
 
-    public get officialRoomPicRef(): string
-    {
+    public get officialRoomPicRef(): string {
         return this._officialRoomPicRef;
     }
 
-    public get habboGroupId(): number
-    {
+    public get habboGroupId(): number {
         return this._groupId;
     }
 
-    public get groupName(): string
-    {
+    public get groupName(): string {
         return this._groupName;
     }
 
-    public get groupBadgeCode(): string
-    {
+    public get groupBadgeCode(): string {
         return this._groupBadge;
     }
 
-    public get roomAdName(): string
-    {
+    public get roomAdName(): string {
         return this._adName;
     }
 
-    public get roomAdDescription(): string
-    {
+    public get roomAdDescription(): string {
         return this._adDescription;
     }
 
-    public get roomAdExpiresInMin(): number
-    {
+    public get roomAdExpiresInMin(): number {
         return this._adExpiresIn;
     }
 
-    public get showOwner(): boolean
-    {
+    public get showOwner(): boolean {
         return this._showOwner;
     }
 
-    public get allowPets(): boolean
-    {
+    public get allowPets(): boolean {
         return this._allowPets;
     }
 
-    public get displayRoomEntryAd(): boolean
-    {
+    public get displayRoomEntryAd(): boolean {
         return this._displayAd;
     }
 
-    public get canMute(): boolean
-    {
+    public get canMute(): boolean {
         return this._canMute;
     }
 
-    public set canMute(k: boolean)
-    {
+    public set canMute(k: boolean) {
         this._canMute = k;
     }
 
-    public get allInRoomMuted(): boolean
-    {
+    public get allInRoomMuted(): boolean {
         return this._allInRoomMuted;
     }
 
-    public set allInRoomMuted(k: boolean)
-    {
+    public set allInRoomMuted(k: boolean) {
         this._allInRoomMuted = k;
     }
 }

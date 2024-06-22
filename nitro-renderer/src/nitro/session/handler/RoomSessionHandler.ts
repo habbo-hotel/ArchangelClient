@@ -3,14 +3,12 @@ import { RoomSessionDoorbellEvent, RoomSessionSpectatorModeEvent } from '../../.
 import { DesktopViewEvent, FlatAccessDeniedMessageEvent, GoToFlatMessageComposer, RoomDoorbellAcceptedEvent, RoomEnterEvent, RoomReadyMessageEvent, YouAreSpectatorMessageEvent } from '../../communication';
 import { BaseHandler } from './BaseHandler';
 
-export class RoomSessionHandler extends BaseHandler
-{
+export class RoomSessionHandler extends BaseHandler {
     public static RS_CONNECTED: string = 'RS_CONNECTED';
     public static RS_READY: string = 'RS_READY';
     public static RS_DISCONNECTED: string = 'RS_DISCONNECTED';
 
-    constructor(connection: IConnection, listener: IRoomHandlerListener)
-    {
+    constructor(connection: IConnection, listener: IRoomHandlerListener) {
         super(connection, listener);
 
         connection.addMessageEvent(new RoomEnterEvent(this.onRoomEnterEvent.bind(this)));
@@ -21,95 +19,81 @@ export class RoomSessionHandler extends BaseHandler
         connection.addMessageEvent(new YouAreSpectatorMessageEvent(this.onYouAreSpectatorMessageEvent.bind(this)));
     }
 
-    private onRoomEnterEvent(event: RoomEnterEvent): void
-    {
-        if(!(event instanceof RoomEnterEvent)) return;
+    private onRoomEnterEvent(event: RoomEnterEvent): void {
+        if (!(event instanceof RoomEnterEvent)) return;
 
-        if(this.listener) this.listener.sessionUpdate(this.roomId, RoomSessionHandler.RS_CONNECTED);
+        if (this.listener) this.listener.sessionUpdate(this.roomId, RoomSessionHandler.RS_CONNECTED);
     }
 
-    private onRoomReadyMessageEvent(event: RoomReadyMessageEvent): void
-    {
-        if(!(event instanceof RoomReadyMessageEvent)) return;
+    private onRoomReadyMessageEvent(event: RoomReadyMessageEvent): void {
+        if (!(event instanceof RoomReadyMessageEvent)) return;
 
         const fromRoomId = this.roomId;
         const toRoomId = event.getParser().roomId;
 
-        if(this.listener)
-        {
+        if (this.listener) {
             this.listener.sessionReinitialize(fromRoomId, toRoomId);
             this.listener.sessionUpdate(this.roomId, RoomSessionHandler.RS_READY);
         }
     }
 
-    private onDesktopViewEvent(event: DesktopViewEvent): void
-    {
-        if(!(event instanceof DesktopViewEvent)) return;
+    private onDesktopViewEvent(event: DesktopViewEvent): void {
+        if (!(event instanceof DesktopViewEvent)) return;
 
-        if(this.listener) this.listener.sessionUpdate(this.roomId, RoomSessionHandler.RS_DISCONNECTED);
+        if (this.listener) this.listener.sessionUpdate(this.roomId, RoomSessionHandler.RS_DISCONNECTED);
     }
 
-    private onRoomDoorbellAcceptedEvent(event: RoomDoorbellAcceptedEvent): void
-    {
-        if(!(event instanceof RoomDoorbellAcceptedEvent) || !this.listener) return;
+    private onRoomDoorbellAcceptedEvent(event: RoomDoorbellAcceptedEvent): void {
+        if (!(event instanceof RoomDoorbellAcceptedEvent) || !this.listener) return;
 
         const parser = event.getParser();
 
-        if(!parser) return;
+        if (!parser) return;
 
         const username = parser.userName;
 
-        if(!username || !username.length)
-        {
+        if (!username || !username.length) {
             this.connection.send(new GoToFlatMessageComposer(this.roomId));
         }
-        else
-        {
-            if(this.listener.events)
-            {
+        else {
+            if (this.listener.events) {
                 const session = this.listener.getSession(this.roomId);
 
-                if(!session) return;
+                if (!session) return;
 
                 this.listener.events.dispatchEvent(new RoomSessionDoorbellEvent(RoomSessionDoorbellEvent.RSDE_ACCEPTED, session, username));
             }
         }
     }
 
-    private onRoomDoorbellRejectedEvent(event: FlatAccessDeniedMessageEvent): void
-    {
-        if(!(event instanceof FlatAccessDeniedMessageEvent) || !this.listener) return;
+    private onRoomDoorbellRejectedEvent(event: FlatAccessDeniedMessageEvent): void {
+        if (!(event instanceof FlatAccessDeniedMessageEvent) || !this.listener) return;
 
         const parser = event.getParser();
 
-        if(!parser) return;
+        if (!parser) return;
 
         const username = parser.userName;
 
-        if(!username || !username.length)
-        {
+        if (!username || !username.length) {
             this.listener.sessionUpdate(this.roomId, RoomSessionHandler.RS_DISCONNECTED);
         }
-        else
-        {
-            if(this.listener.events)
-            {
+        else {
+            if (this.listener.events) {
                 const session = this.listener.getSession(this.roomId);
 
-                if(!session) return;
+                if (!session) return;
 
                 this.listener.events.dispatchEvent(new RoomSessionDoorbellEvent(RoomSessionDoorbellEvent.RSDE_REJECTED, session, username));
             }
         }
     }
 
-    private onYouAreSpectatorMessageEvent(event: YouAreSpectatorMessageEvent): void
-    {
-        if(this.listener)
-        {
+    private onYouAreSpectatorMessageEvent(event: YouAreSpectatorMessageEvent): void {
+        if (this.listener) {
             const session = this.listener.getSession(this.roomId);
 
-            if(!session) return;
+            if (!session) return;
 
             session.isSpectator = true;
             this.listener.events.dispatchEvent(new RoomSessionSpectatorModeEvent(RoomSessionSpectatorModeEvent.SPECTATOR_MODE, session));

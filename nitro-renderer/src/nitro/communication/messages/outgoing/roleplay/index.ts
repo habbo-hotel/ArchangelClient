@@ -1,3 +1,4 @@
+export * from './billing/PayBillComposer';
 export * from './combat/AttackUserComposer';
 export * from './combat/CombatDelayComposer';
 export * from './combat/EquipWeaponComposer';

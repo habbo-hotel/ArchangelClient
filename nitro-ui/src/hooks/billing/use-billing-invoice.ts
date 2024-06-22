@@ -6,10 +6,11 @@ export function useBillingInvoice(): BillingInvoice {
     const [billingInvoice, setBillingInvoice] = useState<BillingInvoice>({
         id: 0,
         userID: 0,
-        chargedByCorpID: 0,
-        chargedByUserID: 0,
+        key: '',
         title: '',
         description: '',
+        chargedByCorpID: 0,
+        chargedByUserID: 0,
         amountOwed: 0,
         amountPaid: 0,
     })

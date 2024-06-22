@@ -519,4 +519,6 @@ export class OutgoingHeader {
     public static EQUIP_WEAPON = 8025;
 
     public static LIST_MY_WEAPONS = 8026;
+
+    public static PAY_BILL = 8027;
 }

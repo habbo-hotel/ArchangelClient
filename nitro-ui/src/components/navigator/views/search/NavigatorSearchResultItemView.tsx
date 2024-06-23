@@ -5,6 +5,10 @@ import { useMessageEvent } from '../../../../hooks';
 import { TaxiDispatchedEvent } from '@nitro-rp/renderer/src/nitro/communication/messages/incoming/roleplay/taxi/TaxiDispatchedEvent';
 import { useEffect, useState } from 'react';
 
+export enum RoomType {
+    TAXI = "taxi"
+}
+
 export interface NavigatorSearchResultItemViewProps extends LayoutGridItemProps {
     disabled: boolean;
     roomData: RoomDataParser;
@@ -48,6 +52,10 @@ export function NavigatorSearchResultItemView({ roomData, disabled, onVisitRoom,
 
         return () => clearInterval(interval);
     }, [arrivesAt]);
+
+    if (!roomData.tags.includes(RoomType.TAXI)) {
+        return null;
+    }
 
     return (
         <Flex pointer overflow="hidden" alignItems="center" onClick={onVisitRoom} gap={2} className={`navigator-item px-2 py-1 small ${disabled && !arrivesAt ? 'navigator-item-disabled' : ''}`} {...rest}>

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { AddEventLinkTracker, LocalizeText, RemoveLinkEventTracker, SendMessageComposer, TryVisitRoom } from '../../api';
 import { Base, Column, NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView } from '../../common';
-import { useMessageEvent, useNavigator, useRoomSessionManagerEvent } from '../../hooks';
+import { useMessageEvent, useNavigator, useRoom, useRoomSessionManagerEvent } from '../../hooks';
 import { NavigatorDoorStateView } from './views/NavigatorDoorStateView';
 import { NavigatorRoomCreatorView } from './views/NavigatorRoomCreatorView';
 import { NavigatorRoomSettingsView } from './views/room-settings/NavigatorRoomSettingsView';
@@ -13,6 +13,7 @@ import { taxiFeeQuery } from '../../api/roleplay/game/TaxiFeeQuery';
 import { CallTaxi } from '../../api/roleplay/taxi/CallTaxi';
 
 export function NavigatorView() {
+    const { roomSession } = useRoom();
     const [taxiFee, setTaxiFee] = useState(0);
     const [isVisible, setIsVisible] = useState(false);
     const [taxiPending, setTaxiPending] = useState(false);
@@ -68,6 +69,9 @@ export function NavigatorView() {
 
 
     function onVisitRoom(roomData: RoomDataParser) {
+        if (roomData.roomId === roomSession?.roomId) {
+            return;
+        }
         if (taxiPending) return;
         setTaxiPending(true);
         CallTaxi(roomData.roomId);
@@ -77,6 +81,7 @@ export function NavigatorView() {
         const parser = event.getParser();
         if (!parser) return;
         setTaxiPending(false);
+        setIsVisible(false);
     });
 
     useEffect(() => {

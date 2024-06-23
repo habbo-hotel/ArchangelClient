@@ -1,7 +1,7 @@
 import { RoomDataParser } from '@nitro-rp/renderer';
 import { FaClock, FaDollarSign, FaUser } from 'react-icons/fa';
 import { Flex, LayoutGridItemProps, Text } from '../../../../common';
-import { useMessageEvent } from '../../../../hooks';
+import { useMessageEvent, useRoom } from '../../../../hooks';
 import { TaxiDispatchedEvent } from '@nitro-rp/renderer/src/nitro/communication/messages/incoming/roleplay/taxi/TaxiDispatchedEvent';
 import { useEffect, useState } from 'react';
 
@@ -17,6 +17,7 @@ export interface NavigatorSearchResultItemViewProps extends LayoutGridItemProps 
 }
 
 export function NavigatorSearchResultItemView({ roomData, disabled, onVisitRoom, taxiFee, ...rest }) {
+    const { roomSession } = useRoom();
     const [arrivesAt, setArrivesAt] = useState<number>();
     const [remainingSecs, setRemainingSecs] = useState<number>(0);
 
@@ -52,6 +53,15 @@ export function NavigatorSearchResultItemView({ roomData, disabled, onVisitRoom,
 
         return () => clearInterval(interval);
     }, [arrivesAt]);
+
+    if (!roomData) {
+        return null;
+    };
+
+    if (roomData?.roomId === roomSession?.roomId) {
+        console.log(roomData.roomID)
+        return null;
+    }
 
     if (!roomData.tags.includes(RoomType.TAXI)) {
         return null;

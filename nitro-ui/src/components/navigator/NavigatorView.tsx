@@ -1,4 +1,4 @@
-import { ConvertGlobalRoomIdMessageComposer, HabboWebTools, ILinkEventTracker, LegacyExternalInterface, NavigatorInitComposer, NavigatorSearchComposer, RoomSessionEvent, TaxiFeeQueryEvent } from '@nitro-rp/renderer';
+import { ConvertGlobalRoomIdMessageComposer, HabboWebTools, ILinkEventTracker, LegacyExternalInterface, NavigatorInitComposer, NavigatorSearchComposer, RoomDataParser, RoomEnterEvent, RoomSessionEvent, TaxiFeeQueryEvent } from '@nitro-rp/renderer';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { AddEventLinkTracker, LocalizeText, RemoveLinkEventTracker, SendMessageComposer, TryVisitRoom } from '../../api';
@@ -10,10 +10,12 @@ import { NavigatorRoomSettingsView } from './views/room-settings/NavigatorRoomSe
 import { NavigatorSearchResultView } from './views/search/NavigatorSearchResultView';
 import { NavigatorRoomInfoView } from './views/search/NavigatorRoomInfoView';
 import { taxiFeeQuery } from '../../api/roleplay/game/TaxiFeeQuery';
+import { CallTaxi } from '../../api/roleplay/taxi/CallTaxi';
 
 export function NavigatorView() {
     const [taxiFee, setTaxiFee] = useState(0);
     const [isVisible, setIsVisible] = useState(false);
+    const [taxiPending, setTaxiPending] = useState(false);
     const [isReady, setIsReady] = useState(false);
     const [isCreatorOpen, setCreatorOpen] = useState(false);
     const [isRoomInfoOpen, setRoomInfoOpen] = useState(false);
@@ -62,6 +64,20 @@ export function NavigatorView() {
 
         sendSearch('', topLevelContext.code);
     }, [isReady, searchResult, topLevelContext, sendSearch]);
+
+
+
+    function onVisitRoom(roomData: RoomDataParser) {
+        if (taxiPending) return;
+        setTaxiPending(true);
+        CallTaxi(roomData.roomId);
+    }
+
+    useMessageEvent<RoomEnterEvent>(RoomEnterEvent, event => {
+        const parser = event.getParser();
+        if (!parser) return;
+        setTaxiPending(false);
+    });
 
     useEffect(() => {
         const linkTracker: ILinkEventTracker = {
@@ -204,7 +220,7 @@ export function NavigatorView() {
                         {!isCreatorOpen &&
                             <>
                                 <Column innerRef={elementRef} overflow="auto">
-                                    {(searchResult && searchResult.results.map((result, index) => <NavigatorSearchResultView key={index} searchResult={result} taxiFee={taxiFee} />))}
+                                    {(searchResult && searchResult.results.map((result, index) => <NavigatorSearchResultView key={index} searchResult={result} taxiFee={taxiFee} taxiPending={taxiPending} onVisitRoom={onVisitRoom} />))}
                                 </Column>
                             </>}
                         {isCreatorOpen && <NavigatorRoomCreatorView />}

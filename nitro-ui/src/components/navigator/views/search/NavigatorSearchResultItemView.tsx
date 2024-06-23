@@ -1,80 +1,75 @@
 import { RoomDataParser } from '@nitro-rp/renderer';
-import { FaDollarSign, FaUser } from 'react-icons/fa';
-import { CreateRoomSession, DoorStateType, GetSessionDataManager, TryVisitRoom } from '../../../../api';
+import { FaCar, FaClock, FaDollarSign, FaTaxi, FaUser } from 'react-icons/fa';
 import { Flex, LayoutGridItemProps, Text } from '../../../../common';
-import { useMessageEvent, useNavigator } from '../../../../hooks';
-import { CallTaxi } from '../../../../api/roleplay/taxi/CallTaxi';
+import { useMessageEvent } from '../../../../hooks';
 import { TaxiDispatchedEvent } from '@nitro-rp/renderer/src/nitro/communication/messages/incoming/roleplay/taxi/TaxiDispatchedEvent';
+import { useEffect, useState } from 'react';
 
 export interface NavigatorSearchResultItemViewProps extends LayoutGridItemProps {
-    roomData: RoomDataParser
+    disabled: boolean;
+    roomData: RoomDataParser;
+    onVisitRoom(): void;
     taxiFee: number;
 }
 
-export function NavigatorSearchResultItemView({ roomData, taxiFee, ...rest }: NavigatorSearchResultItemViewProps) {
-    const { setDoorData = null } = useNavigator();
-
-    function visitRoom() {
-        if (roomData.ownerId !== GetSessionDataManager().userId) {
-            if (roomData.habboGroupId !== 0) {
-                TryVisitRoom(roomData.roomId);
-
-                return;
-            }
-
-            switch (roomData.doorMode) {
-                case RoomDataParser.DOORBELL_STATE:
-                    setDoorData(prevValue => {
-                        const newValue = { ...prevValue };
-
-                        newValue.roomInfo = roomData;
-                        newValue.state = DoorStateType.START_DOORBELL;
-
-                        return newValue;
-                    });
-                    return;
-                case RoomDataParser.PASSWORD_STATE:
-                    setDoorData(prevValue => {
-                        const newValue = { ...prevValue };
-
-                        newValue.roomInfo = roomData;
-                        newValue.state = DoorStateType.START_PASSWORD;
-
-                        return newValue;
-                    });
-                    return;
-            }
-        }
-
-        CallTaxi(roomData.roomId);
-    }
+export function NavigatorSearchResultItemView({ roomData, disabled, onVisitRoom, taxiFee, ...rest }) {
+    const [arrivesAt, setArrivesAt] = useState<number>();
+    const [remainingSecs, setRemainingSecs] = useState<number>(0);
 
     useMessageEvent<TaxiDispatchedEvent>(TaxiDispatchedEvent, event => {
         const parser = event.getParser();
         if (!parser) return;
-        const currentTime = Date.now();
-        const delay = parser.arrivesAt - currentTime;
-
-        if (delay <= 0) {
-            CreateRoomSession(roomData.roomId);
-        } else {
-            setTimeout(() => {
-                CreateRoomSession(roomData.roomId);
-            }, delay);
+        if (parser.roomID === roomData.roomId) {
+            setArrivesAt(parser.arrivesAt);
+            return;
+        }
+        if (arrivesAt) {
+            setArrivesAt(null);
         }
     });
 
+    useEffect(() => {
+        if (arrivesAt === null || arrivesAt === undefined) return;
+
+        const updateRemainingSecs = () => {
+            const currentTime = Math.floor(Date.now() / 1000);
+            const diffSecs = arrivesAt - currentTime;
+            if (diffSecs <= 0) {
+                setRemainingSecs(0);
+                setArrivesAt(null);
+                return;
+            }
+            setRemainingSecs(diffSecs);
+        };
+
+        updateRemainingSecs();
+
+        const interval = setInterval(updateRemainingSecs, 1000);
+
+        return () => clearInterval(interval);
+    }, [arrivesAt]);
+
     return (
-        <Flex pointer overflow="hidden" alignItems="center" onClick={visitRoom} gap={2} className="navigator-item px-2 py-1 small" {...rest}>
+        <Flex pointer overflow="hidden" alignItems="center" onClick={onVisitRoom} gap={2} className="navigator-item px-2 py-1 small" {...rest}>
             <Flex center className="badge p-1 bg-primary" gap={1}>
                 <FaUser className="fa-icon" />
                 {roomData.userCount}
             </Flex>
             <Text truncate grow>{roomData.roomName}</Text>
-            <Flex center className="badge p-1 bg-danger" gap={1}>
-                <FaDollarSign className="fa-icon" />
-                {taxiFee}
-            </Flex>
+            {!!arrivesAt && (
+                <Flex center className="badge p-1 bg-success" gap={1}>
+                    <FaClock className="fa-icon" />
+                    {remainingSecs} secs
+                </Flex>
+            )}
+            {
+                !arrivesAt && !disabled && (
+                    <Flex center className="badge p-1 bg-danger" gap={1}>
+                        <FaDollarSign className="fa-icon" />
+                        {taxiFee}
+                    </Flex>
+                )
+            }
         </Flex>
     );
 }

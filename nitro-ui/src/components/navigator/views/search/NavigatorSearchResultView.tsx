@@ -1,4 +1,4 @@
-import { NavigatorSearchResultList } from '@nitro-rp/renderer';
+import { NavigatorSearchResultList, RoomDataParser, RoomEnterEvent } from '@nitro-rp/renderer';
 import { useState } from 'react';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 import { LocalizeText, } from '../../../../api';
@@ -8,9 +8,11 @@ import { NavigatorSearchResultItemView } from './NavigatorSearchResultItemView';
 export interface NavigatorSearchResultViewProps {
     searchResult: NavigatorSearchResultList;
     taxiFee: number;
+    onVisitRoom(roomData: RoomDataParser): void;
+    taxiPending: boolean;
 }
 
-export function NavigatorSearchResultView({ searchResult, taxiFee }: NavigatorSearchResultViewProps) {
+export function NavigatorSearchResultView({ searchResult, taxiFee, taxiPending, onVisitRoom }: NavigatorSearchResultViewProps) {
     const [isExtended, setIsExtended] = useState(true);
 
     const getResultTitle = () => {
@@ -34,7 +36,7 @@ export function NavigatorSearchResultView({ searchResult, taxiFee }: NavigatorSe
             </Flex>
             {isExtended &&
                 <Grid columnCount={1} className="navigator-grid" gap={0}>
-                    {searchResult.rooms.length > 0 && searchResult.rooms.map((room, index) => <NavigatorSearchResultItemView key={index} roomData={room} taxiFee={taxiFee} />)}
+                    {searchResult.rooms.length > 0 && searchResult.rooms.map((room, index) => <NavigatorSearchResultItemView key={index} roomData={room} taxiFee={taxiFee} disabled={taxiPending} onVisitRoom={() => onVisitRoom(room)} />)}
                 </Grid>
             }
         </Column>

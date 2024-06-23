@@ -1,5 +1,5 @@
 import { RoomDataParser } from '@nitro-rp/renderer';
-import { FaCar, FaClock, FaDollarSign, FaTaxi, FaUser } from 'react-icons/fa';
+import { FaClock, FaDollarSign, FaUser } from 'react-icons/fa';
 import { Flex, LayoutGridItemProps, Text } from '../../../../common';
 import { useMessageEvent } from '../../../../hooks';
 import { TaxiDispatchedEvent } from '@nitro-rp/renderer/src/nitro/communication/messages/incoming/roleplay/taxi/TaxiDispatchedEvent';
@@ -50,7 +50,7 @@ export function NavigatorSearchResultItemView({ roomData, disabled, onVisitRoom,
     }, [arrivesAt]);
 
     return (
-        <Flex pointer overflow="hidden" alignItems="center" onClick={onVisitRoom} gap={2} className="navigator-item px-2 py-1 small" {...rest}>
+        <Flex pointer overflow="hidden" alignItems="center" onClick={onVisitRoom} gap={2} className={`navigator-item px-2 py-1 small ${disabled && !arrivesAt ? 'navigator-item-disabled' : ''}`} {...rest}>
             <Flex center className="badge p-1 bg-primary" gap={1}>
                 <FaUser className="fa-icon" />
                 {roomData.userCount}

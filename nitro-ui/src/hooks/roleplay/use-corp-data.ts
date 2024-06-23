@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useMessageEvent } from "../events";
 import { CorpInfoQuery } from "../../api/roleplay/corp/CorpInfoQuery";
 
-export function useCorpData(corpID: number): CorpInfoData  {
+export function useCorpData(corpID: number): CorpInfoData {
     const [corpData, setCorpData] = useState<CorpInfoData>({
         id: 0,
         userID: 0,
@@ -11,6 +11,7 @@ export function useCorpData(corpID: number): CorpInfoData  {
         name: '',
         description: '',
         badgeCode: '',
+        tags: [],
     });
 
     useEffect(() => {

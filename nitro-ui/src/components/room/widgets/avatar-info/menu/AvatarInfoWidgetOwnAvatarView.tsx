@@ -14,6 +14,8 @@ import { GangDisband } from '../../../../../api/roleplay/gang/GangDisband';
 import { useRoleplayStats } from '../../../../../hooks/roleplay/use-rp-stats';
 import { useMyWeaponList } from '../../../../../hooks/roleplay/use-my-weapon-list';
 import { EquipWeapon } from '../../../../../api/roleplay/combat/EquipWeapon';
+import { useCorpData } from '../../../../../hooks/roleplay/use-corp-data';
+import { useCorpPositionData } from '../../../../../hooks/roleplay/use-corp-position-data';
 
 interface AvatarInfoWidgetOwnAvatarViewProps {
     avatarInfo: AvatarInfoUser;
@@ -32,7 +34,8 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
     const { avatarInfo = null, isDancing = false, onClose = null } = props;
 
     const roleplayStats = useRoleplayStats(avatarInfo?.webID);
-    const weaponList = useMyWeaponList();
+    const corpData = useCorpData(roleplayStats.corporationID);
+    const corpJobPosition = useCorpPositionData(roleplayStats.corporationID, roleplayStats.corporationPositionID);
     const [mode, setMode] = useState((isDancing && HasHabboClub()) ? MODE_CLUB_DANCES : MODE_NORMAL);
     const { roomSession = null } = useRoom();
 
@@ -142,10 +145,14 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
             </ContextMenuHeaderView>
             {(mode === MODE_NORMAL) &&
                 <>
-                    <ContextMenuListItemView onClick={event => processAction('view_business')}>
-                        <FaChevronRight className="right fa-icon" />
-                        {LocalizeText('infostand.button.business')}
-                    </ContextMenuListItemView>
+                    {
+                        (corpJobPosition.canWorkAnywhere || corpData.roomID === roomSession?.roomId) && (
+                            <ContextMenuListItemView onClick={event => processAction('view_business')}>
+                                <FaChevronRight className="right fa-icon" />
+                                {LocalizeText('infostand.button.business')}
+                            </ContextMenuListItemView>
+                        )
+                    }
                     <ContextMenuListItemView onClick={event => processAction('view_gang')}>
                         <FaChevronRight className="right fa-icon" />
                         {LocalizeText('infostand.button.gang')}

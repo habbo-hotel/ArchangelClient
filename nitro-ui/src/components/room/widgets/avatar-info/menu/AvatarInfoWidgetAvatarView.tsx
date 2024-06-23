@@ -1,4 +1,4 @@
-import { RoomObjectCategory, RoomObjectVariable, RoomUnitGiveHandItemComposer, TradingOpenComposer } from '@nitro-rp/renderer';
+import { CorpType, RoomObjectCategory, RoomObjectVariable, RoomUnitGiveHandItemComposer, TradingOpenComposer } from '@nitro-rp/renderer';
 import { FC, useEffect, useMemo, useState } from 'react';
 import { AvatarInfoUser, CreateLinkEvent, DispatchUiEvent, GetOwnRoomObject, GetUserProfile, LocalizeText, RoomWidgetUpdateChatInputContentEvent, SendMessageComposer } from '../../../../../api';
 import { useFriends, useSessionInfo } from '../../../../../hooks';
@@ -19,6 +19,8 @@ import { PoliceStunUser } from '../../../../../api/roleplay/police/PoliceStunUse
 import { PoliceEscortUser } from '../../../../../api/roleplay/police/PoliceEscortUser';
 import { useCrimes } from '../../../../../api/roleplay/police/GetCrimes';
 import { useCombatDelay } from '../../../../../hooks/roleplay/use-combat-delay';
+import { useCorpData } from '../../../../../hooks/roleplay/use-corp-data';
+import { useCorpPositionData } from '../../../../../hooks/roleplay/use-corp-position-data';
 
 interface AvatarInfoWidgetAvatarViewProps {
     avatarInfo: AvatarInfoUser;
@@ -40,6 +42,8 @@ export const AvatarInfoWidgetAvatarView: FC<AvatarInfoWidgetAvatarViewProps> = p
     const [mode, setMode] = useState(MODE_NORMAL);
     const { canRequestFriend = null } = useFriends();
     const crimeList = useCrimes();
+    const corpData = useCorpData(roleplayStats.corporationID);
+    const corpJobPosition = useCorpPositionData(roleplayStats.corporationID, roleplayStats.corporationPositionID);
 
     const canGiveHandItem = useMemo(() => {
         let flag = false;
@@ -177,11 +181,15 @@ export const AvatarInfoWidgetAvatarView: FC<AvatarInfoWidgetAvatarViewProps> = p
                                                 {LocalizeText('infostand.button.business')}
                                                 <FaChevronRight className="right fa-icon" />
                                             </ContextMenuListItemView>
-                                            <ContextMenuListItemView onClick={() => processAction('view_police')}>
-                                                <FaChevronRight className="right fa-icon" />
-                                                {LocalizeText('infostand.button.police')}
-                                            </ContextMenuListItemView>
                                         </>
+                                    )
+                                }
+                                {
+                                    sessionRoleplayStats.isWorking && corpData.tags.includes(CorpType.POLICE) && (
+                                        <ContextMenuListItemView onClick={() => processAction('view_police')}>
+                                            <FaChevronRight className="right fa-icon" />
+                                            {LocalizeText('infostand.button.police')}
+                                        </ContextMenuListItemView>
                                     )
                                 }
                                 {

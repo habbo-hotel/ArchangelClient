@@ -1,7 +1,0 @@
-import { IMessageComposer } from '../../../../../api';
-export declare class GroupJoinComposer implements IMessageComposer<ConstructorParameters<typeof GroupJoinComposer>> {
-    private _data;
-    constructor(groupId: number);
-    getMessageArray(): [groupId: number];
-    dispose(): void;
-}

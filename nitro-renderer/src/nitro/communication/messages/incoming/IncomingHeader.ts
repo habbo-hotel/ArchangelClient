@@ -481,4 +481,5 @@ export class IncomingHeader {
     public static CASH_REGISTER_QUERY = 9009;
     public static BILLING_INVOICE_QUERY = 9010;
     public static TAXI_FEE_QUERY = 9011;
+    public static TAXI_DISPATCHED = 9012;
 }

@@ -2,7 +2,9 @@ import { RoomDataParser } from '@nitro-rp/renderer';
 import { FaDollarSign, FaUser } from 'react-icons/fa';
 import { CreateRoomSession, DoorStateType, GetSessionDataManager, TryVisitRoom } from '../../../../api';
 import { Flex, LayoutGridItemProps, Text } from '../../../../common';
-import { useNavigator } from '../../../../hooks';
+import { useMessageEvent, useNavigator } from '../../../../hooks';
+import { CallTaxi } from '../../../../api/roleplay/taxi/CallTaxi';
+import { TaxiDispatchedEvent } from '@nitro-rp/renderer/src/nitro/communication/messages/incoming/roleplay/taxi/TaxiDispatchedEvent';
 
 export interface NavigatorSearchResultItemViewProps extends LayoutGridItemProps {
     roomData: RoomDataParser
@@ -44,8 +46,23 @@ export function NavigatorSearchResultItemView({ roomData, taxiFee, ...rest }: Na
             }
         }
 
-        CreateRoomSession(roomData.roomId);
+        CallTaxi(roomData.roomId);
     }
+
+    useMessageEvent<TaxiDispatchedEvent>(TaxiDispatchedEvent, event => {
+        const parser = event.getParser();
+        if (!parser) return;
+        const currentTime = Date.now();
+        const delay = parser.arrivesAt - currentTime;
+
+        if (delay <= 0) {
+            CreateRoomSession(roomData.roomId);
+        } else {
+            setTimeout(() => {
+                CreateRoomSession(roomData.roomId);
+            }, delay);
+        }
+    });
 
     return (
         <Flex pointer overflow="hidden" alignItems="center" onClick={visitRoom} gap={2} className="navigator-item px-2 py-1 small" {...rest}>

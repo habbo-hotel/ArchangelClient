@@ -523,4 +523,6 @@ export class OutgoingHeader {
     public static PAY_BILL = 8027;
 
     public static TAXI_FEE_QUERY = 8028;
+
+    public static CALL_TAXI = 8029;
 }

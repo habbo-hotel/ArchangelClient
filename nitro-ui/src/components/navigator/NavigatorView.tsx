@@ -1,4 +1,4 @@
-import { ConvertGlobalRoomIdMessageComposer, HabboWebTools, ILinkEventTracker, LegacyExternalInterface, NavigatorInitComposer, NavigatorSearchComposer, RoomSessionEvent, TaxiFeeEvent, TaxiFeeQueryComposer } from '@nitro-rp/renderer';
+import { ConvertGlobalRoomIdMessageComposer, HabboWebTools, ILinkEventTracker, LegacyExternalInterface, NavigatorInitComposer, NavigatorSearchComposer, RoomSessionEvent, TaxiFeeQueryEvent } from '@nitro-rp/renderer';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { AddEventLinkTracker, LocalizeText, RemoveLinkEventTracker, SendMessageComposer, TryVisitRoom } from '../../api';
@@ -175,7 +175,7 @@ export function NavigatorView() {
         taxiFeeQuery();
     }, []);
 
-    useMessageEvent<TaxiFeeEvent>(TaxiFeeEvent, event => {
+    useMessageEvent<TaxiFeeQueryEvent>(TaxiFeeQueryEvent, event => {
         const parser = event.getParser();
         if (!parser) return;
         setTaxiFee(parser.taxiFee);

@@ -189,13 +189,13 @@ export const AvatarInfoWidgetAvatarView: FC<AvatarInfoWidgetAvatarViewProps> = p
                                     )
                                 }
                                 {
-                                    !sessionRoleplayStats.isWorking && (
+                                    roleplayStats.gangID ? (
                                         <ContextMenuListItemView onClick={() => processAction('view_gang')}>
                                             <FaChevronRight className="right fa-icon" />
                                             {LocalizeText('infostand.button.gang')}
                                         </ContextMenuListItemView>
                                     )
-                                }
+                                        : null}
                                 {canRequestFriend(avatarInfo.webID) &&
                                     <ContextMenuListItemView onClick={() => processAction('friend')}>
                                         {LocalizeText('infostand.button.friend')}

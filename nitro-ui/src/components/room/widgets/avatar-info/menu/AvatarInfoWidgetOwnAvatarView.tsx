@@ -27,7 +27,6 @@ const MODE_EXPRESSIONS = 3;
 const MODE_SIGNS = 4;
 const MODE_BUSINESS = 5;
 const MODE_GANGS = 6;
-const MODE_WEAPONS = 7;
 
 export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProps> = props => {
     const { avatarInfo = null, isDancing = false, onClose = null } = props;
@@ -56,10 +55,7 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
                         hideMenu = false;
                         setMode(MODE_GANGS);
                         break;
-                    case 'view_weapons':
-                        hideMenu = false;
-                        setMode(MODE_WEAPONS);
-                        break;
+
                     case 'startwork':
                         CorpStartWork()
                         break;
@@ -154,14 +150,6 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
                         <FaChevronRight className="right fa-icon" />
                         {LocalizeText('infostand.button.gang')}
                     </ContextMenuListItemView>
-                    {
-                        weaponList.length > 0 && (
-                            <ContextMenuListItemView onClick={event => processAction('view_weapons')}>
-                                <FaChevronRight className="right fa-icon" />
-                                {LocalizeText('infostand.button.weapons')}
-                            </ContextMenuListItemView>
-                        )
-                    }
                     {!isRidingHorse &&
                         <ContextMenuListItemView onClick={event => processAction('dance_menu')}>
                             <FaChevronRight className="right fa-icon" />
@@ -352,21 +340,6 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
                     </ContextMenuListItemView>
                 </>
             }
-            {(mode === MODE_WEAPONS) && (
-                <>
-                    <ContextMenuListItemView onClick={event => processAction('back')}>
-                        <FaChevronLeft className="left fa-icon" />
-                        {LocalizeText('generic.back')}
-                    </ContextMenuListItemView>
-                    {
-                        weaponList.map(_ => (
-                            <ContextMenuListItemView key={`weapon_${_.uniqueName}`} onClick={() => onEquip(_)}>
-                                {_.displayName}
-                            </ContextMenuListItemView>
-                        ))
-                    }
-                </>
-            )}
         </ContextMenuView >
     );
 }

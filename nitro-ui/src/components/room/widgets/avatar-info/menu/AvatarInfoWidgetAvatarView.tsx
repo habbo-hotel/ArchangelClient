@@ -1,6 +1,6 @@
 import { RoomObjectCategory, RoomObjectVariable, RoomUnitGiveHandItemComposer, TradingOpenComposer } from '@nitro-rp/renderer';
 import { FC, useEffect, useMemo, useState } from 'react';
-import { AvatarInfoUser, CreateLinkEvent, DispatchUiEvent, GetConfiguration, GetOwnRoomObject, GetUserProfile, LocalizeText, RoomWidgetUpdateChatInputContentEvent, SendMessageComposer } from '../../../../../api';
+import { AvatarInfoUser, CreateLinkEvent, DispatchUiEvent, GetOwnRoomObject, GetUserProfile, LocalizeText, RoomWidgetUpdateChatInputContentEvent, SendMessageComposer } from '../../../../../api';
 import { useFriends, useSessionInfo } from '../../../../../hooks';
 import { ContextMenuHeaderView } from '../../context-menu/ContextMenuHeaderView';
 import { ContextMenuListItemView } from '../../context-menu/ContextMenuListItemView';
@@ -181,10 +181,6 @@ export const AvatarInfoWidgetAvatarView: FC<AvatarInfoWidgetAvatarViewProps> = p
                                                 <FaChevronRight className="right fa-icon" />
                                                 {LocalizeText('infostand.button.police')}
                                             </ContextMenuListItemView>
-                                            <ContextMenuListItemView onClick={() => processAction('view_police_arrest')}>
-                                                <FaChevronRight className="right fa-icon" />
-                                                {LocalizeText('infostand.button.police_arrest')}
-                                            </ContextMenuListItemView>
                                         </>
                                     )
                                 }
@@ -267,7 +263,7 @@ export const AvatarInfoWidgetAvatarView: FC<AvatarInfoWidgetAvatarViewProps> = p
                                 {
                                     roleplayStats.isCuffed && !roleplayStats.escortedByUserID && (
                                         <ContextMenuListItemView onClick={() => processAction('police_escort')}>
-                                            {LocalizeText('infostand.button.police_escort')}
+                                            {LocalizeText('infostand.button.police_start_escort')}
                                         </ContextMenuListItemView>
                                     )
                                 }

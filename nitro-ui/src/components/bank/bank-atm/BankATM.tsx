@@ -70,14 +70,8 @@ export function BankATM() {
                         <Text bold fontSize={5}>Bank account:</Text>
                         <Text fontSize={4}>${Number(bankInfo.checkingBalance).toLocaleString()}</Text>
                     </Column>
-                    <Column center size={4} overflow="auto">
-                        <Text bold fontSize={5}>Debit card:</Text>
-                        <Text fontSize={4}>${Number(bankInfo.debitBalance).toLocaleString()}</Text>
-                    </Column>
                 </Grid>
-                <br />
                 <hr />
-                <br />
                 <Grid fullHeight={false}>
                     <Column center size={12}>
                         <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>

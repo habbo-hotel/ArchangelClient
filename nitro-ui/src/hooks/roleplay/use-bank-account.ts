@@ -8,7 +8,6 @@ export function useBankAccount(corpID: number, userID: string): BankAccountData 
         corpID: 0,
         userID: 0,
         checkingBalance: 0,
-        debitBalance: 0,
         createdAt: 0,
         updatedAt: 0,
     });

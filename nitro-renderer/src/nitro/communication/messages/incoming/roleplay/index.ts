@@ -1,6 +1,7 @@
 export * from './bank/BankAccountInfoEvent';
 export * from './bank/BankListEvent';
 export * from './bank/BankOpenATMEvent';
+export * from './bank/BankOpenComputerEvent'
 export * from './billing/BillingInvoiceQueryEvent';
 export * from './combat/MyWeaponListEvent';
 export * from './corp/CorpInfoQueryEvent';

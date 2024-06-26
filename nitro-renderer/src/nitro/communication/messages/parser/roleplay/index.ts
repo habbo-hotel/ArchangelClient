@@ -1,6 +1,7 @@
 export * from './bank/BankAccountInfoEventParser';
 export * from './bank/BankListEventParser';
 export * from './bank/BankOpenATMEventParser';
+export * from './bank/BankOpenComputerEventParser';
 export * from './billing/BillingInvoiceQueryEventParser';
 export * from './combat/CombatDelayParser';
 export * from './combat/MyWeaponListParser';

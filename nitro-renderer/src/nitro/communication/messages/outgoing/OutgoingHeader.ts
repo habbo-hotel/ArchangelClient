@@ -539,4 +539,6 @@ export class OutgoingHeader {
     public static BANK_CONNECT_ATM = 8035;
 
     public static BANK_LIST = 8036;
+
+    public static BANK_CONNECT_COMPUTER = 8037;
 }

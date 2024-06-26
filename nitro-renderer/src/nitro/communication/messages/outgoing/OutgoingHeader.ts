@@ -534,7 +534,9 @@ export class OutgoingHeader {
 
     public static BANK_ACCOUNT_QUERY = 8033;
 
-    public static BANK_ACCOUNT_TRANSFER = 8033;
-
     public static BANK_ACCOUNT_WITHDRAW = 8034;
+
+    public static BANK_CONNECT_ATM = 8035;
+
+    public static BANK_LIST = 8036;
 }

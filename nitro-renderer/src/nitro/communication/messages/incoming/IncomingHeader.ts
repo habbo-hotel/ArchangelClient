@@ -484,4 +484,5 @@ export class IncomingHeader {
     public static TAXI_DISPATCHED = 9012;
     public static BANK_ACCOUNT_INFO = 9013;
     public static BANK_OPEN_ATM = 9014;
+    public static BANK_LIST = 9015;
 }

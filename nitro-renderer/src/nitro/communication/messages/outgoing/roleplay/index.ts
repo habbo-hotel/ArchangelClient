@@ -4,6 +4,8 @@ export * from './bank/BankAccountOpenComposer';
 export * from './bank/BankAccountQueryComposer';
 export * from './bank/BankAccountTransferDebitComposer';
 export * from './bank/BankAccountWithdrawComposer'
+export * from './bank/BankConnectATMComposer';
+export * from './bank/BankListComposer';
 export * from './billing/PayBillComposer';
 export * from './combat/AttackUserComposer';
 export * from './combat/CombatDelayComposer';

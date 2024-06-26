@@ -25,6 +25,7 @@ import { LeftSideView } from '../left-side/LeftSideView';
 import { CorpTools } from '../corp-tools/CorpTools';
 import { Billing } from '../billing/Billing';
 import { InventoryView } from '../inventory/InventoryView';
+import { Bank } from '../bank/Bank';
 
 export function MainView() {
 
@@ -58,6 +59,7 @@ export function MainView() {
             <FloorplanEditorView />
             <CorpTools />
             <Billing />
+            <Bank />
         </Base>
     );
 }

@@ -15,18 +15,22 @@ export function BankATM() {
         setATMData({ itemID: event.getParser().itemID, corpID: event.getParser().corpID })
     });
 
+    function onClose() {
+        setIsVisible(false);
+    }
+
     if (!isVisible || !atmData) {
         return null;
     }
 
     return (
         <NitroCardView uniqueKey="bankATM" className="nitro-inventory">
-            <NitroCardHeaderView headerText="ATM" onCloseClick={() => setIsVisible(false)} />
+            <NitroCardHeaderView headerText="ATM" onCloseClick={onClose} />
             <NitroCardContentView>
                 {
                     atmData.corpID
-                        ? <ManageAccount bankCorpID={atmData.corpID} />
-                        : <SetupATM itemID={atmData.itemID} onClose={() => setIsVisible(false)} />
+                        ? <ManageAccount bankCorpID={atmData.corpID} onClose={onClose} />
+                        : <SetupATM itemID={atmData.itemID} onClose={onClose} />
                 }
             </NitroCardContentView>
         </NitroCardView >

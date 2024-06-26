@@ -6,6 +6,9 @@ import { CorpBadge } from "../../../roleplay-stats/corp-badge/CorpBadge";
 import { Button } from "react-bootstrap";
 import { useRoleplayStats } from "../../../../hooks/roleplay/use-rp-stats";
 import { useBankAccount } from "../../../../hooks/roleplay/use-bank-account";
+import { BankAccountWithdraw } from "../../../../api/roleplay/bank/BankAccountWithdraw";
+import { BankAccountDeposit } from "../../../../api/roleplay/bank/BankAccountDeposit";
+import { useCorpData } from "../../../../hooks/roleplay/use-corp-data";
 
 enum ATMMode {
     WITHDRAW = "WITHDRAW",
@@ -14,24 +17,28 @@ enum ATMMode {
 
 export interface ManageAccountProps {
     bankCorpID: number;
+    onClose(): void;
 }
 
-export function ManageAccount({ bankCorpID }: ManageAccountProps) {
+export function ManageAccount({ bankCorpID, onClose }: ManageAccountProps) {
     const { userInfo } = useSessionInfo();
     const rpStats = useRoleplayStats(userInfo?.userId)
     const [mode, setMode] = useState(null);
     const [amount, setAmount] = useState(0);
+    const corpInfo = useCorpData(bankCorpID);
     const bankInfo = useBankAccount(bankCorpID, userInfo?.username);
     const [maxAmount, btnLabel, btnAction]: [number, string, () => void] = mode === ATMMode.DEPOSIT
         ? [rpStats.cashBalance, 'Deposit', onDeposit]
         : [bankInfo.checkingBalance, 'Withdraw', onWithdraw]
 
     function onWithdraw() {
-
+        BankAccountWithdraw(bankCorpID, amount);
+        onClose();
     }
 
     function onDeposit() {
-
+        BankAccountDeposit(bankCorpID, amount);
+        onClose();
     }
 
     useEffect(() => {
@@ -41,8 +48,8 @@ export function ManageAccount({ bankCorpID }: ManageAccountProps) {
     return (
         <>
             <div style={{ display: 'flex', flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                <CorpBadge corpID={2} />
-                <Text bold fontSize={4}>Bank of Bobba</Text>
+                <CorpBadge corpID={bankCorpID} />
+                <Text bold fontSize={4}>{corpInfo.name}</Text>
             </div>
             <Grid fullHeight={false}>
                 <Column center size={6} overflow="hidden">
@@ -62,12 +69,12 @@ export function ManageAccount({ bankCorpID }: ManageAccountProps) {
                                 <Text bold>What do you want to do?</Text>
                             </Column>
                             <Column center size={6}>
-                                <Button style={{ width: '100%' }} size="lg" variant="outline-danger" onClick={() => setMode(ATMMode.WITHDRAW)}>
+                                <Button style={{ width: '100%' }} size="lg" variant="danger" onClick={() => setMode(ATMMode.WITHDRAW)}>
                                     Withdraw
                                 </Button>
                             </Column>
                             <Column center size={6}>
-                                <Button style={{ width: '100%' }} size="lg" variant="outline-success" onClick={() => setMode(ATMMode.DEPOSIT)}>
+                                <Button style={{ width: '100%' }} size="lg" variant="success" onClick={() => setMode(ATMMode.DEPOSIT)}>
                                     Deposit
                                 </Button>
                             </Column>
@@ -79,7 +86,7 @@ export function ManageAccount({ bankCorpID }: ManageAccountProps) {
                         <Column center size={12}>
                             <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
                                 <Text fontSize={4}>${Number(amount).toLocaleString()}</Text>
-                                <input type="range" min={0} max={maxAmount} value={amount} onChange={e => console.log(e.currentTarget.value as any)} style={{ width: '100%', height: 30, marginTop: 4 }} />
+                                <input type="range" min={0} max={maxAmount} value={amount} onChange={e => setAmount(Number(e.currentTarget.value))} style={{ width: '100%', height: 30, marginTop: 4 }} />
                             </div>
                             <div style={{ display: 'flex', gap: 4, alignItems: 'center', justifyContent: 'center' }}>
                                 <Text underline style={{ cursor: 'pointer' }} onClick={() => setMode(null)}>Cancel</Text>

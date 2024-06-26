@@ -14,11 +14,12 @@ enum ATMMode {
 
 export function BankATM() {
     const { userInfo } = useSessionInfo();
+    const [bankCorpID, setBankCorpID] = useState(0);
     const [isVisible, setIsVisible] = useState(false);
     const rpStats = useRoleplayStats(userInfo?.userId)
     const [mode, setMode] = useState(ATMMode.WITHDRAW);
     const [amount, setAmount] = useState(0);
-    const bankInfo = useBankAccount(rpStats?.corporationID, userInfo?.username)
+    const bankInfo = useBankAccount(bankCorpID, userInfo?.username)
 
     useEffect(() => {
         setAmount(0);
@@ -26,6 +27,10 @@ export function BankATM() {
 
     useMessageEvent<BankOpenATMEvent>(BankOpenATMEvent, () => {
         setIsVisible(true);
+    });
+
+    useMessageEvent<BankOpenATMEvent>(BankOpenATMEvent, event => {
+        setBankCorpID(event.getParser().corpID);
     });
 
     function onWithdraw() {

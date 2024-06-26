@@ -7,6 +7,12 @@ import { CorpInfoQueryEvent } from './messages/incoming/roleplay/corp/CorpInfoQu
 import { GangInfoQueryEvent } from './messages/incoming/roleplay/gang/GangInfoQueryEvent';
 import { TaxiDispatchedEvent } from './messages/incoming/roleplay/taxi/TaxiDispatchedEvent';
 import { UserOpenWardrobeEvent } from './messages/incoming/roleplay/user/UserOpenWardrobeEvent';
+import { BankAccountCloseComposer } from './messages/outgoing/roleplay/bank/BankAccountCloseComposer';
+import { BankAccountDepositComposer } from './messages/outgoing/roleplay/bank/BankAccountDepositComposer';
+import { BankAccountOpenComposer } from './messages/outgoing/roleplay/bank/BankAccountOpenComposer';
+import { BankAccountQueryComposer } from './messages/outgoing/roleplay/bank/BankAccountQueryComposer';
+import { BankAccountTransferDebitComposer } from './messages/outgoing/roleplay/bank/BankAccountTransferDebitComposer';
+import { BankAccountWithdrawComposer } from './messages/outgoing/roleplay/bank/BankAccountWithdrawComposer';
 import { ListMyWeaponsComposer } from './messages/outgoing/roleplay/combat/ListMyWeaponsComposer';
 import { CorpStartWorkComposer } from './messages/outgoing/roleplay/corp/CorpStartWorkComposer';
 import { CorpStopWorkComposer } from './messages/outgoing/roleplay/corp/CorpStopWorkComposer';
@@ -1220,7 +1226,12 @@ export class NitroMessages implements IMessageConfiguration {
         this._composers.set(OutgoingHeader.LIST_MY_WEAPONS, ListMyWeaponsComposer);
         this._composers.set(OutgoingHeader.PAY_BILL, PayBillComposer);
         this._composers.set(OutgoingHeader.TAXI_FEE_QUERY, TaxiFeeQueryComposer);
-        this._composers.set(OutgoingHeader.CALL_TAXI, CallTaxiComposer);
+        this._composers.set(OutgoingHeader.BANK_ACCOUNT_CLOSE, BankAccountCloseComposer);
+        this._composers.set(OutgoingHeader.BANK_ACCOUNT_DEPOSIT, BankAccountDepositComposer);
+        this._composers.set(OutgoingHeader.BANK_ACCOUNT_OPEN, BankAccountOpenComposer);
+        this._composers.set(OutgoingHeader.BANK_ACCOUNT_QUERY, BankAccountQueryComposer);
+        this._composers.set(OutgoingHeader.BANK_ACCOUNT_TRANSFER, BankAccountTransferDebitComposer);
+        this._composers.set(OutgoingHeader.BANK_ACCOUNT_WITHDRAW, BankAccountWithdrawComposer);
     }
 
     public get events(): Map<number, Function> {

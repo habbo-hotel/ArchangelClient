@@ -42,8 +42,11 @@ export const AvatarInfoWidgetAvatarView: FC<AvatarInfoWidgetAvatarViewProps> = p
     const [mode, setMode] = useState(MODE_NORMAL);
     const { canRequestFriend = null } = useFriends();
     const crimeList = useCrimes();
-    const corpData = useCorpData(roleplayStats.corporationID);
-    const corpJobPosition = useCorpPositionData(roleplayStats.corporationID, roleplayStats.corporationPositionID);
+
+    const myRoleplayStats = useRoleplayStats(sessionInfo?.userId)
+    const myCorpData = useCorpData(myRoleplayStats.corporationID);
+
+    console.log(myCorpData)
 
     const canGiveHandItem = useMemo(() => {
         let flag = false;
@@ -185,7 +188,7 @@ export const AvatarInfoWidgetAvatarView: FC<AvatarInfoWidgetAvatarViewProps> = p
                                     )
                                 }
                                 {
-                                    sessionRoleplayStats.isWorking && corpData.tags.includes(CorpType.POLICE) && (
+                                    sessionRoleplayStats.isWorking && myCorpData.tags.includes(CorpType.POLICE) && (
                                         <ContextMenuListItemView onClick={() => processAction('view_police')}>
                                             <FaChevronRight className="right fa-icon" />
                                             {LocalizeText('infostand.button.police')}

@@ -525,4 +525,16 @@ export class OutgoingHeader {
     public static TAXI_FEE_QUERY = 8028;
 
     public static CALL_TAXI = 8029;
+
+    public static BANK_ACCOUNT_CLOSE = 8030;
+
+    public static BANK_ACCOUNT_DEPOSIT = 8031;
+
+    public static BANK_ACCOUNT_OPEN = 8032;
+
+    public static BANK_ACCOUNT_QUERY = 8033;
+
+    public static BANK_ACCOUNT_TRANSFER = 8033;
+
+    public static BANK_ACCOUNT_WITHDRAW = 8034;
 }

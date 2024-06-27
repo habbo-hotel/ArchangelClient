@@ -32,6 +32,7 @@ export * from './police/PoliceArrestComposer';
 export * from './police/PoliceCuffComposer';
 export * from './police/PoliceEscortComposer';
 export * from './police/PoliceStunComposer';
+export * from './room/RoomListUsersComposer';
 export * from './taxi/TaxiFeeQueryComposer';
 export * from './taxi/CallTaxiComposer';
 export * from './user/UserRoleplayStatsQueryComposer';

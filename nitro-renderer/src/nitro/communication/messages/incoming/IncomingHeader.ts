@@ -486,4 +486,5 @@ export class IncomingHeader {
     public static BANK_OPEN_ATM = 9014;
     public static BANK_LIST = 9015;
     public static BANK_OPEN_COMPUTER = 9016;
+    public static ROOM_LIST_USERS = 9017;
 }

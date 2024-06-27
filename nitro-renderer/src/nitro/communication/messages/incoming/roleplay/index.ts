@@ -10,4 +10,5 @@ export * from './corp/CorpPositionInfoQueryEvent';
 export * from './taxi/TaxiFeeQueryEvent';
 export * from './gang/TimeOfDayEvent';
 export * from './gang/GangInfoQueryEvent';
+export * from './room/RoomListUsersEvent';
 export * from './user/UserRoleplayStatsChangeEvent';

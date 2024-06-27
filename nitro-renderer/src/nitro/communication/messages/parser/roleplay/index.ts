@@ -10,6 +10,7 @@ export * from './corp/CorpInfoParser';
 export * from './corp/CorpPositionInfoParser';
 export * from './game/TimeOfDayEventParser';
 export * from './gang/GangInfoParser';
+export * from './room/RoomListUsersEventParser';
 export * from './taxi/TaxiDispatchedEventParser';
 export * from './taxi/TaxiFeeEventParser'
 export * from './user/UserRoleplayStatsChangeParser';

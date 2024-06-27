@@ -5,7 +5,6 @@ import { NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../
 import { SetupATM } from './views/SetupATM';
 import { ManageAccount } from './views/ManageAccount';
 
-
 export function BankATM() {
     const [isVisible, setIsVisible] = useState(false)
     const [atmData, setATMData] = useState<{ itemID: number; corpID: number }>();

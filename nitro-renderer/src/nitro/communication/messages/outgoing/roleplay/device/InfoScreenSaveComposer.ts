@@ -3,8 +3,8 @@ import { IMessageComposer } from "../../../../../../api";
 export class InfoScreenSaveComposer implements IMessageComposer<ConstructorParameters<typeof InfoScreenSaveComposer>> {
     private _data: ConstructorParameters<typeof InfoScreenSaveComposer>;
 
-    constructor() {
-        this._data = [];
+    constructor(itemID: number, content: string) {
+        this._data = [itemID, content];
     }
 
     public getMessageArray() {

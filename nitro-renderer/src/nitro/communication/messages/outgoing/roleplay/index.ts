@@ -21,6 +21,7 @@ export * from './corp/CorpPositionInfoQueryComposer';
 export * from './corp/CorpPromoteUserComposer';
 export * from './corp/CorpStartWorkComposer';
 export * from './corp/CorpStopWorkComposer';
+export * from './device/InfoScreenSaveComposer';
 export * from './game/TimeOfDayQueryComposer';
 export * from './gang/GangDeclineInviteComposer';
 export * from './gang/GangDisbandComposer';

@@ -543,4 +543,6 @@ export class OutgoingHeader {
     public static BANK_CONNECT_COMPUTER = 8037;
 
     public static ROOM_LIST_USERS = 8038;
+
+    public static INFO_SCREEN_SAVE_COMPOSER = 8039;
 }

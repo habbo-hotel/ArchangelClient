@@ -1,7 +1,6 @@
 import { GangDeclineInviteComposer } from '@nitro-rp/renderer';
-import { SendMessageComposer } from '../../../';
+import { SendMessageComposer } from '../../';
 
-export function GangDeclineInvite(gangName: string): void
-{
+export function GangDeclineInvite(gangName: string): void {
     SendMessageComposer(new GangDeclineInviteComposer(gangName));
 }

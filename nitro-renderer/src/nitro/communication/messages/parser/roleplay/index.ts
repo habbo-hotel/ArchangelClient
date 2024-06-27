@@ -8,6 +8,7 @@ export * from './combat/MyWeaponListParser';
 export * from './corp/CashRegisterParser';
 export * from './corp/CorpInfoParser';
 export * from './corp/CorpPositionInfoParser';
+export * from './device/InfoScreenViewEventParser';
 export * from './game/TimeOfDayEventParser';
 export * from './gang/GangInfoParser';
 export * from './room/RoomListUsersEventParser';

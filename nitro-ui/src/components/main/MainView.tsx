@@ -26,6 +26,7 @@ import { CorpTools } from '../corp-tools/CorpTools';
 import { Billing } from '../billing/Billing';
 import { InventoryView } from '../inventory/InventoryView';
 import { Bank } from '../bank/Bank';
+import { Devices } from '../devices/Devices';
 
 export function MainView() {
 
@@ -60,6 +61,7 @@ export function MainView() {
             <CorpTools />
             <Billing />
             <Bank />
+            <Devices />
         </Base>
     );
 }

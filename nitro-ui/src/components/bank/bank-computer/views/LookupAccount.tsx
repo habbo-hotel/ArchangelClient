@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react";
-import { useSessionInfo } from "../../../../hooks";
-import { FaInfoCircle } from "react-icons/fa";
-import { Column, Grid, Text } from "../../../../common";
+import { useState } from "react";
+import { Column, Grid, LayoutAvatarImageView, Text } from "../../../../common";
 import { CorpBadge } from "../../../roleplay-stats/corp-badge/CorpBadge";
-import { Button } from "react-bootstrap";
-import { useRoleplayStats } from "../../../../hooks/roleplay/use-rp-stats";
-import { useBankAccount } from "../../../../hooks/roleplay/use-bank-account";
 import { useCorpData } from "../../../../hooks/roleplay/use-corp-data";
 import { UserSelect } from "../../components/user-select/UserSelect";
+import { RoomUsersListRow } from "@nitro-rp/renderer";
+import { useBankAccount } from "../../../../hooks/roleplay/use-bank-account";
+import { Button } from "react-bootstrap";
+import { BankAccountClose } from "../../../../api/roleplay/bank/BankAccountClose";
+import { useRoleplayStats } from "../../../../hooks/roleplay/use-rp-stats";
+import { BankAccountOpen } from "../../../../api/roleplay/bank/BankAccountOpen";
 
 enum ATMMode {
     WITHDRAW = "WITHDRAW",
@@ -20,28 +21,32 @@ export interface LookupAccountProps {
 }
 
 export function LookupAccount({ bankCorpID, onClose }: LookupAccountProps) {
-    const { userInfo } = useSessionInfo();
-    const rpStats = useRoleplayStats(userInfo?.userId)
-    const [mode, setMode] = useState(null);
-    const [amount, setAmount] = useState(0);
+    const [confirm, setConfirm] = useState(false);
     const corpInfo = useCorpData(bankCorpID);
-    const bankInfo = useBankAccount(bankCorpID, userInfo?.username);
-    const [maxAmount, btnLabel, btnAction]: [number, string, () => void] = mode === ATMMode.DEPOSIT
-        ? [rpStats.cashBalance, 'Deposit', onDeposit]
-        : [bankInfo.checkingBalance, 'Withdraw', onWithdraw]
+    const [user, setUser] = useState<RoomUsersListRow>();
+    const rpStats = useRoleplayStats(user?.id);
+    const userBankAccount = useBankAccount(bankCorpID, user?.username);
 
-
-    function onWithdraw() {
+    function onCloseAccount() {
+        if (!user) {
+            return;
+        }
+        if (!confirm) {
+            setConfirm(true);
+            return;
+        }
+        console.log(user.username)
+        BankAccountClose(user.username);
         onClose();
     }
 
-    function onDeposit() {
+    function onOpenAccount() {
+        if (!user || !!userBankAccount.createdAt) {
+            return;
+        }
+        BankAccountOpen(user.username);
         onClose();
     }
-
-    useEffect(() => {
-        setAmount(0);
-    }, [mode]);
 
     return (
         <>
@@ -49,10 +54,46 @@ export function LookupAccount({ bankCorpID, onClose }: LookupAccountProps) {
                 <CorpBadge corpID={bankCorpID} />
                 <Text bold fontSize={4}>{corpInfo.name}</Text>
             </div>
-            <div style={{ display: 'flex', marginTop: 40, flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-                <Text bold fontSize={4}>Lookup account</Text>
-                <UserSelect />
-            </div>
+            <Grid fullHeight={false}>
+                <Column size={6} justifyContent="center">
+                    <Text bold fontSize={4}>Lookup account</Text>
+                    <UserSelect userID={user?.id} onChange={setUser} />
+                </Column>
+                <Column size={6} justifyContent="center">
+                    {
+                        user && (
+                            <Grid fullHeight={false}>
+                                <Column size={4} justifyContent="center">
+                                    {rpStats.figure && <LayoutAvatarImageView headOnly figure={rpStats.figure} direction={2} style={{ height: 80 }} />}
+                                </Column>
+                                <Column size={8} justifyContent="center">
+                                    {
+                                        userBankAccount.createdAt
+                                            ? (
+                                                <>
+                                                    <Text bold fontSize={5}>Balance</Text>
+                                                    <Text fontSize={4}>${Number(userBankAccount.checkingBalance).toLocaleString()}</Text>
+                                                    <Button style={{ width: '100%' }} type="button" variant="danger" onClick={onCloseAccount}>
+                                                        {!confirm ? 'Close Account' : 'Are you sure?'}
+                                                    </Button>
+                                                </>
+                                            )
+                                            : (
+                                                <>
+                                                    <Text fontSize={4}>No account found.</Text>
+                                                    <Button style={{ width: '100%' }} type="button" variant="success" onClick={onOpenAccount}>
+                                                        Open Account
+                                                    </Button>
+                                                </>
+                                            )
+                                    }
+                                </Column>
+                            </Grid >
+                        )
+                    }
+                </Column>
+            </Grid >
+
         </>
     )
 }

@@ -28,7 +28,9 @@ export function UserSelect({ userID, onChange }: UserSelectProps) {
     }
 
     return (
-        <select style={{ width: '100%', padding: 14 }} value={userID} onChange={onChangeUser}>
+        <select style={{ width: '100%', padding: 14 }} value={userID} onChange={onChangeUser}>            {
+            !userID && <option selected disabled>Select a user</option>
+        }
             {
                 users.map(user => (
                     <option key={`user_${user.id}`} value={user.id}>

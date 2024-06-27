@@ -13,6 +13,13 @@ export function useBankAccount(corpID: number, userID: string): BankAccountData 
     });
 
     useEffect(() => {
+        setBankData({
+            corpID: 0,
+            userID: 0,
+            checkingBalance: 0,
+            createdAt: 0,
+            updatedAt: 0,
+        })
         BankAccountQuery(corpID, userID);
     }, [corpID, userID]);
 

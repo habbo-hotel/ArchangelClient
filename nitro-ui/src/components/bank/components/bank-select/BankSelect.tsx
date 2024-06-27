@@ -30,6 +30,9 @@ export function BankSelect({ bankID, onChange }: BankSelectProps) {
     return (
         <select style={{ width: '100%', padding: 14 }} value={bankID} onChange={onChangeBank}>
             {
+                !bankID && <option selected disabled>Select a bank</option>
+            }
+            {
                 banks.map(bank => (
                     <option key={`bank_${bank.corpID}`} value={bank.corpID}>
                         {bank.corpName}

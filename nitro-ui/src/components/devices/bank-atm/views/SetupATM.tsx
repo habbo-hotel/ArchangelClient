@@ -1,7 +1,7 @@
 import { Button } from "react-bootstrap";
 import { Column, Grid, Text } from "../../../../common";
 import { CorpBadge } from "../../../roleplay-stats/corp-badge/CorpBadge";
-import { BankSelect } from "../../components/bank-select/BankSelect";
+import { BankSelect } from "../../../roleplay/bank-select/BankSelect";
 import { useState } from "react";
 import { BankListRow } from "@nitro-rp/renderer";
 import { BankConnectATM } from "../../../../api/roleplay/bank/BankConnectATM";

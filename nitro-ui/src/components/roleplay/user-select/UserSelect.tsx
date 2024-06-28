@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { useMessageEvent } from "../../../../hooks";
+import { useMessageEvent } from "../../../hooks";
 import { RoomListUsersEvent, RoomUsersListRow } from "@nitro-rp/renderer";
-import { RoomListUsers } from "../../../../api/roleplay/room/RoomListUsers";
+import { RoomListUsers } from "../../../api/roleplay/room/RoomListUsers";
 
 export interface UserSelectProps {
     userID?: number;

@@ -317,24 +317,12 @@ const useNavigatorState = () => {
             return;
         }
 
-        let forwardType = -1;
-        let forwardId = -1;
 
         if ((GetConfiguration<string>('friend.id') !== undefined) && (parseInt(GetConfiguration<string>('friend.id')) > 0)) {
-            forwardType = 0;
             SendMessageComposer(new FollowFriendMessageComposer(parseInt(GetConfiguration<string>('friend.id'))));
         }
 
-        if ((GetConfiguration<number>('forward.type') !== undefined) && (GetConfiguration<number>('forward.id') !== undefined)) {
-            forwardType = parseInt(GetConfiguration<string>('forward.type'));
-            forwardId = parseInt(GetConfiguration<string>('forward.id'))
-        }
-
-        if (forwardType === 2) {
-            TryVisitRoom(forwardId);
-        }
-
-        else if ((forwardType === -1) && (parser.roomIdToEnter > 0)) {
+        else if (parser.roomIdToEnter > 0) {
             CreateLinkEvent('navigator/close');
 
             if (parser.roomIdToEnter !== parser.homeRoomId) {

@@ -32,7 +32,7 @@ export function UserInventory({ roomSession, roomPreviewer }: UserInventoryProps
             label: 'Ammo',
             children: <p>Ammo</p>
         },
-    ], [roomSession, roomPreviewer]);
+    ], [roomSession, roomPre]);
     const [currentTab, setCurrentTab] = useState<Tab>(inventoryTabs[0]);
 
     return (

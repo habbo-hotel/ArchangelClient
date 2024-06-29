@@ -6,6 +6,7 @@ export enum LicenseType {
     FISHING = 3,
     MINING = 4,
     WEAPON = 5,
+    LUMBERJACK = 6
 }
 
 export interface LicenseStatusData {

@@ -1,4 +1,4 @@
-import { LicenseComputerData, LicenseOpenComputerEvent } from "@nitro-rp/renderer";
+import { LicenseComputerData, LicenseOpenComputerEvent, LicenseType } from "@nitro-rp/renderer";
 import { useMessageEvent } from "../../../hooks";
 import { useState } from "react";
 import { NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from "../../../common";
@@ -13,6 +13,14 @@ export function LicenseComputer() {
         setIsVisible(true);
         setComputerData(event.getParser().data);
     });
+
+    function onConnected(corpID: number, licenseType: LicenseType) {
+        setComputerData(_ => ({
+            ..._,
+            corpID,
+            licenseType,
+        }));
+    }
 
     function onClose() {
         setIsVisible(false);
@@ -29,7 +37,7 @@ export function LicenseComputer() {
                 {
                     computerData.corpID
                         ? <LookupLicense licenseType={computerData.licenseType} corpID={computerData.corpID} onClose={onClose} />
-                        : <SetupComputer itemID={computerData.itemID} onClose={onClose} />
+                        : <SetupComputer itemID={computerData.itemID} onConnected={onConnected} />
                 }
             </NitroCardContentView>
         </NitroCardView >

@@ -2,16 +2,16 @@ import { Button } from "react-bootstrap";
 import { Column, Grid, Text } from "../../../../common";
 import { CorpBadge } from "../../../roleplay-stats/corp-badge/CorpBadge";
 import { useState } from "react";
-import { LicenseAgencyData } from "@nitro-rp/renderer";
+import { LicenseAgencyData, LicenseType } from "@nitro-rp/renderer";
 import { LicenseAgencySelect } from "../../../roleplay/LicenseAgencySelect";
 import { LicenseConnectComputer } from "../../../../api/roleplay/license/LicenseConnectComputer";
 
 export interface SetupComputerProps {
     itemID: number;
-    onClose(): void;
+    onConnected(corpID: number, licenseType: LicenseType): void;
 }
 
-export function SetupComputer({ itemID, onClose }: SetupComputerProps) {
+export function SetupComputer({ itemID, onConnected }: SetupComputerProps) {
     const [licenseAgency, setLicenseAgency] = useState<LicenseAgencyData>();
 
     function onConnect() {
@@ -19,7 +19,7 @@ export function SetupComputer({ itemID, onClose }: SetupComputerProps) {
             return;
         }
         LicenseConnectComputer(itemID, licenseAgency.corpID);
-        onClose();
+        onConnected(licenseAgency.corpID, licenseAgency.licenseType);
     }
 
     return (

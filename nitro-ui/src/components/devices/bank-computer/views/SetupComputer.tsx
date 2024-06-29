@@ -8,10 +8,10 @@ import { BankSelect } from "../../../roleplay/BankSelect";
 
 export interface SetupComputerProps {
     itemID: number;
-    onClose(): void;
+    onConnected(corpID: number): void;
 }
 
-export function SetupComputer({ itemID, onClose }: SetupComputerProps) {
+export function SetupComputer({ itemID, onConnected }: SetupComputerProps) {
     const [bank, setBank] = useState<BankListRow>();
 
     function onConnect() {
@@ -19,7 +19,7 @@ export function SetupComputer({ itemID, onClose }: SetupComputerProps) {
             return;
         }
         BankConnectComputer(itemID, bank.corpID);
-        onClose();
+        onConnected(bank.corpID);
     }
 
     return (

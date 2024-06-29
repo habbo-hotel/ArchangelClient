@@ -551,4 +551,6 @@ export class OutgoingHeader {
     public static LICENSE_STATUS_QUERY_COMPOSER = 8041;
 
     public static LICENSE_AGENCY_LIST_COMPOSER = 8042;
+
+    public static LICENSE_OFFER_COMPOSER = 8043;
 }

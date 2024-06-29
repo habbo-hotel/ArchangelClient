@@ -8,10 +8,10 @@ import { BankConnectATM } from "../../../../api/roleplay/bank/BankConnectATM";
 
 export interface SetupATMProps {
     itemID: number;
-    onClose(): void;
+    onConnected(corpID: number): void;
 }
 
-export function SetupATM({ itemID, onClose }: SetupATMProps) {
+export function SetupATM({ itemID, onConnected }: SetupATMProps) {
     const [bank, setBank] = useState<BankListRow>();
 
     function onConnect() {
@@ -19,7 +19,7 @@ export function SetupATM({ itemID, onClose }: SetupATMProps) {
             return;
         }
         BankConnectATM(itemID, bank.corpID);
-        onClose();
+        onConnected(bank.corpID);
     }
 
     return (

@@ -7,7 +7,7 @@ import { Button } from "react-bootstrap";
 import { useRoleplayStats } from "../../../../hooks/roleplay/use-rp-stats";
 import { useLicenseStatus } from "../../../../hooks/roleplay/use-license-status";
 import { UserSelect } from "../../../roleplay/UserSelect";
-
+import { LicenseOffer } from "../../../../api/roleplay/license/LicenseOffer";
 
 export interface LookupLicenseProps {
     corpID: number;
@@ -15,15 +15,20 @@ export interface LookupLicenseProps {
     onClose(): void;
 }
 
+function capitalizeFirstLetter(str: string) {
+    return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
 export function LookupLicense({ corpID, licenseType, onClose }: LookupLicenseProps) {
-    const [confirm, setConfirm] = useState(false);
     const corpInfo = useCorpData(corpID);
     const [user, setUser] = useState<RoomUsersListRow>();
     const rpStats = useRoleplayStats(user?.id);
     const userLicenseStatus = useLicenseStatus(licenseType, rpStats.userID)
 
     function onApplyForLicense() {
-        alert('oh yea do that');
+        if (!user) return;
+        LicenseOffer(user.username, licenseType);
+        onClose();
     }
 
     const [statusColor, statusText] = userLicenseStatus.licenseIsValid
@@ -36,20 +41,20 @@ export function LookupLicense({ corpID, licenseType, onClose }: LookupLicensePro
                 <CorpBadge corpID={corpID} />
                 <Text bold fontSize={4}>{corpInfo.name}</Text>
             </div>
-            <Grid fullHeight={false}>
-                <Column size={6} justifyContent="center">
-                    <Text bold fontSize={4}>Lookup license</Text>
+            <Grid center fullHeight={false}>
+                <Column center size={6} justifyContent="center">
+                    <Text bold fontSize={4}>{capitalizeFirstLetter(LicenseType[licenseType])} License:</Text>
                     <UserSelect userID={user?.id} onChange={setUser} />
                 </Column>
-                <Column size={6} justifyContent="center">
+                <Column center size={6} justifyContent="center">
                     {
                         user && (
-                            <Grid fullHeight={false}>
-                                <Column size={4} justifyContent="center">
-                                    {rpStats.figure && <LayoutAvatarImageView headOnly figure={rpStats.figure} direction={2} style={{ height: 80 }} />}
+                            <Grid center fullHeight={false}>
+                                <Column center size={4} justifyContent="center" alignItems="center">
+                                    {rpStats.figure && <LayoutAvatarImageView figure={rpStats.figure} direction={2} style={{ height: 80 }} />}
                                 </Column>
-                                <Column size={8} justifyContent="center">
-                                    <Text bold fontSize={5}>License Status</Text>
+                                <Column center size={8} justifyContent="center">
+                                    <Text bold fontSize={5}>Valid License?</Text>
                                     <Text fontSize={4} style={{ color: statusColor }}>{statusText}</Text>
                                     {
                                         !userLicenseStatus.licenseIsValid && (

@@ -14,6 +14,13 @@ export function BankATM() {
         setATMData({ itemID: event.getParser().itemID, corpID: event.getParser().corpID })
     });
 
+    function onConnected(corpID: number) {
+        setATMData(_ => ({
+            ..._,
+            corpID,
+        }))
+    }
+
     function onClose() {
         setIsVisible(false);
     }
@@ -29,7 +36,7 @@ export function BankATM() {
                 {
                     atmData.corpID
                         ? <ManageAccount bankCorpID={atmData.corpID} onClose={onClose} />
-                        : <SetupATM itemID={atmData.itemID} onClose={onClose} />
+                        : <SetupATM itemID={atmData.itemID} onConnected={onConnected} />
                 }
             </NitroCardContentView>
         </NitroCardView >

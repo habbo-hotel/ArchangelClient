@@ -14,6 +14,13 @@ export function BankComputer() {
         setComputerData({ itemID: event.getParser().itemID, corpID: event.getParser().corpID })
     });
 
+    function onConnected(corpID: number) {
+        setComputerData(_ => ({
+            ..._,
+            corpID,
+        }))
+    }
+
     function onClose() {
         setIsVisible(false);
     }
@@ -29,7 +36,7 @@ export function BankComputer() {
                 {
                     computerData.corpID
                         ? <LookupAccount bankCorpID={computerData.corpID} onClose={onClose} />
-                        : <SetupComputer itemID={computerData.itemID} onClose={onClose} />
+                        : <SetupComputer itemID={computerData.itemID} onConnected={onConnected} />
                 }
             </NitroCardContentView>
         </NitroCardView >

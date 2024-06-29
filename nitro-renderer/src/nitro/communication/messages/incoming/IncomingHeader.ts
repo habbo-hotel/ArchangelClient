@@ -491,4 +491,5 @@ export class IncomingHeader {
     public static LICENSE_OPEN_COMPUTER = 9019;
     public static LICENSE_STATUS = 9020;
     public static LICENSE_AGENCY_LIST = 9021;
+    public static CORP_OPEN_INVENTORY = 9022;
 }

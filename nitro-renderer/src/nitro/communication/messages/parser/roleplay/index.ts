@@ -7,6 +7,7 @@ export * from './combat/CombatDelayParser';
 export * from './combat/MyWeaponListParser';
 export * from './corp/CashRegisterParser';
 export * from './corp/CorpInfoParser';
+export * from './corp/CorpOpenInventoryParser';
 export * from './corp/CorpPositionInfoParser';
 export * from './device/InfoScreenViewEventParser';
 export * from './game/TimeOfDayEventParser';

@@ -1,10 +1,10 @@
 import { Button } from "react-bootstrap";
 import { Column, Grid, Text } from "../../../../common";
 import { CorpBadge } from "../../../roleplay-stats/corp-badge/CorpBadge";
-import { BankSelect } from "../../../roleplay/bank-select/BankSelect";
 import { useState } from "react";
 import { BankListRow } from "@nitro-rp/renderer";
 import { BankConnectComputer } from "../../../../api/roleplay/bank/BankConnectComputer";
+import { BankSelect } from "../../../roleplay/BankSelect";
 
 export interface SetupComputerProps {
     itemID: number;

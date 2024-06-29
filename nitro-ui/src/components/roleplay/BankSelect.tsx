@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { BankListQuery } from "../../../api/roleplay/bank/BankListQuery";
+import { BankListQuery } from "../../api/roleplay/bank/BankListQuery";
 import { BankListEvent, BankListRow } from "@nitro-rp/renderer";
-import { useMessageEvent } from "../../../hooks";
+import { useMessageEvent } from "../../hooks";
 
 export interface BankSelectProps {
     bankID?: number;

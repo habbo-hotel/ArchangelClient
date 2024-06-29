@@ -11,5 +11,8 @@ export * from './device/InfoScreenViewEvent';
 export * from './taxi/TaxiFeeQueryEvent';
 export * from './gang/TimeOfDayEvent';
 export * from './gang/GangInfoQueryEvent';
+export * from './license/LicenseAgencyListEvent';
+export * from './license/LicenseOpenComputerEvent';
+export * from './license/LicenseStatusEvent';
 export * from './room/RoomListUsersEvent';
 export * from './user/UserRoleplayStatsChangeEvent';

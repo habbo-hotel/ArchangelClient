@@ -2,18 +2,13 @@ import { useState } from "react";
 import { Column, Grid, LayoutAvatarImageView, Text } from "../../../../common";
 import { CorpBadge } from "../../../roleplay-stats/corp-badge/CorpBadge";
 import { useCorpData } from "../../../../hooks/roleplay/use-corp-data";
-import { UserSelect } from "../../../roleplay/user-select/UserSelect";
+import { UserSelect } from "../../../roleplay/UserSelect";
 import { RoomUsersListRow } from "@nitro-rp/renderer";
 import { useBankAccount } from "../../../../hooks/roleplay/use-bank-account";
 import { Button } from "react-bootstrap";
 import { BankAccountClose } from "../../../../api/roleplay/bank/BankAccountClose";
 import { useRoleplayStats } from "../../../../hooks/roleplay/use-rp-stats";
 import { BankAccountOpen } from "../../../../api/roleplay/bank/BankAccountOpen";
-
-enum ATMMode {
-    WITHDRAW = "WITHDRAW",
-    DEPOSIT = "DEPOSIT"
-}
 
 export interface LookupAccountProps {
     bankCorpID: number;

@@ -1,40 +1,40 @@
 import { Button } from "react-bootstrap";
 import { Column, Grid, Text } from "../../../../common";
 import { CorpBadge } from "../../../roleplay-stats/corp-badge/CorpBadge";
-import { BankSelect } from "../../../roleplay/BankSelect";
 import { useState } from "react";
-import { BankListRow } from "@nitro-rp/renderer";
-import { BankConnectATM } from "../../../../api/roleplay/bank/BankConnectATM";
+import { LicenseAgencyData } from "@nitro-rp/renderer";
+import { LicenseAgencySelect } from "../../../roleplay/LicenseAgencySelect";
+import { LicenseConnectComputer } from "../../../../api/roleplay/license/LicenseConnectComputer";
 
-export interface SetupATMProps {
+export interface SetupComputerProps {
     itemID: number;
     onClose(): void;
 }
 
-export function SetupATM({ itemID, onClose }: SetupATMProps) {
-    const [bank, setBank] = useState<BankListRow>();
+export function SetupComputer({ itemID, onClose }: SetupComputerProps) {
+    const [licenseAgency, setLicenseAgency] = useState<LicenseAgencyData>();
 
     function onConnect() {
-        if (!bank) {
+        if (!licenseAgency) {
             return;
         }
-        BankConnectATM(itemID, bank.corpID);
+        LicenseConnectComputer(itemID, licenseAgency.corpID);
         onClose();
     }
 
     return (
         <Grid fullHeight={false}>
             <Column size={12}>
-                <Text bold fontSize={4}>Configure ATM</Text>
-                <Text fontSize={5}>This ATM has never been setup before.  Please connect it to a bank below.</Text>
+                <Text bold fontSize={4}>Configure Computer</Text>
+                <Text fontSize={5}>This Computer has never been setup before.  Please connect it to a bank below.</Text>
             </Column>
             <Column center size={6}>
                 <Grid fullHeight={false}>
                     <Column center size={2}>
-                        {bank?.corpID && <CorpBadge corpID={bank.corpID} />}
+                        {licenseAgency?.corpID && <CorpBadge corpID={licenseAgency.corpID} />}
                     </Column>
                     <Column size={10}>
-                        <BankSelect bankID={bank?.corpID} onChange={setBank} />
+                        <LicenseAgencySelect corpID={licenseAgency?.corpID} onChange={setLicenseAgency} />
                     </Column>
                 </Grid>
             </Column>

@@ -545,4 +545,10 @@ export class OutgoingHeader {
     public static ROOM_LIST_USERS = 8038;
 
     public static INFO_SCREEN_SAVE_COMPOSER = 8039;
+
+    public static LICENSE_CONNECT_COMPUTER_COMPOSER = 8040;
+
+    public static LICENSE_STATUS_QUERY_COMPOSER = 8041;
+
+    public static LICENSE_AGENCY_LIST_COMPOSER = 8042;
 }

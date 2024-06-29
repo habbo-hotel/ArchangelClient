@@ -488,4 +488,7 @@ export class IncomingHeader {
     public static BANK_OPEN_COMPUTER = 9016;
     public static ROOM_LIST_USERS = 9017;
     public static INFO_SCREEN_VIEW = 9018;
+    public static LICENSE_OPEN_COMPUTER = 9019;
+    public static LICENSE_STATUS = 9020;
+    public static LICENSE_AGENCY_LIST = 9021;
 }

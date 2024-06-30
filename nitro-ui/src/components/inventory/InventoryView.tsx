@@ -72,7 +72,6 @@ export const InventoryView: FC<{}> = () => {
                 setRoomSession(event.session);
                 return;
             case RoomSessionEvent.ENDED:
-                alert('oh')
                 setRoomSession(null);
                 setIsVisible(false);
                 return;

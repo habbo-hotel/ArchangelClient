@@ -14,21 +14,21 @@ export function RoomInformationView() {
 
     useMessageEvent<TimeOfDayEvent>(TimeOfDayEvent, event => {
         const parser = event.getParser();
-        if(!parser) return;
+        if (!parser) return;
         setTimeOfDay(parser.serverTime);
     });
 
 
-    if(!navigatorData?.enteredGuestRoom) return null;
+    if (!navigatorData?.enteredGuestRoom) return null;
 
     return (
         <Base className="nitro-notification-bubble rounded">
-            <div className="d-flex" style={{justifyContent: 'space-between'}}>
-                <Flex pointer alignItems="center" gap={ 2}>
-                    <Text bold variant="white">{ navigatorData.enteredGuestRoom.roomName }</Text>
+            <div className="d-flex" style={{ justifyContent: 'space-between' }}>
+                <Flex pointer alignItems="center" gap={2}>
+                    <Text bold fontSize={4} variant="white">{navigatorData.enteredGuestRoom.roomName}</Text>
                 </Flex>
-                <Flex pointer alignItems="center" gap={ 2}>
-                    <Text bold variant="white">{timeOfDay}</Text>
+                <Flex pointer alignItems="center" gap={2}>
+                    <Text bold fontSize={5} variant="white">{timeOfDay}</Text>
                 </Flex>
             </div>
         </Base>

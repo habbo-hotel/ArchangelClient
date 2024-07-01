@@ -18,6 +18,7 @@ export * from './corp/CorpFireUserComposer';
 export * from './corp/CorpInfoQueryComposer';
 export * from './corp/CorpOfferUserJobComposer';
 export * from './corp/CorpPositionInfoQueryComposer';
+export * from './corp/CorpPositionListComposer';
 export * from './corp/CorpPromoteUserComposer';
 export * from './corp/CorpStartWorkComposer';
 export * from './corp/CorpStopWorkComposer';

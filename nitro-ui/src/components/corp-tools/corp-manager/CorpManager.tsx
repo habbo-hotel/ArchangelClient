@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Tab } from "../../inventory/Inventory.types";
 import { CorpInfo } from "./views/corp-info/CorpInfo";
 import { CorpFinances } from "./views/corp-finances/CorpFinances";
@@ -8,27 +8,31 @@ import { NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, Nitro
 import { CorpOpenComputerEvent } from "@nitro-rp/renderer";
 import { useMessageEvent } from "../../../hooks";
 
+export interface CorpManagerViewProps {
+    corpID: number;
+}
+
 export function CorpManager() {
     const [visible, setVisible] = useState(true);
     const [corpID, setCorpID] = useState<number>();
     const tabs: Tab[] = useMemo(() => [
         {
             label: 'Info',
-            children: <CorpInfo />
+            children: <CorpInfo corpID={corpID} />
         },
         {
             label: 'Positions',
-            children: <CorpPositions />
+            children: <CorpPositions corpID={corpID} />
         },
         {
             label: 'Employees',
-            children: <CorpEmployees />
+            children: <CorpEmployees corpID={corpID} />
         },
         {
             label: 'Finances',
-            children: <CorpFinances />
+            children: <CorpFinances corpID={corpID} />
         },
-    ], []);
+    ], [corpID]);
     const [currentTab, setCurrentTab] = useState<Tab>(tabs[0]);
 
     useMessageEvent<CorpOpenComputerEvent>(CorpOpenComputerEvent, event => {
@@ -37,6 +41,10 @@ export function CorpManager() {
         setCorpID(parser.corpID);
         setVisible(true);
     })
+
+    useEffect(() => {
+        setCurrentTab(tabs[0]);
+    }, [tabs]);
 
     if (!visible || !corpID) {
         return null;

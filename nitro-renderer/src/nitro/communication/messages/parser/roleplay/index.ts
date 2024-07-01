@@ -10,6 +10,7 @@ export * from './corp/CorpInfoParser';
 export * from './corp/CorpOpenComputerEventParser';
 export * from './corp/CorpOpenInventoryParser';
 export * from './corp/CorpPositionInfoParser';
+export * from './corp/CorpPositionListEventParser';
 export * from './device/InfoScreenViewEventParser';
 export * from './game/TimeOfDayEventParser';
 export * from './gang/GangInfoParser';

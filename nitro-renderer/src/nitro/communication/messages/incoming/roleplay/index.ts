@@ -9,6 +9,7 @@ export * from './corp/CorpOpenComputerEvent';
 export * from './corp/CorpOpenInventoryEvent';
 export * from './corp/CashRegisterEvent';
 export * from './corp/CorpPositionInfoQueryEvent';
+export * from './corp/CorpPositionListEvent';
 export * from './device/InfoScreenViewEvent';
 export * from './taxi/TaxiFeeQueryEvent';
 export * from './gang/TimeOfDayEvent';

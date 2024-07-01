@@ -5,6 +5,7 @@ export * from './bank/BankOpenComputerEvent'
 export * from './billing/BillingInvoiceQueryEvent';
 export * from './combat/MyWeaponListEvent';
 export * from './corp/CorpInfoQueryEvent';
+export * from './corp/CorpOpenComputerEvent';
 export * from './corp/CorpOpenInventoryEvent';
 export * from './corp/CashRegisterEvent';
 export * from './corp/CorpPositionInfoQueryEvent';

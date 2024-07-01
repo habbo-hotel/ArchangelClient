@@ -5,6 +5,9 @@
 @import './icons';
 @import './utils';
 
+@import 'ag-grid-community/styles/ag-grid.css';
+@import 'ag-grid-community/styles/ag-theme-quartz.css';
+
 .btn-sm {
   min-height: 28px;
 }

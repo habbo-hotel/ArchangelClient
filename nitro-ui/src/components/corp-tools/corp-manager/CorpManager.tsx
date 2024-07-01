@@ -52,8 +52,7 @@ export function CorpManager() {
 
     return (
         <>
-            <NitroCardView uniqueKey="corpManager" className="nitro-inventory">
-
+            <NitroCardView uniqueKey="corpManager" className="nitro-inventory" style={{ minWidth: 600, minHeight: 450 }}>
                 <NitroCardHeaderView headerText="Corp Manager" onCloseClick={() => setVisible(false)} />
                 <NitroCardContentView>
                     <NitroCardTabsView>

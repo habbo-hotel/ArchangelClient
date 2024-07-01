@@ -8,6 +8,7 @@ export * from './corp/CorpInfoQueryEvent';
 export * from './corp/CorpOpenComputerEvent';
 export * from './corp/CorpOpenInventoryEvent';
 export * from './corp/CashRegisterEvent';
+export * from './corp/CorpEmployeeListEvent';
 export * from './corp/CorpPositionInfoQueryEvent';
 export * from './corp/CorpPositionListEvent';
 export * from './device/InfoScreenViewEvent';

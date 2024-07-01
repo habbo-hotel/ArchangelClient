@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Tab } from "../../inventory/Inventory.types";
 import { CorpInfo } from "./views/corp-info/CorpInfo";
-import { CorpFinances } from "./views/corp-finances/CorpFinances";
 import { CorpPositions } from "./views/corp-positions/CorpPositions";
 import { CorpEmployees } from "./views/corp-employees/CorpEmployees";
 import { NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView } from "../../../common";
@@ -27,10 +26,6 @@ export function CorpManager() {
         {
             label: 'Employees',
             children: <CorpEmployees corpID={corpID} />
-        },
-        {
-            label: 'Finances',
-            children: <CorpFinances corpID={corpID} />
         },
     ], [corpID]);
     const [currentTab, setCurrentTab] = useState<Tab>(tabs[0]);

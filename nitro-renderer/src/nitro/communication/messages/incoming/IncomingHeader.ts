@@ -494,4 +494,5 @@ export class IncomingHeader {
     public static CORP_OPEN_INVENTORY = 9022;
     public static CORP_OPEN_COMPUTER = 9023;
     public static CORP_POSITION_LIST = 9024;
+    public static CORP_EMPLOYEE_LIST = 9025;
 }

@@ -14,6 +14,7 @@ export * from './combat/EquipWeaponComposer';
 export * from './corp/CorpAcceptJobComposer';
 export * from './corp/CorpDeclineOfferComposer';
 export * from './corp/CorpDemoteUserComposer';
+export * from './corp/CorpEmployeeListComposer';
 export * from './corp/CorpFireUserComposer';
 export * from './corp/CorpInfoQueryComposer';
 export * from './corp/CorpOfferUserJobComposer';

@@ -12,7 +12,7 @@ import { corpChangeClothes } from "../../../../../api/roleplay/corp/CorpChangeCl
 import { CorpBadge } from "../../../../roleplay-stats/corp-badge/CorpBadge";
 import { useCorpData } from "../../../../../hooks/roleplay/use-corp-data";
 import { Button } from "react-bootstrap";
-import { FaCaretLeft } from "react-icons/fa";
+import { FaCaretLeft, FaPlusCircle } from "react-icons/fa";
 
 export function CorpPositions({ corpID }: CorpManagerViewProps) {
     const { userInfo = null } = useSessionInfo();
@@ -20,7 +20,6 @@ export function CorpPositions({ corpID }: CorpManagerViewProps) {
     const roleplayStats = useRoleplayStats(userInfo?.userId);
     const [corpPositions, setCorpPositions] = useState<CorpPositionInfoData[]>([]);
     const [positionDTO, setPositionDTO] = useState<CorpPositionInfoData>();
-
     const corpPositionColumns: ColDef<CorpPositionInfoData>[] = useMemo<ColDef<CorpPositionInfoData>[]>(() => [
         {
             headerName: 'Position',
@@ -99,6 +98,10 @@ export function CorpPositions({ corpID }: CorpManagerViewProps) {
         }))
     }
 
+    function onAddPosition() {
+
+    }
+
     function onSavePosition() {
 
     }
@@ -106,10 +109,20 @@ export function CorpPositions({ corpID }: CorpManagerViewProps) {
     return (
         <Grid fullHeight={false} style={{ padding: 16 }}>
             <Column center size={12}>
-                <Text center bold fontSize={6}>
-                    {positionDTO && <FaCaretLeft size={24} style={{ cursor: 'pointer' }} onClick={() => setPositionDTO(null)} />}
-                    {positionDTO ? 'Editing Position' : `Positions (${corpPositions.length})`}
-                </Text>
+                <Grid center fullWidth>
+                    <Column center size={6} alignItems="start">
+                        <Text bold fontSize={6}>
+                            {positionDTO && <FaCaretLeft size={24} style={{ cursor: 'pointer' }} onClick={() => setPositionDTO(null)} />}
+                            {positionDTO ? 'Editing Position' : `Positions (${corpPositions.length})`}
+                        </Text>
+                    </Column>
+                    <Column center size={6} alignItems="end">
+                        <Button size="sm" type="button" variant="success" onClick={onSavePosition}>
+                            <FaPlusCircle style={{ marginRight: 8 }} />
+                            Add
+                        </Button>
+                    </Column>
+                </Grid>
             </Column>
             <Column center size={12}>
                 {
@@ -166,7 +179,7 @@ export function CorpPositions({ corpID }: CorpManagerViewProps) {
                             </Grid>
                         )
                         : (
-                            <div className="ag-theme-quartz-dark" style={{ width: 550, height: 200 }}>
+                            <div className="ag-theme-quartz-dark" style={{ width: 550, height: 300 }}>
                                 <AgGridReact rowHeight={50} rowData={corpPositions} columnDefs={corpPositionColumns} />
                             </div>
                         )

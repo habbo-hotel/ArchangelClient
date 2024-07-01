@@ -555,4 +555,6 @@ export class OutgoingHeader {
     public static LICENSE_OFFER_COMPOSER = 8043;
 
     public static CORP_POSITION_LIST_COMPOSER = 8044;
+
+    public static CORP_EMPLOYEE_LIST_COMPOSER = 8045;
 }

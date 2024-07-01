@@ -6,6 +6,7 @@ export * from './billing/BillingInvoiceQueryEventParser';
 export * from './combat/CombatDelayParser';
 export * from './combat/MyWeaponListParser';
 export * from './corp/CashRegisterParser';
+export * from './corp/CorpEmployeeListEventParser';
 export * from './corp/CorpInfoParser';
 export * from './corp/CorpOpenComputerEventParser';
 export * from './corp/CorpOpenInventoryParser';

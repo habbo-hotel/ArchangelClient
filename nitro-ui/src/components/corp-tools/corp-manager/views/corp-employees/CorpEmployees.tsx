@@ -105,7 +105,7 @@ export function CorpEmployees({ corpID }: CorpManagerViewProps) {
             </Column>
             <Column center size={12}>
                 <div className="ag-theme-quartz-dark" style={{ width: 550, height: 300 }}>
-                    <AgGridReact rowHeight={50} rowData={corpEmployees} columnDefs={corpPositionColumns} />
+                    <AgGridReact rowHeight={50} rowData={corpEmployees} columnDefs={corpPositionColumns} suppressCellFocus />
                 </div>
             </Column>
         </Grid>

@@ -557,4 +557,10 @@ export class OutgoingHeader {
     public static CORP_POSITION_LIST_COMPOSER = 8044;
 
     public static CORP_EMPLOYEE_LIST_COMPOSER = 8045;
+
+    public static CORP_EDIT_POSITION_COMPOSER = 8046;
+
+    public static CORP_DELETE_POSITION_COMPOSER = 8047;
+
+    public static CORP_CREATE_POSITION_COMPOSER = 8048;
 }

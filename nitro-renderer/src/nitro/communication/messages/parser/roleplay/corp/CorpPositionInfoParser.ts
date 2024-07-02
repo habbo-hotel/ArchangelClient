@@ -6,6 +6,7 @@ export interface CorpPositionInfoData {
     name: string;
     motto: string;
     salary: number;
+    orderID: number;
     maleUniform: string;
     femaleUniform: string;
     canHire: boolean;
@@ -21,6 +22,7 @@ export class CorpPositionInfoParser implements IMessageParser {
     private _name: string;
     private _motto: string;
     private _salary: number;
+    private _orderID: number;
     private _maleUniform: string;
     private _femaleUniform: string;
     private _canHire: boolean;
@@ -34,6 +36,7 @@ export class CorpPositionInfoParser implements IMessageParser {
         this._corpID = 0;
         this._name = '';
         this._motto = '';
+        this._orderID = 0;
         this._canHire = false;
         this._canFire = false;
         this._canPromote = false;
@@ -50,6 +53,7 @@ export class CorpPositionInfoParser implements IMessageParser {
         this._name = wrapper.readString();
         this._motto = wrapper.readString();
         this._salary = wrapper.readInt();
+        this._orderID = wrapper.readInt();
         this._maleUniform = wrapper.readString();
         this._femaleUniform = wrapper.readString();
         this._canHire = wrapper.readBoolean();
@@ -68,6 +72,7 @@ export class CorpPositionInfoParser implements IMessageParser {
             name: this._name,
             motto: this._motto,
             salary: this._salary,
+            orderID: this._orderID,
             maleUniform: this._maleUniform,
             femaleUniform: this._femaleUniform,
             canHire: this._canHire,

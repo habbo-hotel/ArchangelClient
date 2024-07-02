@@ -1,13 +1,20 @@
 import { IMessageDataWrapper, IMessageParser } from "../../../../../../api";
 
+export interface CorpPositionListData {
+    id: number;
+    name: string;
+    salary: number;
+    maleFigure: string;
+    femaleFigure: string;
+}
 
 export class CorpPositionListEventParser implements IMessageParser {
     private _corpID: number;
-    private _corpPositionIDs: Array<number>;
+    private _corpPositions: CorpPositionListData[];
 
     public flush(): boolean {
         this._corpID = -1;
-        this._corpPositionIDs = [];
+        this._corpPositions = [];
         return true;
     }
 
@@ -15,10 +22,11 @@ export class CorpPositionListEventParser implements IMessageParser {
         if (!wrapper) return false;
 
         this._corpID = wrapper.readInt();
-        const totalBanks = wrapper.readInt();
+        const totalPositions = wrapper.readInt();
 
-        for (let i = 0; i < totalBanks; i++) {
-            this._corpPositionIDs.push(wrapper.readInt());
+        for (let i = 0; i < totalPositions; i++) {
+            const [id, name, salary, maleFigure, femaleFigure] = wrapper.readString().split(';');
+            this._corpPositions.push({ id: Number(id), name, salary: Number(salary), maleFigure, femaleFigure })
         }
 
         return true;
@@ -28,8 +36,8 @@ export class CorpPositionListEventParser implements IMessageParser {
         return this._corpID;
     }
 
-    public get corpPositionIDs(): Array<number> {
-        return this._corpPositionIDs;
+    public get corpPositions(): CorpPositionListData[] {
+        return this._corpPositions;
     }
 
 }

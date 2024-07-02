@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Column, Grid, LayoutAvatarImageView, Text } from "../../../../../common";
 import { CorpManagerViewProps } from "../../CorpManager";
 import { useMessageEvent, useSessionInfo } from "../../../../../hooks";
-import { CorpPositionInfoData, CorpPositionInfoQueryEvent, CorpPositionListEvent } from "@nitro-rp/renderer";
+import { CorpPositionInfoData, CorpPositionListData, CorpPositionListEvent } from "@nitro-rp/renderer";
 import { AgGridReact } from "ag-grid-react";
 import { ColDef } from 'ag-grid-community';
 import { useRoleplayStats } from "../../../../../hooks/roleplay/use-rp-stats";
@@ -13,16 +13,15 @@ import { CorpPositionEditor } from "./corp-editor/CorpPositionEditor";
 import { CorpEditPosition } from "../../../../../api/roleplay/corp/CorpEditPosition";
 import { CorpCreatePosition } from "../../../../../api/roleplay/corp/CorpCreatePosition";
 import { CorpPositionList } from "../../../../../api/roleplay/corp/CorpPositionList";
-import { CorpPositionInfoQuery } from "../../../../../api/roleplay/corp/CorpPositionInfoQuery";
 import { CorpDeletePosition } from "../../../../../api/roleplay/corp/CorpDeletePosition";
 
 export function CorpPositions({ corpID }: CorpManagerViewProps) {
     const { userInfo = null } = useSessionInfo();
     const roleplayStats = useRoleplayStats(userInfo?.userId);
-    const [corpPositions, setCorpPositions] = useState<CorpPositionInfoData[]>([]);
+    const [corpPositions, setCorpPositions] = useState<CorpPositionListData[]>([]);
     const [creating, setCreating] = useState(false);
-    const [editingPosition, setEditingPosition] = useState<CorpPositionInfoData>();
-    const corpPositionColumns: ColDef<CorpPositionInfoData>[] = useMemo<ColDef<CorpPositionInfoData>[]>(() => [
+    const [editingPosition, setEditingPosition] = useState<CorpPositionListData>();
+    const corpPositionColumns: ColDef<CorpPositionListData>[] = useMemo<ColDef<CorpPositionListData>[]>(() => [
         {
             headerName: 'Position',
             field: 'name',
@@ -35,16 +34,17 @@ export function CorpPositions({ corpID }: CorpManagerViewProps) {
             cellRenderer: (props: { value: string }) => <>${props.value}</>,
         },
         {
+            field: 'maleFigure',
             headerName: 'Uniform',
             flex: 1,
-            cellRenderer: (props: { data: CorpPositionInfoData }) => (
-                <LayoutAvatarImageView className="avatar" figure={corpChangeClothes(roleplayStats.figure, props.data.maleUniform)} direction={2} style={{ marginTop: -30 }} />
+            cellRenderer: (props: { data: CorpPositionListData }) => (
+                <LayoutAvatarImageView className="avatar" figure={corpChangeClothes(roleplayStats.figure, props.data.maleFigure)} direction={2} style={{ marginTop: -30 }} />
             )
         },
         {
             headerName: 'Tools',
             flex: 1,
-            cellRenderer: (props: { data: CorpPositionInfoData }) => (
+            cellRenderer: (props: { data: CorpPositionListData }) => (
                 <Button size="sm" style={{ width: '100%' }} type="button" variant="success" onClick={() => setEditingPosition(props.data)}>
                     View
                 </Button>
@@ -55,46 +55,23 @@ export function CorpPositions({ corpID }: CorpManagerViewProps) {
     useEffect(() => {
         setCorpPositions([]);
         CorpPositionList(corpID);
-    }, [corpID, creating, editingPosition]);
+    }, [corpID]);
 
     useMessageEvent<CorpPositionListEvent>(CorpPositionListEvent, event => {
         const parser = event.getParser();
         if (parser.corpID !== corpID) {
             return;
         }
-        for (const positionID of parser.corpPositionIDs) {
-            CorpPositionInfoQuery(corpID, positionID);
-        }
+        setCorpPositions(parser.corpPositions)
     });
 
-
-    useMessageEvent<CorpPositionInfoQueryEvent>(CorpPositionInfoQueryEvent, event => {
-        const parser = event.getParser();
-        if (parser.data.corpID !== corpID) {
-            return;
-        }
-        setCorpPositions(_ => {
-            const newPositions = [..._];
-
-            const positionIndex = newPositions.findIndex(_ => _.id === parser.data.id);
-
-            if (positionIndex === -1) {
-                newPositions.push(parser.data);
-                return newPositions;
-            }
-
-            newPositions[positionIndex] = parser.data;
-            return newPositions;
-        })
-    })
-
     function onCreate(corpPositionDTO: Omit<CorpPositionInfoData, 'id'>) {
-        CorpCreatePosition(corpID, corpPositionDTO.name, corpPositionDTO.motto, corpPositionDTO.salary, corpPositionDTO.orderID, corpPositionDTO.maleUniform, corpPositionDTO.femaleUniform, corpPositionDTO.canHire, corpPositionDTO.canFire, corpPositionDTO.canPromote, corpPositionDTO.canDemote, corpPositionDTO.canWorkAnywhere);
+        CorpCreatePosition(corpID, corpPositionDTO.orderID, corpPositionDTO.name, corpPositionDTO.motto, corpPositionDTO.salary, corpPositionDTO.maleUniform, corpPositionDTO.femaleUniform, corpPositionDTO.canHire, corpPositionDTO.canFire, corpPositionDTO.canPromote, corpPositionDTO.canDemote, corpPositionDTO.canWorkAnywhere);
         setCreating(false);
     }
 
     function onUpdate(corpPositionDTO: Omit<CorpPositionInfoData, 'id'>) {
-        CorpEditPosition(corpID, editingPosition.id, corpPositionDTO.name, corpPositionDTO.motto, corpPositionDTO.salary, corpPositionDTO.maleUniform, corpPositionDTO.femaleUniform);
+        CorpEditPosition(corpID, editingPosition.id, corpPositionDTO.name, corpPositionDTO.motto, corpPositionDTO.salary, corpPositionDTO.maleUniform, corpPositionDTO.femaleUniform, corpPositionDTO.canHire, corpPositionDTO.canFire, corpPositionDTO.canPromote, corpPositionDTO.canDemote, corpPositionDTO.canWorkAnywhere);
         setEditingPosition(null);
     }
 
@@ -143,7 +120,7 @@ export function CorpPositions({ corpID }: CorpManagerViewProps) {
                     creating
                         ? <CorpPositionEditor corpID={corpID} onSave={onCreate} />
                         : editingPosition
-                            ? <CorpPositionEditor corpID={corpID} defaultCorpPosition={editingPosition} onSave={onUpdate}>
+                            ? <CorpPositionEditor corpID={corpID} corpPositionID={editingPosition?.id} onSave={onUpdate}>
                                 <Button style={{ width: '100%' }} size="sm" type="button" variant="danger" onClick={onDeletePosition}>
                                     Delete
                                 </Button>

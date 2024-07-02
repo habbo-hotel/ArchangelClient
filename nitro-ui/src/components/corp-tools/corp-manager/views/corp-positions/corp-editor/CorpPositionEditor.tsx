@@ -1,38 +1,59 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { Column, Flex, Grid, LayoutAvatarImageView, Text } from "../../../../../../common";
-import { CorpPositionInfoData } from "@nitro-rp/renderer";
+import { CorpPositionInfoData, CorpPositionListData } from "@nitro-rp/renderer";
 import { corpChangeClothes } from "../../../../../../api/roleplay/corp/CorpChangeClothes";
 import { Button } from "react-bootstrap";
 import { useSessionInfo } from "../../../../../../hooks";
 import { useRoleplayStats } from "../../../../../../hooks/roleplay/use-rp-stats";
-import { CorpDeletePosition } from "../../../../../../api/roleplay/corp/CorpDeletePosition";
+import { useCorpPositionData } from "../../../../../../hooks/roleplay/use-corp-position-data";
+import { useCorpPositionList } from "../../../../../../hooks/roleplay/use-corp-position-list";
 
 export interface CorpPositionEditorProps {
-    corpID: number;
     children?: ReactNode;
-    defaultCorpPosition?: CorpPositionInfoData;
+    corpID: number;
+    corpPositionID?: number;
     onSave(corpPositionDTO: Omit<CorpPositionInfoData, 'id'>): void;
 }
 
 const PERM_KEYS: Array<keyof CorpPositionInfoData> = ['canHire', 'canFire', 'canPromote', 'canDemote', 'canWorkAnywhere'];
 
-export function CorpPositionEditor({ corpID, children, defaultCorpPosition, onSave }: CorpPositionEditorProps) {
+export function CorpPositionEditor({ children, corpID, corpPositionID, onSave }: CorpPositionEditorProps) {
     const { userInfo = null } = useSessionInfo();
+    const corpPositions = useCorpPositionList(corpID);
     const roleplayStats = useRoleplayStats(userInfo?.userId);
+    const corpPosition = useCorpPositionData(corpID, corpPositionID);
     const [positionDTO, setPositionDTO] = useState<Omit<CorpPositionInfoData, 'id'>>({
         corpID,
-        name: defaultCorpPosition?.name ?? '',
-        motto: defaultCorpPosition?.motto ?? '',
-        salary: defaultCorpPosition?.salary ?? 5,
-        orderID: defaultCorpPosition?.orderID ?? 1,
-        maleUniform: defaultCorpPosition?.maleUniform ?? '',
-        femaleUniform: defaultCorpPosition?.femaleUniform ?? '',
-        canHire: !!defaultCorpPosition?.canHire,
-        canFire: !!defaultCorpPosition?.canFire,
-        canPromote: !!defaultCorpPosition?.canPromote,
-        canDemote: !!defaultCorpPosition?.canDemote,
-        canWorkAnywhere: !!defaultCorpPosition?.canWorkAnywhere,
+        name: '',
+        orderID: 1,
+        motto: '',
+        salary: 5,
+        maleUniform: '',
+        femaleUniform: '',
+        canHire: false,
+        canFire: false,
+        canPromote: false,
+        canDemote: false,
+        canWorkAnywhere: false,
     });
+
+    useEffect(() => {
+        console.log(corpPosition)
+        setPositionDTO({
+            corpID,
+            name: corpPosition?.name ?? '',
+            orderID: corpPosition?.orderID ?? 1,
+            motto: corpPosition?.motto ?? '',
+            salary: corpPosition?.salary ?? 5,
+            maleUniform: corpPosition?.maleUniform ?? '',
+            femaleUniform: corpPosition?.femaleUniform ?? '',
+            canHire: !!corpPosition?.canHire,
+            canFire: !!corpPosition?.canFire,
+            canPromote: !!corpPosition?.canPromote,
+            canDemote: !!corpPosition?.canDemote,
+            canWorkAnywhere: !!corpPosition?.canWorkAnywhere,
+        })
+    }, [corpPosition]);
 
     function onUpdate(changes: Partial<Omit<CorpPositionInfoData, 'id'>>) {
         setPositionDTO(_ => ({
@@ -41,10 +62,10 @@ export function CorpPositionEditor({ corpID, children, defaultCorpPosition, onSa
         }))
     }
 
-    function onTogglePerm<K extends keyof Omit<CorpPositionInfoData, 'id'>>(key: K) {
+    function onTogglePerm<K extends keyof CorpPositionInfoData>(key: K) {
         setPositionDTO(_ => ({
             ..._,
-            [key]: !_[key],
+            [key]: !_[key as any],
         }))
     }
 
@@ -53,7 +74,11 @@ export function CorpPositionEditor({ corpID, children, defaultCorpPosition, onSa
     }
 
     function onSavePosition() {
-        onSave(positionDTO);
+        console.log(positionDTO)
+        onSave({
+            ...positionDTO,
+            orderID: corpPositions.length + 1,
+        });
     }
 
     return (

@@ -1,24 +1,20 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Column, Flex, Grid, LayoutAvatarImageView, Text } from "../../../../../common";
 import { CorpManagerViewProps } from "../../CorpManager";
-import { useMessageEvent, useSessionInfo } from "../../../../../hooks";
-import { CorpPositionInfoData, CorpPositionInfoQueryEvent, CorpPositionListEvent } from "@nitro-rp/renderer";
-import { CorpPositionList } from "../../../../../api/roleplay/corp/CorpPositionList";
+import { useSessionInfo } from "../../../../../hooks";
+import { CorpPositionInfoData } from "@nitro-rp/renderer";
 import { AgGridReact } from "ag-grid-react";
 import { ColDef } from 'ag-grid-community';
-import { CorpPositionInfoQuery } from "../../../../../api/roleplay/corp/CorpPositionInfoQuery";
 import { useRoleplayStats } from "../../../../../hooks/roleplay/use-rp-stats";
 import { corpChangeClothes } from "../../../../../api/roleplay/corp/CorpChangeClothes";
-import { CorpBadge } from "../../../../roleplay-stats/corp-badge/CorpBadge";
-import { useCorpData } from "../../../../../hooks/roleplay/use-corp-data";
-import { Button } from "react-bootstrap";
 import { FaCaretLeft, FaPlusCircle } from "react-icons/fa";
+import { useCorpPositionList } from "../../../../../hooks/roleplay/use-corp-position-list";
+import { Button } from "react-bootstrap";
 
 export function CorpPositions({ corpID }: CorpManagerViewProps) {
     const { userInfo = null } = useSessionInfo();
-    const corpData = useCorpData(corpID);
     const roleplayStats = useRoleplayStats(userInfo?.userId);
-    const [corpPositions, setCorpPositions] = useState<CorpPositionInfoData[]>([]);
+    const corpPositions = useCorpPositionList(corpID);
     const [positionDTO, setPositionDTO] = useState<CorpPositionInfoData>();
     const corpPositionColumns: ColDef<CorpPositionInfoData>[] = useMemo<ColDef<CorpPositionInfoData>[]>(() => [
         {
@@ -53,41 +49,6 @@ export function CorpPositions({ corpID }: CorpManagerViewProps) {
             )
         },
     ], [roleplayStats]);
-
-    console.log(corpPositions)
-
-    useEffect(() => {
-        CorpPositionList(corpID);
-    }, [corpID]);
-
-    useMessageEvent<CorpPositionListEvent>(CorpPositionListEvent, event => {
-        const parser = event.getParser();
-        if (parser.corpID !== corpID) {
-            return;
-        }
-        for (const positionID of parser.corpPositionIDs) {
-            CorpPositionInfoQuery(corpID, positionID);
-        }
-    })
-    useMessageEvent<CorpPositionInfoQueryEvent>(CorpPositionInfoQueryEvent, event => {
-        const parser = event.getParser();
-        if (parser.data.corpID !== corpID) {
-            return;
-        }
-        setCorpPositions(_ => {
-            const newPositions = [..._];
-
-            const positionIndex = newPositions.findIndex(_ => _.id === parser.data.id);
-
-            if (positionIndex === -1) {
-                newPositions.push(parser.data);
-                return newPositions;
-            }
-
-            newPositions[positionIndex] = parser.data;
-            return newPositions;
-        })
-    })
 
     const PERM_KEYS: Array<keyof CorpPositionInfoData> = ['canHire', 'canFire', 'canPromote', 'canDemote', 'canWorkAnywhere'];
 

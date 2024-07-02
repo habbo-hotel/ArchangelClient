@@ -5,7 +5,7 @@ import { RoomListUsers } from "../../api/roleplay/room/RoomListUsers";
 
 export interface UserSelectProps {
     userID?: number;
-    onChange(newUser: any): void;
+    onChange(newUser: RoomUsersListRow): void;
 }
 
 export function UserSelect({ userID, onChange }: UserSelectProps) {

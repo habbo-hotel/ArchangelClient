@@ -1,16 +1,24 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Column, Grid, LayoutAvatarImageView, Text } from "../../../../../common";
 import { CorpManagerViewProps } from "../../CorpManager";
-import { useMessageEvent } from "../../../../../hooks";
-import { CorpEmployeeData, CorpEmployeeListEvent } from "@nitro-rp/renderer";
+import { useSessionInfo } from "../../../../../hooks";
+import { CorpEmployeeData } from "@nitro-rp/renderer";
 import { AgGridReact } from "ag-grid-react";
 import { ColDef } from 'ag-grid-community';
 import { CorpEmployeeList } from "../../../../../api/roleplay/corp/CorpEmployeeList";
-import { FaCaretDown, FaCaretUp, FaTimesCircle } from "react-icons/fa";
+import { FaCaretDown, FaCaretLeft, FaCaretUp, FaPlusCircle, FaTimesCircle, FaUsers } from "react-icons/fa";
 import { Button } from "react-bootstrap";
+import { CorpFireUser } from "../../../../../api/roleplay/corp/CorpFireUser";
+import { CorpPromoteUser } from "../../../../../api/roleplay/corp/CorpPromoteUser";
+import { CorpDemoteUser } from "../../../../../api/roleplay/corp/CorpDemoteUser";
+import { UserSelect } from "../../../../roleplay/UserSelect";
+import { useCorpEmployeeList } from "../../../../../hooks/roleplay/use-corp-employee-list";
+import { CorpHireEmployee } from "./CorpHireEmployee";
 
 export function CorpEmployees({ corpID }: CorpManagerViewProps) {
-    const [corpEmployees, setCorpEmployees] = useState<CorpEmployeeData[]>([]);
+    const { userInfo } = useSessionInfo();
+    const [hiringMode, setHiringMode] = useState(false);
+    const corpEmployees = useCorpEmployeeList(corpID);
     const corpPositionColumns = useMemo<ColDef<CorpEmployeeData>[]>(() => [
         {
             headerName: '',
@@ -31,40 +39,69 @@ export function CorpEmployees({ corpID }: CorpManagerViewProps) {
         {
             headerName: 'Tools',
             flex: 1,
-            cellRenderer: ({ data }: { data: CorpEmployeeData }) => (
-                <Grid fullHeight={false} gap={2} alignItems="center" style={{ marginTop: 8 }}>
-                    <Button size="sm" type="button" variant="secondary">
-                        <FaCaretDown />
-                    </Button>
-                    <Button size="sm" type="button" variant="success">
-                        <FaCaretUp />
-                    </Button>
+            cellRenderer: ({ data }: { data: CorpEmployeeData }) => {
+                if (data.userID === userInfo?.userId) {
+                    return null;
+                }
 
-                    <Button size="sm" type="button" variant="danger">
-                        <FaTimesCircle />
-                    </Button>
-                </Grid>
-            ),
+                return (
+                    <Grid fullHeight={false} gap={2} alignItems="center" style={{ marginTop: 8 }}>
+                        <Button size="sm" type="button" variant="secondary" onClick={() => onDemoteUser(data.username)}>
+                            <FaCaretDown />
+                        </Button>
+                        <Button size="sm" type="button" variant="success" onClick={() => onPromoteUser(data.username)}>
+                            <FaCaretUp />
+                        </Button>
+
+                        <Button size="sm" type="button" variant="danger" onClick={() => onFireUser(data.username)}>
+                            <FaTimesCircle />
+                        </Button>
+                    </Grid>
+                )
+            },
         },
     ], []);
 
-    useEffect(() => {
-        CorpEmployeeList(corpID);
-    }, [corpID]);
+    function onToggleHiringMode() {
+        setHiringMode(_ => !_);
+    }
 
-    useMessageEvent<CorpEmployeeListEvent>(CorpEmployeeListEvent, event => {
-        const parser = event.getParser();
-        if (parser.corpID !== corpID) {
-            return;
-        }
-        setCorpEmployees(parser.corpEmployees);
-    })
+    function onDemoteUser(username: string) {
+        CorpDemoteUser(username);
+        CorpEmployeeList(corpID);
+    }
+
+    function onPromoteUser(username: string) {
+        CorpPromoteUser(username);
+        CorpEmployeeList(corpID);
+    }
+
+    function onFireUser(username: string) {
+        CorpFireUser(username);
+        CorpEmployeeList(corpID);
+    }
+
+    if (hiringMode) {
+        return <CorpHireEmployee corpID={corpID} onToggle={onToggleHiringMode} />
+    }
+
     return (
         <Grid fullHeight={false} style={{ padding: 16 }}>
-            <Column center size={12} alignItems="start">
-                <Text bold fontSize={6}>
-                    Employees ({corpEmployees.length})
-                </Text>
+            <Column size={12}>
+                <Grid>
+                    <Column center size={6} alignItems="start">
+                        <Text bold fontSize={5}>
+                            <FaUsers size={24} style={{ marginRight: 8 }} />
+                            Employees ({corpEmployees.length})
+                        </Text>
+                    </Column>
+                    <Column center size={6} alignItems="end">
+                        <Button size="sm" type="button" variant="success" onClick={onToggleHiringMode}>
+                            <FaPlusCircle style={{ marginRight: 8 }} />
+                            Add
+                        </Button>
+                    </Column>
+                </Grid>
             </Column>
             <Column center size={12}>
                 <div className="ag-theme-quartz-dark" style={{ width: 550, height: 300 }}>

@@ -7,7 +7,7 @@ import { AgGridReact } from "ag-grid-react";
 import { ColDef } from 'ag-grid-community';
 import { useRoleplayStats } from "../../../../../hooks/roleplay/use-rp-stats";
 import { corpChangeClothes } from "../../../../../api/roleplay/corp/CorpChangeClothes";
-import { FaCaretLeft, FaPlusCircle, FaTimesCircle } from "react-icons/fa";
+import { FaCaretLeft, FaPlusCircle, FaShieldAlt, FaTimesCircle } from "react-icons/fa";
 import { Button } from "react-bootstrap";
 import { CorpPositionEditor } from "./corp-editor/CorpPositionEditor";
 import { CorpEditPosition } from "../../../../../api/roleplay/corp/CorpEditPosition";
@@ -103,9 +103,9 @@ export function CorpPositions({ corpID }: CorpManagerViewProps) {
             <Column center size={12}>
                 <Grid center fullWidth>
                     <Column center size={6} alignItems="start">
-                        <Text bold fontSize={6}>
-                            {editingPosition && <FaCaretLeft size={24} style={{ cursor: 'pointer' }} onClick={() => setEditingPosition(null)} />}
-                            {editingPosition ? 'Editing Position' : `Positions (${corpPositions.length})`}
+                        <Text bold fontSize={5}>
+                            <FaShieldAlt size={24} style={{ marginRight: 8 }} />
+                            {creating ? 'New Position' : editingPosition ? 'Edit Position' : `Positions (${corpPositions.length})`}
                         </Text>
                     </Column>
                     <Column center size={6} alignItems="end">

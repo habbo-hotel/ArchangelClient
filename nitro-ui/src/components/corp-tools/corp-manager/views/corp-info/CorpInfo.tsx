@@ -3,18 +3,24 @@ import { Column, Flex, Grid, Text } from "../../../../../common";
 import { useCorpData } from "../../../../../hooks/roleplay/use-corp-data";
 import { CorpManagerViewProps } from "../../CorpManager";
 import { CorpBadge } from "../../../../roleplay-stats/corp-badge/CorpBadge";
+import { FaInfoCircle, FaShieldAlt } from "react-icons/fa";
 
 export function CorpInfo({ corpID }: CorpManagerViewProps) {
     const corpData = useCorpData(corpID)
     return (
         <Grid fullHeight={false} style={{ padding: 16 }}>
+            <Column center size={6} alignItems="start">
+                <Text bold fontSize={5}>
+                    <FaInfoCircle size={24} style={{ marginRight: 8 }} />
+                    Info
+                </Text>
+            </Column>
             <Column center size={12} alignItems="center">
                 <Flex alignItems="center" gap={1}>
                     <CorpBadge corpID={corpID} />
                 </Flex>
             </Column>
             <Column size={2} />
-
             <Column size={8}>
                 <Text className="col-2" fontSize={5}>Name</Text>
                 <input type="text" className="form-control form-control-sm" value={corpData.name} maxLength={29} onChange={event => console.log(event.target.value)} />

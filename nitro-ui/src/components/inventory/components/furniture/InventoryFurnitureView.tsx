@@ -24,7 +24,6 @@ const attemptPlaceMarketplaceOffer = (groupItem: GroupItem) => {
 }
 
 export function InventoryFurnitureView({ roomSession = null, roomPreviewer = null }: InventoryFurnitureViewProps) {
-    const [isVisible, setIsVisible] = useState(false);
     const [filteredGroupItems, setFilteredGroupItems] = useState<GroupItem[]>([]);
     const { groupItems = [], selectedItem = null, activate = null, deactivate = null } = useInventoryFurni();
     const { resetItems = null } = useInventoryUnseenTracker();
@@ -71,29 +70,14 @@ export function InventoryFurnitureView({ roomSession = null, roomPreviewer = nul
                 roomPreviewer.addFurnitureIntoRoom(selectedItem.type, new Vector3d(90), selectedItem.stuffData, (furnitureItem.extra.toString()));
             }
         }
-    }, [roomPreviewer, selectedItem]);
+    }, [roomPreviewer, roomSession, selectedItem]);
+
 
     useEffect(() => {
-        if (!selectedItem || !selectedItem.hasUnseenItems) return;
-
-        resetItems(UnseenItemCategory.FURNI, selectedItem.items.map(item => item.id));
-
-        selectedItem.hasUnseenItems = false;
-    }, [selectedItem, resetItems]);
-
-    useEffect(() => {
-        if (!isVisible) return;
-
         const id = activate();
 
         return () => deactivate(id);
-    }, [isVisible, activate, deactivate]);
-
-    useEffect(() => {
-        setIsVisible(true);
-
-        return () => setIsVisible(false);
-    }, []);
+    }, [activate, deactivate]);
 
     if (!groupItems || !groupItems.length) return <InventoryCategoryEmptyView title={LocalizeText('inventory.empty.title')} desc={LocalizeText('inventory.empty.desc')} />;
 
@@ -109,11 +93,19 @@ export function InventoryFurnitureView({ roomSession = null, roomPreviewer = nul
             </Column>
             <Column size={5} overflow="auto">
                 <Column overflow="hidden" position="relative">
-                    <LayoutRoomPreviewerView roomPreviewer={roomPreviewer} height={140} />
-                    {selectedItem && selectedItem.stuffData.isUnique &&
-                        <LayoutLimitedEditionCompactPlateView className="top-2 end-2" position="absolute" uniqueNumber={selectedItem.stuffData.uniqueNumber} uniqueSeries={selectedItem.stuffData.uniqueSeries} />}
-                    {(selectedItem && selectedItem.stuffData.rarityLevel > -1) &&
-                        <LayoutRarityLevelView className="top-2 end-2" position="absolute" level={selectedItem.stuffData.rarityLevel} />}
+                    {
+                        selectedItem && (
+                            <>
+                                <LayoutRoomPreviewerView roomPreviewer={roomPreviewer} height={140} />
+                                {selectedItem.stuffData.isUnique &&
+                                    <LayoutLimitedEditionCompactPlateView className="top-2 end-2" position="absolute" uniqueNumber={selectedItem.stuffData.uniqueNumber} uniqueSeries={selectedItem.stuffData.uniqueSeries} />
+                                }
+                                {selectedItem.stuffData.rarityLevel > -1 &&
+                                    <LayoutRarityLevelView className="top-2 end-2" position="absolute" level={selectedItem.stuffData.rarityLevel} />
+                                }
+                            </>
+                        )
+                    }
                 </Column>
                 {selectedItem &&
                     <Column grow justifyContent="between" gap={2}>

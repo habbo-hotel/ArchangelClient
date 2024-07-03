@@ -67,6 +67,7 @@ export const InventoryView: FC<{}> = () => {
         RoomSessionEvent.CREATED,
         RoomSessionEvent.ENDED
     ], event => {
+        console.log('useRoomSessionManagerEvent: ', event);
         switch (event.type) {
             case RoomSessionEvent.CREATED:
                 setRoomSession(event.session);
@@ -126,6 +127,10 @@ export const InventoryView: FC<{}> = () => {
     useEffect(() => {
         if (!isVisible && isTrading) setIsVisible(true);
     }, [isVisible, isTrading]);
+
+    useEffect(() => {
+        setCurrentTab(inventoryTabs[0]);
+    }, [inventoryTabs]);
 
     if (!isVisible) return null;
 

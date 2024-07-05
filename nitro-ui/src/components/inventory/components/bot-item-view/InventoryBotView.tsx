@@ -1,10 +1,10 @@
-import { IRoomSession, RoomObjectVariable, RoomPreviewer } from '@nitro-rp/renderer';
 import { FC, useEffect, useState } from 'react';
 import { attemptBotPlacement, GetRoomEngine, LocalizeText, UnseenItemCategory } from '../../../../api';
 import { AutoGrid, Button, Column, Grid, LayoutRoomPreviewerView, Text } from '../../../../common';
 import { useInventoryBots, useInventoryUnseenTracker } from '../../../../hooks';
 import { InventoryCategoryEmptyView } from '../InventoryCategoryEmptyView';
 import { InventoryBotItemView } from './InventoryBotItemView';
+import { IRoomSession, RoomObjectVariable, RoomPreviewer } from '@nitro-rp/renderer';
 
 interface InventoryBotViewProps {
     roomSession: IRoomSession;

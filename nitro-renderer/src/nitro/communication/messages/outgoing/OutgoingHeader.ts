@@ -563,4 +563,8 @@ export class OutgoingHeader {
     public static CORP_DELETE_POSITION_COMPOSER = 8047;
 
     public static CORP_CREATE_POSITION_COMPOSER = 8048;
+
+    public static CORP_SUPER_HIRE_COMPOSER = 8049;
+
+    public static CORP_LIST_COMPOSER = 8050;
 }

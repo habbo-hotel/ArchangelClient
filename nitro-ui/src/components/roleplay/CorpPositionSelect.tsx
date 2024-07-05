@@ -1,11 +1,11 @@
 import { ChangeEvent } from "react";
-import { CorpPositionInfoData } from "@nitro-rp/renderer";
+import { CorpPositionListData } from "@nitro-rp/renderer";
 import { useCorpPositionList } from "../../hooks/roleplay/use-corp-position-list";
 
 export interface CorpPositionSelectProps {
     corpID: number;
     corpPositionID: number;
-    onChange(newCorpPosition: CorpPositionInfoData): void;
+    onChange(newCorpPosition: CorpPositionListData): void;
 }
 
 export function CorpPositionSelect({ corpID, corpPositionID, onChange }: CorpPositionSelectProps) {

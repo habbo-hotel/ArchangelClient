@@ -4,6 +4,7 @@ import { Tab } from '../Inventory.types';
 import { InventoryFurnitureView } from '../components/furniture/InventoryFurnitureView';
 import { InventoryWeaponsView } from '../components/weapon-item-view/InventoryWeaponsView';
 import { IRoomSession, RoomPreviewer } from '@nitro-rp/renderer';
+import { InventoryBotView } from '../components/bot-item-view/InventoryBotView';
 
 interface UserInventoryProps {
     roomSession: IRoomSession;
@@ -21,16 +22,8 @@ export function UserInventory({ roomSession, roomPreviewer }: UserInventoryProps
             children: <InventoryWeaponsView />
         },
         {
-            label: 'Apparel',
-            children: <p>Apparel</p>
-        },
-        {
-            label: 'Aid',
-            children: <p>Aid</p>
-        },
-        {
-            label: 'Ammo',
-            children: <p>Ammo</p>
+            label: 'Bots',
+            children: <InventoryBotView roomSession={roomSession} roomPreviewer={roomPreviewer} />
         },
     ]
     const [currentTab, setCurrentTab] = useState<Tab>(inventoryTabs[0]);

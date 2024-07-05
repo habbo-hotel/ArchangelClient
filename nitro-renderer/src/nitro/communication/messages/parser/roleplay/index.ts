@@ -8,6 +8,7 @@ export * from './combat/MyWeaponListParser';
 export * from './corp/CashRegisterParser';
 export * from './corp/CorpEmployeeListEventParser';
 export * from './corp/CorpInfoParser';
+export * from './corp/CorpListEventParser';
 export * from './corp/CorpOpenComputerEventParser';
 export * from './corp/CorpOpenInventoryParser';
 export * from './corp/CorpPositionInfoParser';

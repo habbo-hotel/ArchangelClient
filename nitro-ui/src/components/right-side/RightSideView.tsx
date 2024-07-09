@@ -6,16 +6,19 @@ import { NotificationCenterView } from '../notification-center/NotificationCente
 import { MysteryBoxExtensionView } from '../room/widgets/mysterybox/MysteryBoxExtensionView';
 import { RoomPromotesWidgetView } from '../room/widgets/room-promotes/RoomPromotesWidgetView';
 import { RoomInformationView } from '../room/RoomInformationView';
+import { OnlineUserCount } from './online-user-count/OnlineUserCount';
+import { TimeOfDay } from './time-of-day/TimeOfDay';
 
-export const RightSideView: FC<{}> = props =>
-{
+export const RightSideView: FC<{}> = props => {
     return (
         <div className="nitro-right-side">
-            <Column position="relative" gap={ 1 }>
+            <Column position="relative" gap={1}>
+                <OnlineUserCount />
+                <TimeOfDay />
                 <RoomInformationView />
                 <GroupRoomInformationView />
                 <MysteryBoxExtensionView />
-                <OfferView/>
+                <OfferView />
                 <RoomPromotesWidgetView />
                 <NotificationCenterView />
             </Column>

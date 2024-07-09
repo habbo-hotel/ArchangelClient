@@ -569,4 +569,6 @@ export class OutgoingHeader {
     public static CORP_LIST_COMPOSER = 8050;
 
     public static ROLEPLAY_PERMISSONS_COMPOSER = 8051;
+
+    public static USERS_ONLINE = 8052;
 }

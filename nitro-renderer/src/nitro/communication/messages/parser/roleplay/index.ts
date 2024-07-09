@@ -24,4 +24,5 @@ export * from './taxi/TaxiDispatchedEventParser';
 export * from './taxi/TaxiFeeEventParser'
 export * from './user/UserOpenWardrobeEventParser';
 export * from './user/RoleplayPermissionsEventParser';
+export * from './user/UserOnlineCountEventParser';
 export * from './user/UserRoleplayStatsChangeParser';

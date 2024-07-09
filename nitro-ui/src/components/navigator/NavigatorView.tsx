@@ -2,7 +2,7 @@ import { ConvertGlobalRoomIdMessageComposer, HabboWebTools, ILinkEventTracker, L
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { AddEventLinkTracker, LocalizeText, RemoveLinkEventTracker, SendMessageComposer, TryVisitRoom } from '../../api';
-import { Base, Column, NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView } from '../../common';
+import { Base, Column, NitroCardContentView, NitroCardHeaderView, NitroCardTabsItemView, NitroCardTabsView, NitroCardView, Text } from '../../common';
 import { useMessageEvent, useNavigator, useRoom, useRoomSessionManagerEvent } from '../../hooks';
 import { NavigatorDoorStateView } from './views/NavigatorDoorStateView';
 import { NavigatorRoomCreatorView } from './views/NavigatorRoomCreatorView';
@@ -11,9 +11,12 @@ import { NavigatorSearchResultView } from './views/search/NavigatorSearchResultV
 import { NavigatorRoomInfoView } from './views/search/NavigatorRoomInfoView';
 import { taxiFeeQuery } from '../../api/roleplay/game/TaxiFeeQuery';
 import { CallTaxi } from '../../api/roleplay/taxi/CallTaxi';
+import { useRoleplayPermissions } from '../../hooks/roleplay/use-roleplay-permissions';
 
 export function NavigatorView() {
+    const [taxiOnly, setTaxiOnly] = useState(false);
     const { roomSession } = useRoom();
+    const rpPerms = useRoleplayPermissions();
     const [taxiFee, setTaxiFee] = useState(0);
     const [isVisible, setIsVisible] = useState(false);
     const [taxiPending, setTaxiPending] = useState(false);
@@ -66,7 +69,12 @@ export function NavigatorView() {
         sendSearch('', topLevelContext.code);
     }, [isReady, searchResult, topLevelContext, sendSearch]);
 
-
+    function onToggleTaxi() {
+        if (!rpPerms.canSeeAllRooms) {
+            return;
+        }
+        setTaxiOnly(_ => !_);
+    }
 
     function onVisitRoom(roomData: RoomDataParser) {
         if (roomData.roomId === roomSession?.roomId) {
@@ -220,12 +228,20 @@ export function NavigatorView() {
                         </NitroCardTabsItemView>
                     </NitroCardTabsView>
                     <NitroCardContentView position="relative">
+                        {
+                            rpPerms.canSeeAllRooms && (
+                                <Base className="form-check">
+                                    <input className="form-check-input" type="checkbox" name="taxiOnly" checked={!taxiOnly} onChange={onToggleTaxi} />
+                                    <label className="form-check-label" style={{ color: 'black' }}>Taxi only</label>
+                                </Base>
+                            )
+                        }
                         {isLoading &&
                             <Base fit position="absolute" className="top-0 start-0 z-index-1 bg-muted opacity-0-5" />}
                         {!isCreatorOpen &&
                             <>
                                 <Column innerRef={elementRef} overflow="auto">
-                                    {(searchResult && searchResult.results.map((result, index) => <NavigatorSearchResultView key={index} searchResult={result} taxiFee={taxiFee} taxiPending={taxiPending} onVisitRoom={onVisitRoom} />))}
+                                    {(searchResult && searchResult.results.map((result, index) => <NavigatorSearchResultView key={index} searchResult={result} taxiFee={taxiFee} taxiPending={taxiPending} onVisitRoom={onVisitRoom} canSeeAllRooms={taxiOnly} />))}
                                 </Column>
                             </>}
                         {isCreatorOpen && <NavigatorRoomCreatorView />}

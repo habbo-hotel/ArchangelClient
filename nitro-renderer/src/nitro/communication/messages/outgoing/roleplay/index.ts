@@ -48,3 +48,4 @@ export * from './room/RoomListUsersComposer';
 export * from './taxi/TaxiFeeQueryComposer';
 export * from './taxi/CallTaxiComposer';
 export * from './user/UserRoleplayStatsQueryComposer';
+export * from './user/RoleplayPermissionsComposer'

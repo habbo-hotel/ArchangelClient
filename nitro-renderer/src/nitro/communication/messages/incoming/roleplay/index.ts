@@ -20,4 +20,6 @@ export * from './license/LicenseAgencyListEvent';
 export * from './license/LicenseOpenComputerEvent';
 export * from './license/LicenseStatusEvent';
 export * from './room/RoomListUsersEvent';
+export * from './user/UserOpenWardrobeEvent';
 export * from './user/UserRoleplayStatsChangeEvent';
+export * from './user/RoleplayPermissionsEvent';

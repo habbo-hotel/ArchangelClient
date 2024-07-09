@@ -5,7 +5,7 @@ import { LocalizeText, } from '../../../../api';
 import { Column, Flex, Grid, Text } from '../../../../common';
 import { NavigatorSearchResultItemView } from './NavigatorSearchResultItemView';
 
-export interface NavigatorSearchResultViewProps {
+export interface NavigatorStaffResultViewProps {
     searchResult: NavigatorSearchResultList;
     taxiFee: number;
     onVisitRoom(roomData: RoomDataParser): void;
@@ -13,7 +13,8 @@ export interface NavigatorSearchResultViewProps {
     canSeeAllRooms: boolean;
 }
 
-export function NavigatorSearchResultView({ canSeeAllRooms, searchResult, taxiFee, taxiPending, onVisitRoom }: NavigatorSearchResultViewProps) {
+export function NavigatorStaffResultView({ canSeeAllRooms, searchResult, taxiFee, taxiPending, onVisitRoom }: NavigatorStaffResultViewProps) {
+
     const [isExtended, setIsExtended] = useState(true);
 
     const getResultTitle = () => {
@@ -37,7 +38,7 @@ export function NavigatorSearchResultView({ canSeeAllRooms, searchResult, taxiFe
             </Flex>
             {isExtended &&
                 <Grid columnCount={1} className="navigator-grid" gap={0}>
-                    {searchResult.rooms.length > 0 && searchResult.rooms.map((room, index) => <NavigatorSearchResultItemView canSeeAllRooms={canSeeAllRooms} key={index} roomData={room} taxiFee={taxiFee} disabled={taxiPending} onVisitRoom={() => onVisitRoom(room)} />)}
+                    {searchResult.rooms.length > 0 && searchResult.rooms.map((room, index) => <NavigatorSearchResultItemView key={index} canSeeAllRooms={canSeeAllRooms} roomData={room} taxiFee={taxiFee} disabled={taxiPending} onVisitRoom={() => onVisitRoom(room)} />)}
                 </Grid>
             }
         </Column>

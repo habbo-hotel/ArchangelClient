@@ -567,4 +567,6 @@ export class OutgoingHeader {
     public static CORP_SUPER_HIRE_COMPOSER = 8049;
 
     public static CORP_LIST_COMPOSER = 8050;
+
+    public static ROLEPLAY_PERMISSONS_COMPOSER = 8051;
 }

@@ -496,4 +496,5 @@ export class IncomingHeader {
     public static CORP_POSITION_LIST = 9024;
     public static CORP_EMPLOYEE_LIST = 9025;
     public static CORP_LIST = 9026;
+    public static ROLEPLAY_PERMISSIONS = 9027;
 }

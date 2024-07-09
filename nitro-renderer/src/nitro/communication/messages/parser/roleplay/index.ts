@@ -22,4 +22,6 @@ export * from './license/LicenseStatusEventParser';
 export * from './room/RoomListUsersEventParser';
 export * from './taxi/TaxiDispatchedEventParser';
 export * from './taxi/TaxiFeeEventParser'
+export * from './user/UserOpenWardrobeEventParser';
+export * from './user/RoleplayPermissionsEventParser';
 export * from './user/UserRoleplayStatsChangeParser';

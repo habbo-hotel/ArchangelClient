@@ -1,5 +1,5 @@
 import { RoomDataParser } from '@nitro-rp/renderer';
-import { FaClock, FaDollarSign, FaUser } from 'react-icons/fa';
+import { FaCaretRight, FaClock, FaDollarSign, FaShieldAlt, FaUser } from 'react-icons/fa';
 import { Flex, LayoutGridItemProps, Text } from '../../../../common';
 import { useMessageEvent, useRoom } from '../../../../hooks';
 import { TaxiDispatchedEvent } from '@nitro-rp/renderer/src/nitro/communication/messages/incoming/roleplay/taxi/TaxiDispatchedEvent';
@@ -14,9 +14,10 @@ export interface NavigatorSearchResultItemViewProps extends LayoutGridItemProps 
     roomData: RoomDataParser;
     onVisitRoom(): void;
     taxiFee: number;
+    canSeeAllRooms: boolean;
 }
 
-export function NavigatorSearchResultItemView({ roomData, disabled, onVisitRoom, taxiFee, ...rest }) {
+export function NavigatorSearchResultItemView({ canSeeAllRooms, roomData, disabled, onVisitRoom, taxiFee, ...rest }) {
     const { roomSession } = useRoom();
     const [arrivesAt, setArrivesAt] = useState<number>();
     const [remainingSecs, setRemainingSecs] = useState<number>(0);
@@ -59,11 +60,10 @@ export function NavigatorSearchResultItemView({ roomData, disabled, onVisitRoom,
     };
 
     if (roomData?.roomId === roomSession?.roomId) {
-        console.log(roomData.roomID)
         return null;
     }
 
-    if (!roomData.tags.includes(RoomType.TAXI)) {
+    if (!roomData.tags.includes(RoomType.TAXI) && !canSeeAllRooms) {
         return null;
     }
 
@@ -81,10 +81,17 @@ export function NavigatorSearchResultItemView({ roomData, disabled, onVisitRoom,
                 </Flex>
             )}
             {
-                !arrivesAt && !disabled && (
+                !arrivesAt && !disabled && !canSeeAllRooms && (
                     <Flex center className="badge p-1 bg-danger" gap={1}>
                         <FaDollarSign className="fa-icon" />
                         {taxiFee}
+                    </Flex>
+                )
+            }
+            {
+                canSeeAllRooms && (
+                    <Flex center className="badge p-1 bg-success" gap={1}>
+                        <FaCaretRight className="fa-icon" />
                     </Flex>
                 )
             }

@@ -498,4 +498,5 @@ export class IncomingHeader {
     public static CORP_LIST = 9026;
     public static ROLEPLAY_PERMISSIONS = 9027;
     public static USERS_ONLINE = 9028;
+    public static PHONE_OPEN_EVENT = 9029;
 }

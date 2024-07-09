@@ -573,4 +573,6 @@ export class OutgoingHeader {
     public static USERS_ONLINE = 8052;
 
     public static DEVICE_OPEN = 8053;
+
+    public static DEVICE_CLOSE = 8054;
 }

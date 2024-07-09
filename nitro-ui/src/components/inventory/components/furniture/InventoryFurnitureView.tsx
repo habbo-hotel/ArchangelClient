@@ -112,21 +112,21 @@ export function InventoryFurnitureView({ roomSession = null, roomPreviewer = nul
                     <Column grow justifyContent="between" gap={2}>
                         <Text grow truncate>{selectedItem.name}</Text>
                         <Column gap={1}>
-                            {
-                                selectedItem.getLastItem().isUsable && (
-                                    <Button variant="success" onClick={() => DeviceOpen(selectedItem.getLastItem().id)}>
-                                        Use Device
-                                    </Button>
-                                )
-                            }
-                            {!!roomSession &&
+                            {selectedItem.getLastItem().isUsable && (
+                                <Button variant="success" onClick={() => DeviceOpen(selectedItem.getLastItem().id)}>
+                                    Use Device
+                                </Button>
+                            )}
+                            {!selectedItem.getLastItem().isUsable && !!roomSession && (
                                 <Button variant="primary" onClick={event => attemptItemPlacement(selectedItem)}>
                                     {LocalizeText('inventory.furni.placetoroom')}
-                                </Button>}
-                            {(selectedItem && selectedItem.isSellable) &&
+                                </Button>
+                            )}
+                            {(selectedItem && selectedItem.isSellable) && (
                                 <Button onClick={event => attemptPlaceMarketplaceOffer(selectedItem)}>
                                     {LocalizeText('inventory.marketplace.sell')}
-                                </Button>}
+                                </Button>
+                            )}
                         </Column>
                     </Column>}
             </Column>

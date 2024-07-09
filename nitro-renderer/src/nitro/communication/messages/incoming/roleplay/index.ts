@@ -13,6 +13,7 @@ export * from './corp/CorpEmployeeListEvent';
 export * from './corp/CorpPositionInfoQueryEvent';
 export * from './corp/CorpPositionListEvent';
 export * from './device/InfoScreenViewEvent';
+export * from './device/PhoneOpenEvent';
 export * from './taxi/TaxiFeeQueryEvent';
 export * from './gang/TimeOfDayEvent';
 export * from './gang/GangInfoQueryEvent';

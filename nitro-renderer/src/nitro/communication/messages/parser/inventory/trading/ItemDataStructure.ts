@@ -3,8 +3,7 @@ import { GetTickerTime } from '../../../../../../pixi-proxy';
 import { FurnitureDataParser } from '../../room';
 import { IFurnitureItemData } from '../furniture';
 
-export class ItemDataStructure implements IFurnitureItemData
-{
+export class ItemDataStructure implements IFurnitureItemData {
     private _expirationTimeStamp: number;
     private _isWallItem: boolean;
     private _itemId: number;
@@ -23,9 +22,9 @@ export class ItemDataStructure implements IFurnitureItemData
     private _flatId: number;
     private _rentable: boolean;
     private _hasRentPeriodStarted: boolean;
+    private _isUsable: boolean;
 
-    constructor(wrapper: IMessageDataWrapper)
-    {
+    constructor(wrapper: IMessageDataWrapper) {
         this._itemId = wrapper.readInt();
         this._furniType = wrapper.readString().toUpperCase();
         this._ref = wrapper.readInt();
@@ -43,120 +42,102 @@ export class ItemDataStructure implements IFurnitureItemData
         this._flatId = -1;
         this._rentable = false;
         this._isWallItem = (this._furniType === 'I');
+        this._isUsable = wrapper.readBoolean();
     }
 
-    public get itemId(): number
-    {
+    public get itemId(): number {
         return this._itemId;
     }
 
-    public get furniType(): string
-    {
+    public get furniType(): string {
         return this._furniType;
     }
 
-    public get ref(): number
-    {
+    public get ref(): number {
         return this._ref;
     }
 
-    public get spriteId(): number
-    {
+    public get spriteId(): number {
         return this._spriteId;
     }
 
-    public get category(): number
-    {
+    public get category(): number {
         return this._category;
     }
 
-    public get stuffData(): IObjectData
-    {
+    public get stuffData(): IObjectData {
         return this._stuffData;
     }
 
-    public get extra(): number
-    {
+    public get extra(): number {
         return this._extra;
     }
 
-    public get secondsToExpiration(): number
-    {
+    public get secondsToExpiration(): number {
         return this._secondsToExpiration;
     }
 
-    public get creationDay(): number
-    {
+    public get creationDay(): number {
         return this._creationDay;
     }
 
-    public get creationMonth(): number
-    {
+    public get creationMonth(): number {
         return this._creationMonth;
     }
 
-    public get creationYear(): number
-    {
+    public get creationYear(): number {
         return this._creationYear;
     }
 
-    public get isGroupable(): boolean
-    {
+    public get isGroupable(): boolean {
         return this._isGroupable;
     }
 
-    public get songId(): number
-    {
+    public get songId(): number {
         return this._extra;
     }
 
-    public get flatId(): number
-    {
+    public get flatId(): number {
         return this._flatId;
     }
 
-    public get rentable(): boolean
-    {
+    public get rentable(): boolean {
         return this._rentable;
     }
 
-    public get isWallItem(): boolean
-    {
+    public get isWallItem(): boolean {
         return this._isWallItem;
     }
 
-    public get hasRentPeriodStarted(): boolean
-    {
+    public get hasRentPeriodStarted(): boolean {
         return this._hasRentPeriodStarted;
     }
 
-    public get expirationTimeStamp(): number
-    {
+    public get expirationTimeStamp(): number {
         return this._expirationTimeStamp;
     }
 
-    public get isRecycleable(): boolean
-    {
+    public get isRecycleable(): boolean {
         return true;
     }
 
-    public get tradable(): boolean
-    {
+    public get tradable(): boolean {
         return true;
     }
 
-    public get sellable(): boolean
-    {
+    public get sellable(): boolean {
         return true;
     }
 
-    public get slotId(): string
-    {
+    public get slotId(): string {
         return null;
     }
 
-    public get isExternalImageFurni(): boolean
-    {
+    public get isExternalImageFurni(): boolean {
         return (this._furniType.indexOf('external_image') !== -1);
+    }
+
+    public get isUsable(): boolean {
+        return this._isUsable;
     }
 }

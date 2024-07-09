@@ -571,4 +571,6 @@ export class OutgoingHeader {
     public static ROLEPLAY_PERMISSONS_COMPOSER = 8051;
 
     public static USERS_ONLINE = 8052;
+
+    public static DEVICE_OPEN = 8053;
 }

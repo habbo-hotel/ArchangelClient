@@ -1,7 +1,6 @@
 ﻿import { IObjectData } from '../../../../../../api';
 
-export interface IFurnitureItemData
-{
+export interface IFurnitureItemData {
     itemId: number;
     furniType: string;
     ref: number;
@@ -25,4 +24,5 @@ export interface IFurnitureItemData
     creationMonth: number;
     creationYear: number;
     isExternalImageFurni: boolean;
+    isUsable: boolean;
 }

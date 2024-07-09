@@ -28,6 +28,7 @@ export * from './corp/CorpPromoteUserComposer';
 export * from './corp/CorpStartWorkComposer';
 export * from './corp/CorpStopWorkComposer';
 export * from './corp/CorpSuperhireComposer';
+export * from './device/DeviceOpenComposer';
 export * from './device/InfoScreenSaveComposer';
 export * from './game/TimeOfDayQueryComposer';
 export * from './gang/GangDeclineInviteComposer';

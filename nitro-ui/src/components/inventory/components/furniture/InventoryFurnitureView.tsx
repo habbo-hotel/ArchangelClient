@@ -7,6 +7,7 @@ import { useInventoryFurni, useInventoryUnseenTracker } from '../../../../hooks'
 import { InventoryCategoryEmptyView } from '../InventoryCategoryEmptyView';
 import { InventoryFurnitureItemView } from './InventoryFurnitureItemView';
 import { InventoryFurnitureSearchView } from './InventoryFurnitureSearchView';
+import { DeviceOpen } from '../../../../api/roleplay/device/DeviceOpen';
 
 interface InventoryFurnitureViewProps {
     roomSession: IRoomSession;
@@ -81,7 +82,7 @@ export function InventoryFurnitureView({ roomSession = null, roomPreviewer = nul
 
     if (!groupItems || !groupItems.length) return <InventoryCategoryEmptyView title={LocalizeText('inventory.empty.title')} desc={LocalizeText('inventory.empty.desc')} />;
 
-    console.log({ roomSession, roomPreviewer })
+    console.log(selectedItem.getLastItem())
 
     return (
         <Grid>
@@ -111,8 +112,15 @@ export function InventoryFurnitureView({ roomSession = null, roomPreviewer = nul
                     <Column grow justifyContent="between" gap={2}>
                         <Text grow truncate>{selectedItem.name}</Text>
                         <Column gap={1}>
+                            {
+                                selectedItem.getLastItem().isUsable && (
+                                    <Button variant="success" onClick={() => DeviceOpen(selectedItem.getLastItem().id)}>
+                                        Use Device
+                                    </Button>
+                                )
+                            }
                             {!!roomSession &&
-                                <Button variant="success" onClick={event => attemptItemPlacement(selectedItem)}>
+                                <Button variant="primary" onClick={event => attemptItemPlacement(selectedItem)}>
                                     {LocalizeText('inventory.furni.placetoroom')}
                                 </Button>}
                             {(selectedItem && selectedItem.isSellable) &&

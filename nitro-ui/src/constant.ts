@@ -1,0 +1,1 @@
+export const HOTEL_NAME: string = process.env.HOTEL_NAME;

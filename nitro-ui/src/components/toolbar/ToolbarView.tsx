@@ -1,7 +1,8 @@
 import { Dispose, DropBounce, EaseOut, JumpBy, Motions, NitroToolbarAnimateIconEvent, Queue, Wait } from '@nitro-rp/renderer';
 import { CreateLinkEvent, MessengerIconState, OpenMessengerChat } from '../../api';
-import { Base, Flex, LayoutItemCountView } from '../../common';
+import { Base, Flex, LayoutItemCountView, Text } from '../../common';
 import { useFriends, useInventoryUnseenTracker, useMessenger, useRoomEngineEvent } from '../../hooks';
+import { HOTEL_NAME } from '../../constant';
 
 export function ToolbarView() {
     const { getFullCount = 0 } = useInventoryUnseenTracker();
@@ -47,6 +48,9 @@ export function ToolbarView() {
     return (
         <>
             <Flex alignItems="center" justifyContent="between" gap={2} className="nitro-toolbar py-1 px-3">
+                <Flex alignItems="center" id="toolbar-copyright-input-container">
+                    <Text bold fontSize={4} variant="white">{HOTEL_NAME}</Text>
+                </Flex>
                 <Flex gap={2} alignItems="center" style={{ flex: 1, width: '100%' }}>
                     <Flex alignItems="center" gap={2}>
                         <Base pointer className="navigation-item icon icon-rooms" onClick={event => CreateLinkEvent('navigator/toggle')} />

@@ -1,4 +1,4 @@
-import { Column, Flex, FlexProps, Text } from '../../../common';
+import { Column, Flex, FlexProps, Grid, Text } from '../../../common';
 import { LocalizeText } from '../../../api';
 import { ProgressBar } from '../../roleplay-stats/progress-bar/ProgressBar';
 import { useRoleplayStats } from '../../../hooks/roleplay/use-rp-stats';
@@ -10,19 +10,49 @@ interface RoleplayStatsContainerViewProps extends FlexProps {
 export function RoleplayStatsContainerView({ userID }: RoleplayStatsContainerViewProps) {
     const roleplayStats = useRoleplayStats(userID);
     return (
-        <Flex column fullWidth gap={ 1 }>
-            <Column grow gap={ 0 }>
-                <Text bold>{ LocalizeText('roleplay.stats.health') }</Text>
-                    <ProgressBar className="progress-danger" value={roleplayStats.healthNow} minValue={0} maxValue={roleplayStats.healthMax} children={roleplayStats.healthNow <= 0 ? LocalizeText('roleplay.stats.user_is_dead') : undefined} />
-            </Column>
-            <Column grow gap={ 0 }>
-                <Text bold>{ LocalizeText('roleplay.stats.energy') }</Text>                    
-                <ProgressBar className="progress-primary" value={roleplayStats.energyNow} minValue={0} maxValue={roleplayStats.energyMax}/>
-            </Column>
-            <Column grow gap={ 0 }>
-                <Text bold>{ LocalizeText('roleplay.stats.hunger') }</Text>                    
-                <ProgressBar className="progress-warning" value={roleplayStats.hungerNow} minValue={0} maxValue={roleplayStats.hungerMax}/>
-            </Column>
-         </Flex>
+        <>
+            <Text bold fontSize={4}>Stats</Text>
+            <Grid className="bg-muted rounded px-2 py-1">
+                <Column size={4}>
+                    <Text bold fontSize={6}>{LocalizeText('roleplay.stats.health')}</Text>
+                    <Text fontSize={5}>100/100</Text>
+                </Column>
+                <Column size={4}>
+                    <Text bold fontSize={6}>{LocalizeText('roleplay.stats.energy')}</Text>
+                    <Text fontSize={5}>100/100</Text>
+                </Column>
+                <Column size={4}>
+                    <Text bold fontSize={6}>{LocalizeText('roleplay.stats.hunger')}</Text>
+                    <Text fontSize={5}>100/100</Text>
+                </Column>
+            </Grid>
+            <Text bold fontSize={4}>Skill Levels</Text>
+            <Grid className="bg-muted rounded px-2 py-1">
+                <Column size={4}>
+                    <Text bold fontSize={6}>Strength</Text>
+                    <Text fontSize={4}>1</Text>
+                </Column>
+                <Column size={4}>
+                    <Text bold fontSize={6}>Melee</Text>
+                    <Text fontSize={4}>1</Text>
+                </Column>
+                <Column size={4}>
+                    <Text bold fontSize={6}>Combat</Text>
+                    <Text fontSize={4}>1</Text>
+                </Column>
+                <Column size={4}>
+                    <Text bold fontSize={6}>Lumberjack</Text>
+                    <Text fontSize={4}>1</Text>
+                </Column>
+                <Column size={4}>
+                    <Text bold fontSize={6}>Mining</Text>
+                    <Text fontSize={4}>1</Text>
+                </Column>
+                <Column size={4}>
+                    <Text bold fontSize={6}>Fishing</Text>
+                    <Text fontSize={4}>1</Text>
+                </Column>
+            </Grid>
+        </>
     );
 }

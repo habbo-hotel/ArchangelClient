@@ -1,13 +1,12 @@
 import './UserPhone.css';
-import { ReactNode, useEffect, useMemo, useRef, useState } from "react";
-import { Base, Column, DraggableWindow, Flex, Grid, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from "../../../common";
+import { ReactNode, useEffect, useMemo, useState } from "react";
+import { Column, DraggableWindow, Flex, Grid, Text } from "../../../common";
 import { useMessageEvent } from "../../../hooks";
 import { PhoneOpenEvent } from "@nitro-rp/renderer"
 import { Button } from "react-bootstrap";
 import { ButtonVariant } from "react-bootstrap/esm/types";
-import { FaComment, FaIdBadge, FaShieldAlt, FaTimes, FaTimesCircle, FaUsers } from "react-icons/fa";
+import { FaComment, FaDollarSign, FaIdBadge, FaShieldAlt, FaTimesCircle, FaUsers } from "react-icons/fa";
 import { DeviceClose } from "../../../api/roleplay/device/DeviceClose";
-import { UserPhoneView } from './UserPhoneView';
 
 export function UserPhone() {
     const [isVisible, setIsVisible] = useState(false)
@@ -17,9 +16,8 @@ export function UserPhone() {
         {
             key: 'contacts',
             label: (
-                <Flex fullWidth justifyContent="between">
-                    <FaUsers style={{ marginRight: 8 }} />
-                    Contacts
+                <Flex fullWidth center>
+                    <FaUsers style={{ marginRight: 8, fontSize: '4rem' }} />
                 </Flex>
             ),
             color: 'primary',
@@ -28,35 +26,42 @@ export function UserPhone() {
         {
             key: 'messages',
             label: (
-                <Flex fullWidth justifyContent="between">
-                    <FaComment style={{ marginRight: 8 }} />
-                    Messages
+                <Flex fullWidth center>
+                    <FaComment style={{ marginRight: 8, fontSize: '4rem' }} />
                 </Flex>
             ),
             color: 'success',
             onClick: () => alert('mhmmmm wyd'),
         },
         {
-            key: 'emergency',
+            key: 'bank',
             label: (
-                <Flex fullWidth justifyContent="between">
-                    <FaShieldAlt style={{ marginRight: 8 }} />
-                    Emergency
+                <Flex fullWidth center>
+                    <FaDollarSign style={{ marginRight: 8, fontSize: '4rem' }} />
                 </Flex>
             ),
-            color: 'danger',
-            onClick: () => alert('plz halp me'),
+            color: 'success',
+            onClick: () => alert('pay me'),
         },
         {
             key: 'profile',
             label: (
-                <Flex fullWidth justifyContent="between">
-                    <FaIdBadge style={{ marginRight: 8 }} />
-                    Profile
+                <Flex fullWidth center>
+                    <FaIdBadge style={{ marginRight: 8, fontSize: '4rem' }} />
                 </Flex>
             ),
             color: 'dark',
             onClick: () => alert('dis is who i am'),
+        },
+        {
+            key: 'emergency',
+            label: (
+                <Flex fullWidth center>
+                    <FaShieldAlt style={{ marginRight: 8, fontSize: '4rem' }} />
+                </Flex>
+            ),
+            color: 'danger',
+            onClick: () => alert('plz halp me'),
         },
     ], []);
 

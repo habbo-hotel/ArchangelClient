@@ -5,7 +5,7 @@ import { useMessageEvent } from "../../../hooks";
 import { PhoneOpenEvent } from "@nitro-rp/renderer"
 import { Button } from "react-bootstrap";
 import { ButtonVariant } from "react-bootstrap/esm/types";
-import { FaComment, FaDollarSign, FaIdBadge, FaShieldAlt, FaTimesCircle, FaUsers } from "react-icons/fa";
+import { FaCaretLeft, FaComment, FaDollarSign, FaIdBadge, FaShieldAlt, FaTimes, FaTimesCircle, FaUsers } from "react-icons/fa";
 import { DeviceClose } from "../../../api/roleplay/device/DeviceClose";
 import { BankView } from './views/BankView';
 import { MessagesView } from './views/MessagesView';
@@ -38,7 +38,7 @@ export function UserPhone() {
                 </Flex>
             ),
             color: 'primary',
-            children: <ContactListView goBack={goBack} />,
+            children: <ContactListView goBack={goBack} onMessage={contact => alert(`hey ${contact.name}`)} />,
         },
         {
             key: 'messages',
@@ -48,7 +48,7 @@ export function UserPhone() {
                 </Flex>
             ),
             color: 'success',
-            children: <MessagesView />,
+            children: <MessagesView goBack={goBack} />,
         },
         {
             key: 'bank',
@@ -58,7 +58,7 @@ export function UserPhone() {
                 </Flex>
             ),
             color: 'success',
-            children: <BankView />,
+            children: <BankView goBack={goBack} />,
         },
         {
             key: 'profile',
@@ -68,7 +68,7 @@ export function UserPhone() {
                 </Flex>
             ),
             color: 'dark',
-            children: <ProfileView />,
+            children: <ProfileView goBack={goBack} />,
         },
         {
             key: 'emergency',
@@ -78,7 +78,7 @@ export function UserPhone() {
                 </Flex>
             ),
             color: 'danger',
-            children: <EmergencyView />,
+            children: <EmergencyView goBack={goBack} />,
         },
     ], []);
 
@@ -114,11 +114,8 @@ export function UserPhone() {
                         <div className="side">
                             <div className="screen">
                                 <video src="https://images.apple.com/media/us/iphone-x/2017/01df5b43-28e4-4848-bf20-490c34a926a7/overview/primary/hero/small_2x.mp4" autoPlay loop />
-                                <div style={{ position: 'absolute', top: 25, left: 0, width: '100%', minHeight: '100%', overflowY: 'auto', padding: 8 }}>
-                                    <Text color="white" bold fontSize={2} onClick={onToggle} style={{ cursor: 'pointer' }}>
-                                        {!activeApp && <><FaTimesCircle /> <Text bold fontSize={2}>FLEXPHONE</Text></>}
-                                    </Text>
-                                    <Grid fullWidth={true} fullHeight={true}>
+                                <div style={{ position: 'absolute', top: 25, left: 0, width: '100%', height: 550, padding: 8 }}>
+                                    <Grid fullWidth={true} fullHeight={false} overflow="hidden" gap={2}>
                                         {
                                             activeApp
                                                 ? (
@@ -126,13 +123,27 @@ export function UserPhone() {
                                                         {activeApp.children}
                                                     </Column>
                                                 )
-                                                : phoneApps.map(app => (
-                                                    <Column key={`app_${app.key}`} size={6} fullWidth={true} fullHeight={true}>
-                                                        <Button variant={app.color} onClick={() => setActiveApp(app)}>
-                                                            {app.label}
-                                                        </Button>
-                                                    </Column>
-                                                ))
+                                                : (
+                                                    <>
+                                                        <Flex center={true} justifyContent="between">
+                                                            <Flex center>
+                                                                <Text color="white" bold fontSize={2} onClick={() => setIsVisible(false)} style={{ cursor: 'pointer', marginRight: 8 }}>
+                                                                    <FaTimesCircle />
+                                                                </Text>
+                                                                <Text fontSize={2}>
+                                                                    FlexPhone
+                                                                </Text>
+                                                            </Flex>
+                                                        </Flex >
+                                                        {phoneApps.map(app => (
+                                                            <Column key={`app_${app.key}`} fullHeight={false} fullWidth={false} size={12} style={{ flex: 0 }}>
+                                                                <Button variant={app.color} onClick={() => setActiveApp(app)}>
+                                                                    {app.label}
+                                                                </Button>
+                                                            </Column>
+                                                        ))}
+                                                    </>
+                                                )
                                         }
                                     </Grid>
                                 </div>

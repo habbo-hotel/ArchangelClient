@@ -1,12 +1,14 @@
 import { FaCaretLeft, FaUsers } from "react-icons/fa";
 import { Column, Flex, Grid, LayoutAvatarImageView, Text } from "../../../../common";
 import { useFriends } from "../../../../hooks";
+import { MessengerFriend } from "../../../../api";
 
 interface ContactListViewProps {
     goBack(): void;
+    onMessage(contact: MessengerFriend): void;
 }
 
-export function ContactListView({ goBack }: ContactListViewProps) {
+export function ContactListView({ goBack, onMessage }: ContactListViewProps) {
     const { onlineFriends = [] } = useFriends();
     return (
         <>

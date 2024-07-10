@@ -5,13 +5,13 @@ import { useMessageEvent } from "../../../hooks";
 import { PhoneOpenEvent } from "@nitro-rp/renderer"
 import { Button } from "react-bootstrap";
 import { ButtonVariant } from "react-bootstrap/esm/types";
-import { FaCaretLeft, FaComment, FaDollarSign, FaIdBadge, FaShieldAlt, FaTimesCircle, FaUsers } from "react-icons/fa";
+import { FaComment, FaDollarSign, FaIdBadge, FaShieldAlt, FaTimesCircle, FaUsers } from "react-icons/fa";
 import { DeviceClose } from "../../../api/roleplay/device/DeviceClose";
 import { BankView } from './views/BankView';
 import { MessagesView } from './views/MessagesView';
 import { ProfileView } from './views/ProfileView';
-import { ContactsView } from './views/ContactsView';
 import { EmergencyView } from './views/EmergencyView';
+import { ContactListView } from './contacts/ContactListView';
 
 interface PhoneApp {
     key: string;
@@ -23,6 +23,11 @@ interface PhoneApp {
 export function UserPhone() {
     const [isVisible, setIsVisible] = useState(false)
     const [itemID, setItemID] = useState<number>();
+    const [activeApp, setActiveApp] = useState<PhoneApp>();
+
+    function goBack() {
+        setActiveApp(undefined);
+    }
 
     const phoneApps: Array<PhoneApp> = useMemo(() => [
         {
@@ -33,7 +38,7 @@ export function UserPhone() {
                 </Flex>
             ),
             color: 'primary',
-            children: <ContactsView />,
+            children: <ContactListView goBack={goBack} />,
         },
         {
             key: 'messages',
@@ -77,8 +82,6 @@ export function UserPhone() {
         },
     ], []);
 
-    const [activeApp, setActiveApp] = useState<PhoneApp>();
-
     useMessageEvent<PhoneOpenEvent>(PhoneOpenEvent, event => {
         setIsVisible(true);
         setItemID(event.getParser().itemID);
@@ -111,21 +114,20 @@ export function UserPhone() {
                         <div className="side">
                             <div className="screen">
                                 <video src="https://images.apple.com/media/us/iphone-x/2017/01df5b43-28e4-4848-bf20-490c34a926a7/overview/primary/hero/small_2x.mp4" autoPlay loop />
-                                <div style={{ position: 'absolute', top: 25, left: 25 }}>
+                                <div style={{ position: 'absolute', top: 25, left: 0, width: '100%', minHeight: '100%', overflowY: 'auto', padding: 8 }}>
                                     <Text color="white" bold fontSize={2} onClick={onToggle} style={{ cursor: 'pointer' }}>
-                                        {activeApp ? <FaCaretLeft /> : <><FaTimesCircle /> <Text bold fontSize={2}>FLEXPHONE</Text></>}
+                                        {!activeApp && <><FaTimesCircle /> <Text bold fontSize={2}>FLEXPHONE</Text></>}
                                     </Text>
-
-                                    <Grid>
+                                    <Grid fullWidth={true} fullHeight={true}>
                                         {
                                             activeApp
                                                 ? (
-                                                    <Column fullHeight fullWidth>
+                                                    <Column fullWidth={true} fullHeight={true}>
                                                         {activeApp.children}
                                                     </Column>
                                                 )
                                                 : phoneApps.map(app => (
-                                                    <Column key={`app_${app.key}`} size={6}>
+                                                    <Column key={`app_${app.key}`} size={6} fullWidth={true} fullHeight={true}>
                                                         <Button variant={app.color} onClick={() => setActiveApp(app)}>
                                                             {app.label}
                                                         </Button>
@@ -147,6 +149,6 @@ export function UserPhone() {
                     </div>
                 </Flex>
             </Column>
-        </DraggableWindow>
+        </DraggableWindow >
     )
 }

@@ -5,11 +5,10 @@ import { useMessageEvent } from "../../../hooks";
 import { PhoneOpenEvent } from "@nitro-rp/renderer"
 import { Button } from "react-bootstrap";
 import { ButtonVariant } from "react-bootstrap/esm/types";
-import { FaComment, FaDollarSign, FaIdBadge, FaShieldAlt, FaTimesCircle, FaUsers } from "react-icons/fa";
+import { FaComment, FaDollarSign, FaShieldAlt, FaTimesCircle, FaUsers } from "react-icons/fa";
 import { DeviceClose } from "../../../api/roleplay/device/DeviceClose";
 import { BankView } from './views/BankView';
 import { MessagesView } from './views/MessagesView';
-import { ProfileView } from './views/ProfileView';
 import { EmergencyView } from './views/EmergencyView';
 import { ContactListView } from './contacts/ContactListView';
 
@@ -57,18 +56,8 @@ export function UserPhone() {
                     <FaDollarSign style={{ marginRight: 8, fontSize: '4rem' }} />
                 </Flex>
             ),
-            color: 'success',
-            children: <BankView goBack={goBack} />,
-        },
-        {
-            key: 'profile',
-            label: (
-                <Flex fullWidth center>
-                    <FaIdBadge style={{ marginRight: 8, fontSize: '4rem' }} />
-                </Flex>
-            ),
             color: 'dark',
-            children: <ProfileView goBack={goBack} />,
+            children: <BankView goBack={goBack} />,
         },
         {
             key: 'emergency',

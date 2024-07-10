@@ -1,7 +1,6 @@
 import { FaCaretLeft, FaShieldAlt } from "react-icons/fa";
 import { Column, Flex, Grid, Text } from "../../../../common";
 import { Button } from "react-bootstrap";
-import { CorpBadge } from "../../../roleplay-stats/corp-badge/CorpBadge";
 import { useState } from "react";
 import { CorpType } from "@nitro-rp/renderer";
 

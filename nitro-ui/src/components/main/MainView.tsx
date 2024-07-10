@@ -45,7 +45,6 @@ export function MainView() {
             <NavigatorView />
             <InventoryView />
             <CatalogView />
-            <FriendsView />
             <LeftSideView />
             <RightSideView />
             <UserSettingsView />

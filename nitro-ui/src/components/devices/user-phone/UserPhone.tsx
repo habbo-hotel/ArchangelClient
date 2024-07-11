@@ -7,10 +7,10 @@ import { Button } from "react-bootstrap";
 import { ButtonVariant } from "react-bootstrap/esm/types";
 import { FaComment, FaDollarSign, FaShieldAlt, FaTimesCircle, FaUsers } from "react-icons/fa";
 import { DeviceClose } from "../../../api/roleplay/device/DeviceClose";
-import { BankView } from './views/BankView';
 import { EmergencyView } from './views/EmergencyView';
 import { ContactListView } from './contacts/ContactListView';
 import { MessageView } from './messages/MessageView';
+import { BankAccountListView } from './bank/BankAccountListView';
 
 interface PhoneApp {
     key: string;
@@ -57,7 +57,7 @@ export function UserPhone() {
                 </Flex>
             ),
             color: 'dark',
-            children: <BankView goBack={goBack} />,
+            children: <BankAccountListView goBack={goBack} />,
         },
         {
             key: 'emergency',

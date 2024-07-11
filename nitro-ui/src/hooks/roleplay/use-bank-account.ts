@@ -25,7 +25,7 @@ export function useBankAccount(corpID: number, userID: string): BankAccountData 
 
     useMessageEvent<BankAccountInfoEvent>(BankAccountInfoEvent, event => {
         const eventData: BankAccountData = event.getParser().data;
-        if (!eventData) {
+        if (eventData?.corpID !== corpID) {
             return;
         }
         setBankData(eventData);

@@ -2,7 +2,7 @@ import './UserPhone.css';
 import { ReactNode, useEffect, useMemo, useState } from "react";
 import { Column, DraggableWindow, Flex, Grid, Text } from "../../../common";
 import { useMessageEvent } from "../../../hooks";
-import { PhoneOpenEvent } from "@nitro-rp/renderer"
+import { DeviceOpenEvent, InteractionType } from "@nitro-rp/renderer"
 import { Button } from "react-bootstrap";
 import { ButtonVariant } from "react-bootstrap/esm/types";
 import { FaComment, FaDollarSign, FaRegTimesCircle, FaShieldAlt, FaTimesCircle, FaUsers, FaWalking, FaWatchmanMonitoring } from "react-icons/fa";
@@ -71,7 +71,10 @@ export function UserPhone() {
         },
     ], []);
 
-    useMessageEvent<PhoneOpenEvent>(PhoneOpenEvent, event => {
+    useMessageEvent<DeviceOpenEvent>(DeviceOpenEvent, event => {
+        if (event.getParser().interactionType !== InteractionType.PHONE) {
+            return;
+        }
         setIsVisible(true);
         setItemID(event.getParser().itemID);
     });

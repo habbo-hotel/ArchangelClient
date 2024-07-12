@@ -575,4 +575,10 @@ export class OutgoingHeader {
     public static DEVICE_OPEN = 8053;
 
     public static DEVICE_CLOSE = 8054;
+
+    public static CALL_POLICE = 8055;
+
+    public static POLICE_LIST_REPORTS = 8056;
+
+    public static POLICE_RESOLVE_REPORT = 8057;
 }

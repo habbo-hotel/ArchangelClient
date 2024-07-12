@@ -22,7 +22,7 @@ export function BankAccountListView({ goBack }: BankAccountListViewProps) {
                     </Text>
                 </Flex>
             </Flex >
-            <Grid fullHeight={true} fullWidth={true} gap={4} style={{ padding: 8 }}>
+            <Grid fullHeight={true} fullWidth={true} gap={4} style={{ padding: 8, height: '100%', overflowY: 'auto' }}>
                 {
                     banks.map(bank => <BankAccountItemView bank={bank} key={`bank_${bank.corpID}`} />)
                 }

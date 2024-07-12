@@ -1,4 +1,4 @@
-import { CanCreateRoomEventEvent, CantConnectMessageParser, DoorbellMessageEvent, FlatAccessDeniedMessageEvent, FlatCreatedEvent, FollowFriendMessageComposer, GenericErrorEvent, GetGuestRoomMessageComposer, GetGuestRoomResultEvent, GetUserEventCatsMessageComposer, GetUserFlatCatsMessageComposer, HabboWebTools, LegacyExternalInterface, NavigatorCategoryDataParser, NavigatorEventCategoryDataParser, NavigatorHomeRoomEvent, NavigatorMetadataEvent, NavigatorOpenRoomCreatorEvent, NavigatorSearchEvent, NavigatorSearchResultSet, NavigatorTopLevelContext, RoomDataParser, RoomDoorbellAcceptedEvent, RoomEnterErrorEvent, RoomEntryInfoMessageEvent, RoomForwardEvent, RoomScoreEvent, RoomSettingsUpdatedEvent, SecurityLevel, UserEventCatsEvent, UserFlatCatsEvent, UserInfoEvent, UserPermissionsEvent } from '@nitro-rp/renderer';
+import { CanCreateRoomEventEvent, CantConnectMessageParser, DoorbellMessageEvent, FlatAccessDeniedMessageEvent, FlatCreatedEvent, FollowFriendMessageComposer, GenericErrorEvent, GetGuestRoomMessageComposer, GetGuestRoomResultEvent, GetUserEventCatsMessageComposer, GetUserFlatCatsMessageComposer, HabboWebTools, LegacyExternalInterface, NavigatorCategoryDataParser, NavigatorHomeRoomEvent, NavigatorMetadataEvent, NavigatorOpenRoomCreatorEvent, NavigatorSearchEvent, NavigatorSearchResultSet, NavigatorTopLevelContext, RoomDataParser, RoomDoorbellAcceptedEvent, RoomEnterErrorEvent, RoomEntryInfoMessageEvent, RoomForwardEvent, RoomScoreEvent, RoomSettingsUpdatedEvent, SecurityLevel, UserFlatCatsEvent, UserInfoEvent, UserPermissionsEvent } from '@nitro-rp/renderer';
 import { useState } from 'react';
 import { useBetween } from 'use-between';
 import { CreateLinkEvent, CreateRoomSession, DoorStateType, GetConfiguration, GetSessionDataManager, INavigatorData, LocalizeText, NotificationAlertType, SendMessageComposer, TryVisitRoom, VisitDesktop } from '../../api';
@@ -280,6 +280,8 @@ const useNavigatorState = () => {
 
             return newValue;
         });
+
+        console.log(parser.result)
 
         setSearchResult(parser.result);
     });

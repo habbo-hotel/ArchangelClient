@@ -1,5 +1,5 @@
 import { NavigatorSearchComposer, RoomMuteComposer, RoomSettingsComposer, SecurityLevel, ToggleStaffPickMessageComposer, UpdateHomeRoomMessageComposer } from '@nitro-rp/renderer';
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import { CreateLinkEvent, DispatchUiEvent, GetGroupInformation, GetSessionDataManager, LocalizeText, ReportType, SendMessageComposer } from '../../../../api';
 import { Button, classNames, Column, Flex, LayoutBadgeImageView, LayoutRoomThumbnailView, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text, UserProfileIconView } from '../../../../common';
 import { RoomWidgetThumbnailEvent } from '../../../../events';
@@ -11,8 +11,6 @@ export class NavigatorRoomInfoViewProps {
 
 export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props => {
     const { onCloseClick = null } = props;
-    const [isRoomPicked, setIsRoomPicked] = useState(false);
-    const [isRoomMuted, setIsRoomMuted] = useState(false);
     const { report = null } = useHelp();
     const { navigatorData = null } = useNavigator();
 
@@ -53,11 +51,9 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props => {
                 SendMessageComposer(new RoomSettingsComposer(navigatorData.enteredGuestRoom.roomId));
                 return;
             case 'toggle_pick':
-                setIsRoomPicked(value => !value);
                 SendMessageComposer(new ToggleStaffPickMessageComposer(navigatorData.enteredGuestRoom.roomId));
                 return;
             case 'toggle_mute':
-                setIsRoomMuted(value => !value);
                 SendMessageComposer(new RoomMuteComposer());
                 return;
             case 'open_floorplan_editor':
@@ -72,14 +68,6 @@ export const NavigatorRoomInfoView: FC<NavigatorRoomInfoViewProps> = props => {
         }
 
     }
-
-    useEffect(() => {
-        if (!navigatorData) return;
-
-        setIsRoomPicked(navigatorData.currentRoomIsStaffPick);
-
-        if (navigatorData.enteredGuestRoom) setIsRoomMuted(navigatorData.enteredGuestRoom.allInRoomMuted);
-    }, [navigatorData]);
 
     if (!navigatorData.enteredGuestRoom) return null;
 

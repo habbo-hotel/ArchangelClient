@@ -1,22 +1,19 @@
 import { IMessageDataWrapper } from '../../../../../../api';
 import { NavigatorSearchResultList } from './NavigatorSearchResultList';
 
-export class NavigatorSearchResultSet
-{
+export class NavigatorSearchResultSet {
     private _code: string;
     private _data: string;
     private _results: NavigatorSearchResultList[];
 
-    constructor(wrapper: IMessageDataWrapper)
-    {
-        if(!wrapper) throw new Error('invalid_wrapper');
+    constructor(wrapper: IMessageDataWrapper) {
+        if (!wrapper) throw new Error('invalid_wrapper');
 
         this.flush();
         this.parse(wrapper);
     }
 
-    public flush(): boolean
-    {
+    public flush(): boolean {
         this._code = null;
         this._data = null;
         this._results = [];
@@ -24,17 +21,15 @@ export class NavigatorSearchResultSet
         return true;
     }
 
-    public parse(wrapper: IMessageDataWrapper): boolean
-    {
-        if(!wrapper) return false;
+    public parse(wrapper: IMessageDataWrapper): boolean {
+        if (!wrapper) return false;
 
         this._code = wrapper.readString();
         this._data = wrapper.readString();
 
         let totalResults = wrapper.readInt();
 
-        while(totalResults > 0)
-        {
+        while (totalResults > 0) {
             this._results.push(new NavigatorSearchResultList(wrapper));
 
             totalResults--;
@@ -43,18 +38,25 @@ export class NavigatorSearchResultSet
         return true;
     }
 
-    public get code(): string
-    {
+    public get code(): string {
         return this._code;
     }
 
-    public get data(): string
-    {
+    public get data(): string {
         return this._data;
     }
 
-    public get results(): NavigatorSearchResultList[]
-    {
-        return this._results;
+    public get results(): NavigatorSearchResultList[] {
+        return this._results
+            .map(res => ({
+                ...res as any,
+                rooms: res.rooms.sort((a, b) => b.userCount - a.userCount),
+                totalUserCount: res.rooms.reduce((sum, room) => sum + room.userCount, 0)
+            }))
+            .sort((a, b) => b.totalUserCount - a.totalUserCount)
+            .map(res => {
+                const { totalUserCount, ...rest } = res;
+                return rest;
+            });
     }
 }

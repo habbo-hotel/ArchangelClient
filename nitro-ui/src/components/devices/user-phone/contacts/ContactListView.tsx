@@ -23,8 +23,8 @@ export function ContactListView({ goBack, onMessage }: ContactListViewProps) {
                     </Text>
                 </Flex>
             </Flex >
-            <Grid fullHeight={true} fullWidth={true} gap={4} style={{ padding: 8 }}>
-                <Column size={12}>
+            <Grid fullHeight={true} fullWidth={true} gap={4} style={{ padding: 8, height: '100%', overflowY: 'auto' }}>
+                <Column size={12} fullHeight={false}>
                     <Text bold fontSize={5}>Online ({onlineFriends.length})</Text>
                     {
                         onlineFriends.length === 0 && (
@@ -40,7 +40,7 @@ export function ContactListView({ goBack, onMessage }: ContactListViewProps) {
                         </Column>
                     ))
                 }
-                <Column size={12}>
+                <Column size={12} fullHeight={false}>
                     <Text bold fontSize={5}>Offline ({offlineFriends.length})</Text>
                     {
                         offlineFriends.length === 0 && (

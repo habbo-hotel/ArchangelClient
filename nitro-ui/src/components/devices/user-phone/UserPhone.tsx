@@ -95,7 +95,7 @@ export function UserPhone() {
                         <div className="side">
                             <div className="screen">
                                 <video src="https://images.apple.com/media/us/iphone-x/2017/01df5b43-28e4-4848-bf20-490c34a926a7/overview/primary/hero/small_2x.mp4" autoPlay loop />
-                                <div style={{ position: 'absolute', top: 25, left: 0, width: '100%', height: 550, padding: 8 }}>
+                                <div style={{ position: 'absolute', top: 25, left: 0, width: '100%', height: 620, padding: 8 }}>
                                     {!activeApp && (
                                         <Grid fullWidth={true} fullHeight={false} overflow="hidden" gap={2}>
                                             <Flex center={true} justifyContent="between" fullWidth={true}>

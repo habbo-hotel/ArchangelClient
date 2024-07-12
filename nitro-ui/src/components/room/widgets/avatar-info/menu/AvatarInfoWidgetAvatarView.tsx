@@ -1,6 +1,6 @@
-import { CorpType, RoomObjectCategory, RoomObjectVariable, RoomUnitGiveHandItemComposer, TradingOpenComposer } from '@nitro-rp/renderer';
+import { CorpType, RemoveFriendComposer, RequestFriendComposer, RoomObjectCategory, RoomObjectVariable, RoomUnitGiveHandItemComposer, TradingOpenComposer } from '@nitro-rp/renderer';
 import { FC, useEffect, useMemo, useState } from 'react';
-import { AvatarInfoUser, CreateLinkEvent, DispatchUiEvent, GetOwnRoomObject, GetUserProfile, LocalizeText, RoomWidgetUpdateChatInputContentEvent, SendMessageComposer } from '../../../../../api';
+import { AvatarInfoUser, DispatchUiEvent, GetOwnRoomObject, GetUserProfile, LocalizeText, RoomWidgetUpdateChatInputContentEvent, SendMessageComposer } from '../../../../../api';
 import { useFriends, useSessionInfo } from '../../../../../hooks';
 import { ContextMenuHeaderView } from '../../context-menu/ContextMenuHeaderView';
 import { ContextMenuListItemView } from '../../context-menu/ContextMenuListItemView';
@@ -20,7 +20,6 @@ import { PoliceEscortUser } from '../../../../../api/roleplay/police/PoliceEscor
 import { useCrimes } from '../../../../../api/roleplay/police/GetCrimes';
 import { useCombatDelay } from '../../../../../hooks/roleplay/use-combat-delay';
 import { useCorpData } from '../../../../../hooks/roleplay/use-corp-data';
-import { useCorpPositionData } from '../../../../../hooks/roleplay/use-corp-position-data';
 
 interface AvatarInfoWidgetAvatarViewProps {
     avatarInfo: AvatarInfoUser;
@@ -40,13 +39,11 @@ export const AvatarInfoWidgetAvatarView: FC<AvatarInfoWidgetAvatarViewProps> = p
     const combatDelay = useCombatDelay();
     const sessionRoleplayStats = useRoleplayStats(sessionInfo?.userId);
     const [mode, setMode] = useState(MODE_NORMAL);
-    const { canRequestFriend = null } = useFriends();
+    const { canRequestFriend = null, getFriend, requestFriend } = useFriends();
     const crimeList = useCrimes();
 
     const myRoleplayStats = useRoleplayStats(sessionInfo?.userId)
     const myCorpData = useCorpData(myRoleplayStats.corporationID);
-
-    console.log(myCorpData)
 
     const canGiveHandItem = useMemo(() => {
         let flag = false;
@@ -125,7 +122,10 @@ export const AvatarInfoWidgetAvatarView: FC<AvatarInfoWidgetAvatarViewProps> = p
                     DispatchUiEvent(new RoomWidgetUpdateChatInputContentEvent(RoomWidgetUpdateChatInputContentEvent.WHISPER, avatarInfo.name));
                     break;
                 case 'friend':
-                    CreateLinkEvent(`friends/request/${avatarInfo.webID}/${avatarInfo.name}`);
+                    SendMessageComposer(new RequestFriendComposer(avatarInfo.name));
+                    break;
+                case 'unfriend':
+                    SendMessageComposer(new RemoveFriendComposer(avatarInfo.webID));
                     break;
                 case 'trade':
                     SendMessageComposer(new TradingOpenComposer(avatarInfo.roomIndex));
@@ -142,8 +142,6 @@ export const AvatarInfoWidgetAvatarView: FC<AvatarInfoWidgetAvatarViewProps> = p
     useEffect(() => {
         setMode(MODE_NORMAL);
     }, [avatarInfo]);
-
-    const canBeArrested = roleplayStats.isCuffed && !!roleplayStats.escortedByUserID;
 
     return (
         <ContextMenuView objectId={avatarInfo.roomIndex} category={RoomObjectCategory.UNIT} userType={avatarInfo.userType} onClose={onClose} collapsable={true}>
@@ -203,10 +201,17 @@ export const AvatarInfoWidgetAvatarView: FC<AvatarInfoWidgetAvatarViewProps> = p
                                         </ContextMenuListItemView>
                                     )
                                         : null}
-                                {canRequestFriend(avatarInfo.webID) &&
-                                    <ContextMenuListItemView onClick={() => processAction('friend')}>
-                                        {LocalizeText('infostand.button.friend')}
-                                    </ContextMenuListItemView>}
+                                {
+                                    canRequestFriend(avatarInfo.webID)
+                                        ? <ContextMenuListItemView onClick={() => processAction('friend')}>
+                                            {LocalizeText('infostand.button.friend')}
+                                        </ContextMenuListItemView>
+                                        : !!getFriend(avatarInfo.webID)
+                                            ? <ContextMenuListItemView onClick={() => processAction('unfriend')}>
+                                                Unfriend
+                                            </ContextMenuListItemView>
+                                            : ''
+                                }
                                 <ContextMenuListItemView onClick={() => processAction('trade')}>
                                     {LocalizeText('infostand.button.trade')}
                                 </ContextMenuListItemView>

@@ -1,9 +1,12 @@
+import './MessageThreadRow.css';
 import { useMemo } from 'react';
 import { Base, Flex, LayoutAvatarImageView } from '../../../../common';
 import { GetGroupChatData, GetSessionDataManager, MessengerGroupType, MessengerThread, MessengerThreadChatGroup } from '../../../../api';
+import { useSessionInfo } from '../../../../hooks';
 
 export function MessageThreadRow({ thread, group }: { thread: MessengerThread, group: MessengerThreadChatGroup }) {
     const groupChatData = useMemo(() => ((group.type === MessengerGroupType.GROUP_CHAT) && GetGroupChatData(group.chats[0].extraData)), [group]);
+    const { userInfo } = useSessionInfo();
 
     const isOwnChat = useMemo(() => {
         if (!thread || !group) return false;
@@ -22,24 +25,14 @@ export function MessageThreadRow({ thread, group }: { thread: MessengerThread, g
     }
 
     return (
-        <Flex fullWidth justifyContent={isOwnChat ? 'end' : 'start'} gap={2}>
-            <Base shrink className="message-avatar">
-                {((group.type === MessengerGroupType.PRIVATE_CHAT) && !isOwnChat) &&
-                    <LayoutAvatarImageView figure={thread.participant.figure} direction={2} style={{ height: 80 }} />}
-                {(groupChatData && !isOwnChat) &&
-                    <LayoutAvatarImageView figure={groupChatData.figure} direction={2} style={{ height: 80 }} />}
-            </Base>
-            <Base className={'bg-light text-black border-radius mb-2 rounded py-1 px-2 messages-group-' + (isOwnChat ? 'right' : 'left')}>
-                <Base className="fw-bold">
-                    {isOwnChat && GetSessionDataManager().userName}
-                    {!isOwnChat && (groupChatData ? groupChatData.username : thread.participant.name)}
-                </Base>
-                {group.chats.map((chat, index) => <Base key={index} className="text-break">{chat.message}</Base>)}
-            </Base>
-            {isOwnChat &&
-                <Base shrink className="message-avatar">
-                    <LayoutAvatarImageView figure={GetSessionDataManager().figure} direction={4} style={{ height: 80 }} />
-                </Base>}
-        </Flex>
+        <div className="imessage">
+            <div className={`message-wrapper ${isOwnChat ? 'from-me' : 'from-them'}`}>
+                <LayoutAvatarImageView figure={isOwnChat ? userInfo?.figure : thread.participant.figure} direction={2} style={{ height: 80 }} />
+                <p className={`text-break ${isOwnChat ? 'from-me' : 'from-them'}`}>
+                    {group.chats.map(_ => <>{_.message}<br /></>)}
+                </p>
+
+            </div>
+        </div>
     );
 }

@@ -27,11 +27,11 @@ export function MessageThreadRow({ thread, group }: { thread: MessengerThread, g
     return (
         <div className="imessage">
             <div className={`message-wrapper ${isOwnChat ? 'from-me' : 'from-them'}`}>
-                <LayoutAvatarImageView figure={isOwnChat ? userInfo?.figure : thread.participant.figure} direction={2} style={{ height: 80 }} />
+                {!isOwnChat && <LayoutAvatarImageView className="user-photo" figure={isOwnChat ? userInfo?.figure : thread.participant.figure} direction={2} style={{ height: 80 }} />}
                 <p className={`text-break ${isOwnChat ? 'from-me' : 'from-them'}`}>
                     {group.chats.map(_ => <>{_.message}<br /></>)}
                 </p>
-
+                {isOwnChat && <LayoutAvatarImageView className="user-photo" figure={isOwnChat ? userInfo?.figure : thread.participant.figure} direction={2} style={{ height: 80 }} />}
             </div>
         </div>
     );

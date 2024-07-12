@@ -1,67 +1,30 @@
 .imessage {
   border-radius: 0.25rem;
   display: flex;
+  flex: 1;
   flex-direction: column;
   font-family: "SanFrancisco";
   font-size: 1.25rem;
   margin: 0 auto 1rem;
-  max-width: 600px;
   padding: 0.5rem 1.5rem;
+  width: 100%;
 }
 
 .imessage p {
   border-radius: 1.15rem;
-  line-height: 1.25;
-  max-width: 75%;
+  line-height: 1;
+  width: 100%;
+  max-height:  75px;
+  overflow-y: auto;
   padding: 0.5rem .875rem;
   position: relative;
   word-wrap: break-word;
-}
-
-.imessage p::before,
-.imessage p::after {
-  bottom: -0.1rem;
-  content: "";
-  height: 1rem;
-  position: absolute;
 }
 
 p.from-me {
   align-self: flex-end;
   background-color: #248bf5;
   color: #fff; 
-}
-
-p.from-me::before {
-  border-bottom-left-radius: 0.8rem 0.7rem;
-  border-right: 1rem solid #248bf5;
-  right: -0.35rem;
-  transform: translate(0, -0.1rem);
-}
-
-p.from-me::after {
-  background-color: #fff;
-  border-bottom-left-radius: 0.5rem;
-  right: -40px;
-  transform: translate(-30px, -2px);
-  width: 10px;
-}
-
-p[class^="from-"] {
-  margin: 0.5rem 0;
-  width: fit-content;
-}
-
-p.from-me ~ p.from-me {
-  margin: 0.25rem 0 0;
-}
-
-p.from-me ~ p.from-me:not(:last-child) {
-  margin: 0.25rem 0 0;
-}
-
-p.from-me ~ p.from-me:last-child {
-  margin-bottom: 0.5rem;
 }
 
 p.from-them {
@@ -83,19 +46,6 @@ p.from-them::after {
   left: 20px;
   transform: translate(-30px, -2px);
   width: 10px;
-}
-
-p[class^="from-"].emoji {
-  background: none;
-  font-size: 2.5rem;
-}
-
-p[class^="from-"].emoji::before {
-  content: none;
-}
-
-.no-tail::before {
-  display: none;
 }
 
 .margin-b_none {
@@ -129,16 +79,6 @@ p[class^="from-"].emoji::before {
   height: 40px;
   margin-right: 0.5rem;
   width: 40px;
-}
-
-.user-photo.from-me {
-  margin-left: 0.5rem;
-  margin-right: 0;
-}
-
-.user-photo.from-them {
-  margin-left: 0;
-  margin-right: 0.5rem;
 }
 
 /* general styling */

@@ -5,12 +5,12 @@ import { useMessageEvent } from "../../../hooks";
 import { PhoneOpenEvent } from "@nitro-rp/renderer"
 import { Button } from "react-bootstrap";
 import { ButtonVariant } from "react-bootstrap/esm/types";
-import { FaComment, FaDollarSign, FaShieldAlt, FaTimesCircle, FaUsers } from "react-icons/fa";
+import { FaComment, FaDollarSign, FaRegTimesCircle, FaShieldAlt, FaTimesCircle, FaUsers, FaWalking, FaWatchmanMonitoring } from "react-icons/fa";
 import { DeviceClose } from "../../../api/roleplay/device/DeviceClose";
-import { EmergencyView } from './views/EmergencyView';
 import { ContactListView } from './contacts/ContactListView';
 import { MessageView } from './messages/MessageView';
 import { BankAccountListView } from './bank/BankAccountListView';
+import { CallPoliceView } from './emergency/CallPoliceView';
 
 interface PhoneApp {
     key: string;
@@ -67,7 +67,7 @@ export function UserPhone() {
                 </Flex>
             ),
             color: 'danger',
-            children: <EmergencyView goBack={goBack} />,
+            children: <CallPoliceView goBack={goBack} />,
         },
     ], []);
 
@@ -89,50 +89,49 @@ export function UserPhone() {
 
     return (
         <DraggableWindow handleSelector=".drag-handler">
-            <Column gap={0} alignItems="center" className={`nitro-layout-trophy`}>
-                <Flex center fullWidth position="relative" className="trophy-header drag-handler">
-                    <div className="iphone-x drag-handler">
+            <Column gap={0} alignItems="center">
+                <Flex center fullWidth position="relative" className="drag-handler">
+                    <div className="iphone-x">
                         <div className="side">
                             <div className="screen">
                                 <video src="https://images.apple.com/media/us/iphone-x/2017/01df5b43-28e4-4848-bf20-490c34a926a7/overview/primary/hero/small_2x.mp4" autoPlay loop />
-                                <div style={{ position: 'absolute', top: 25, left: 0, width: '100%', height: 620, padding: 8 }}>
+                                <div style={{ position: 'absolute', top: 10, left: 0, height: 'calc(100% - 60px)', width: '100%', padding: 8 }}>
+                                    <div style={{ height: '100%' }}>
+                                        {!activeApp && (
+                                            <Grid fullWidth={true} fullHeight={false} overflow="hidden" gap={2}>
+                                                <Flex center={true} justifyContent="between" fullWidth={true}>
+                                                    <Flex center>
+
+                                                        <Text fontSize={2}>
+
+                                                        </Text>
+                                                    </Flex>
+                                                </Flex >
+                                                {phoneApps.map(app => (
+                                                    <Column key={`app_${app.key}`} fullHeight={false} fullWidth={false} size={12} style={{ flex: 0 }}>
+                                                        <Button variant={app.color} onClick={() => setActiveApp(app)}>
+                                                            {app.label}
+                                                        </Button>
+                                                    </Column>
+                                                ))}
+                                            </Grid>
+                                        )}
+                                        {activeApp && (
+                                            <Column fullWidth={true} fullHeight={true}>
+                                                {activeApp.children}
+                                            </Column>
+                                        )}
+                                    </div>
                                     {!activeApp && (
-                                        <Grid fullWidth={true} fullHeight={false} overflow="hidden" gap={2}>
-                                            <Flex center={true} justifyContent="between" fullWidth={true}>
-                                                <Flex center>
-                                                    <Text color="white" bold fontSize={2} onClick={() => setIsVisible(false)} style={{ cursor: 'pointer', marginRight: 8 }}>
-                                                        <FaTimesCircle />
-                                                    </Text>
-                                                    <Text fontSize={2}>
-                                                        FlexPhone
-                                                    </Text>
-                                                </Flex>
-                                            </Flex >
-                                            {phoneApps.map(app => (
-                                                <Column key={`app_${app.key}`} fullHeight={false} fullWidth={false} size={12} style={{ flex: 0 }}>
-                                                    <Button variant={app.color} onClick={() => setActiveApp(app)}>
-                                                        {app.label}
-                                                    </Button>
-                                                </Column>
-                                            ))}
-                                        </Grid>
-                                    )}
-                                    {activeApp && (
-                                        <Column fullWidth={true} fullHeight={true}>
-                                            {activeApp.children}
-                                        </Column>
+                                        <Flex center>
+                                            <Text bold fontSize={1} onClick={() => setIsVisible(false)} style={{ cursor: 'pointer', marginRight: 8 }}>
+                                                <FaRegTimesCircle style={{ color: 'gray' }} />
+                                            </Text>
+                                        </Flex>
                                     )}
                                 </div>
                             </div>
                         </div>
-                        <div className="line" />
-                        <div className="header">
-                            <div className="sensor-1" />
-                            <div className="sensor-2" />
-                            <div className="sensor-3" />
-                        </div>
-                        <div className="volume-button" />
-                        <div className="power-button" />
                     </div>
                 </Flex>
             </Column>

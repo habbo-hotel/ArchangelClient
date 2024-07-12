@@ -2,7 +2,7 @@ import { IMessageDataWrapper, IMessageParser } from "../../../../../../api";
 
 export enum InteractionType {
     PHONE = "rp_phone",
-    POLICE_LAPTOP = 'rp_police_laptop",'
+    POLICE_LAPTOP = 'rp_police_laptop'
 }
 
 export class DeviceOpenEventParser implements IMessageParser {
@@ -19,7 +19,6 @@ export class DeviceOpenEventParser implements IMessageParser {
         if (!wrapper) return false;
         this._itemID = wrapper.readInt();
         this._interactionType = wrapper.readString() as any
-        console.log(this._interactionType)
         return true;
     }
 

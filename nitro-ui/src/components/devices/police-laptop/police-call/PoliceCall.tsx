@@ -2,11 +2,18 @@ import { Button, Column, Flex, Grid, LayoutAvatarImageView, NitroCardContentView
 import { useState } from "react";
 import { PoliceCallData, PoliceCallInfoEvent } from "@nitro-rp/renderer";
 import { useMessageEvent } from "../../../../hooks";
-import { FaBullhorn, FaCheck, FaFlag, FaTimes, FaVolumeMute } from "react-icons/fa";
+import { FaCheck, FaFlag } from "react-icons/fa";
+import { PoliceResolveReport } from "../../../../api/roleplay/police/PoliceResolveReport";
 
 export function PoliceCall() {
     const [isVisible, setIsVisible] = useState(false)
     const [callInfo, setCallInfo] = useState<PoliceCallData>();
+
+    function onResolve(flagged: boolean) {
+        console.log(callInfo)
+        PoliceResolveReport(callInfo.callId, flagged);
+        setCallInfo(undefined);
+    }
 
     useMessageEvent<PoliceCallInfoEvent>(PoliceCallInfoEvent, event => {
         setIsVisible(true);
@@ -31,11 +38,11 @@ export function PoliceCall() {
                     </Column>
                 </Grid>
                 <Flex center gap={2}>
-                    <Button fullWidth variant="success">
+                    <Button fullWidth variant="success" onClick={() => onResolve(false)}>
                         <FaCheck style={{ marginRight: 8 }} />
                         Accept
                     </Button>
-                    <Button fullWidth variant="danger">
+                    <Button fullWidth variant="danger" onClick={() => onResolve(true)}>
                         <FaFlag style={{ marginRight: 8 }} />
                         Flag
                     </Button>

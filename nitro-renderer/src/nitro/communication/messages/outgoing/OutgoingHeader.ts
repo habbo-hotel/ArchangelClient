@@ -581,4 +581,10 @@ export class OutgoingHeader {
     public static POLICE_LIST_REPORTS = 8056;
 
     public static POLICE_RESOLVE_REPORT = 8057;
+
+    public static HOTBAR_LIST_ITEMS = 8058;
+
+    public static HOTBAR_ADD_ITEM = 8059;
+
+    public static HOTBAR_PICKUP_ITEM = 8060;
 }

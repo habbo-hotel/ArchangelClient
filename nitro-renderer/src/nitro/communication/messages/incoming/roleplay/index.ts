@@ -17,6 +17,7 @@ export * from './device/DeviceOpenEvent';
 export * from './taxi/TaxiFeeQueryEvent';
 export * from './gang/TimeOfDayEvent';
 export * from './gang/GangInfoQueryEvent';
+export * from './items/HotBarListItemsEvent';
 export * from './license/LicenseAgencyListEvent';
 export * from './license/LicenseOpenComputerEvent';
 export * from './license/LicenseStatusEvent';

@@ -17,6 +17,7 @@ export * from './device/InfoScreenViewEventParser';
 export * from './device/DeviceOpenEventParser';
 export * from './game/TimeOfDayEventParser';
 export * from './gang/GangInfoParser';
+export * from './items/HotBarListItemsEventParser';
 export * from './license/LicenseAgencyListEventParser';
 export * from './license/LicenseOpenComputerEventParser';
 export * from './license/LicenseStatusEventParser';

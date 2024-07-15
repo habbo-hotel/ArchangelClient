@@ -501,4 +501,5 @@ export class IncomingHeader {
     public static PHONE_OPEN_EVENT = 9029;
     public static POLICE_LIST_REPORTS = 9030;
     public static POLICE_CALL_INFO = 9031;
+    public static HOT_BAR_LIST_ITEMS = 9032;
 }

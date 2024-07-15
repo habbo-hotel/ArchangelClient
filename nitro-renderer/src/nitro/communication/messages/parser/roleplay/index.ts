@@ -20,6 +20,7 @@ export * from './gang/GangInfoParser';
 export * from './license/LicenseAgencyListEventParser';
 export * from './license/LicenseOpenComputerEventParser';
 export * from './license/LicenseStatusEventParser';
+export * from './police/PoliceCallInfoEventParser';
 export * from './police/PoliceListReportsEventParser';
 export * from './room/RoomListUsersEventParser';
 export * from './taxi/TaxiDispatchedEventParser';

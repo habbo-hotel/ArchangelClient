@@ -1,11 +1,16 @@
-import { FaExclamationCircle, FaRegTimesCircle, FaUser } from "react-icons/fa";
-import { Button, ColorVariantType, Column, DraggableWindow, Flex, Grid, Text } from "../../../common";
+import { FaCaretLeft, FaExclamationCircle, FaPhone, FaSearch } from "react-icons/fa";
+import { Button, ColorVariantType, Column, Flex, Grid, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from "../../../common";
 import { DeviceClose } from "../../../api/roleplay/device/DeviceClose";
 import { ReactNode, useEffect, useMemo, useState } from "react";
-import { useMessageEvent } from "../../../hooks";
+import { useMessageEvent, useSessionInfo } from "../../../hooks";
 import { LookupUserView } from "./lookup-user/LookupUserView";
 import { PoliceReportListView } from "./police-reports/PoliceReportListView";
 import { DeviceOpenEvent, InteractionType } from "@nitro-rp/renderer";
+import { useRoleplayStats } from "../../../hooks/roleplay/use-rp-stats";
+import { CorpBadge } from "../../roleplay-stats/corp-badge/CorpBadge";
+import { useCorpData } from "../../../hooks/roleplay/use-corp-data";
+import { MostWanted } from "./most-wanted/MostWanted";
+import { PoliceCall } from "./police-call/PoliceCall";
 
 interface PoliceApp {
     key: string;
@@ -18,27 +23,43 @@ export function PoliceLaptop() {
     const [isVisible, setIsVisible] = useState(false)
     const [itemID, setItemID] = useState<number>();
     const [activeApp, setActiveApp] = useState<PoliceApp>();
+    const { userInfo } = useSessionInfo();
+    const rpStats = useRoleplayStats(userInfo?.userId);
+    const corpInfo = useCorpData(rpStats.corporationID);
 
-    const phoneApps: Array<PoliceApp> = useMemo(() => [
+    const policeApps: Array<PoliceApp> = useMemo(() => [
         {
             key: 'lookup-user',
             label: (
                 <Flex fullWidth center>
-                    <FaUser style={{ marginRight: 8, fontSize: '4rem' }} />
+                    <FaSearch style={{ marginRight: 8, fontSize: '2rem' }} />
+                    <Text bold fontSize={5} variant="white">Background Search</Text>
                 </Flex>
             ),
-            color: 'primary',
+            color: 'success',
             children: <LookupUserView />,
         },
         {
             key: 'police-reports',
             label: (
                 <Flex fullWidth center>
-                    <FaExclamationCircle style={{ marginRight: 8, fontSize: '4rem' }} />
+                    <FaPhone style={{ marginRight: 8, fontSize: '2rem' }} />
+                    <Text bold fontSize={5} variant="white">View Police Reports</Text>
+                </Flex>
+            ),
+            color: 'secondary',
+            children: <PoliceReportListView />,
+        },
+        {
+            key: 'most-wanted',
+            label: (
+                <Flex fullWidth center>
+                    <FaExclamationCircle style={{ marginRight: 8, fontSize: '2rem' }} />
+                    <Text bold fontSize={5} variant="white">Most Wanted List</Text>
                 </Flex>
             ),
             color: 'danger',
-            children: <PoliceReportListView />,
+            children: <MostWanted />,
         },
     ], []);
 
@@ -57,48 +78,52 @@ export function PoliceLaptop() {
         DeviceClose(itemID)
     }, [isVisible])
 
-    if (!isVisible) {
-        return null;
-    }
-
     return (
-        <DraggableWindow handleSelector=".drag-handler">
-            <Column gap={0} alignItems="center">
-                <Flex center fullWidth position="relative" className="drag-handler">
-                    <div style={{ height: '100%' }}>
-                        {!activeApp && (
-                            <Grid fullWidth={true} fullHeight={false} overflow="hidden" gap={2}>
-                                <Flex center={true} justifyContent="between" fullWidth={true}>
-                                    <Flex center>
-                                        <Text fontSize={2}>
-                                            Police Laptop
-                                        </Text>
-                                    </Flex>
-                                </Flex >
-                                {phoneApps.map(app => (
-                                    <Column key={`app_${app.key}`} fullHeight={false} fullWidth={false} size={12} style={{ flex: 0 }}>
-                                        <Button variant={app.color} onClick={() => setActiveApp(app)}>
-                                            {app.label}
+        <>
+            <PoliceCall />
+            {
+                isVisible && (
+                    <NitroCardView uniqueKey="policeLaptop" className="nitro-inventory">
+                        <NitroCardHeaderView headerText="Police Laptop" onCloseClick={() => setIsVisible(false)} />
+                        <NitroCardContentView>
+                            <div style={{ height: '100%', width: '100%' }}>
+                                <Flex center column>
+                                    <CorpBadge corpID={rpStats.corporationID} />
+                                    <Text bold fontSize={4}>{corpInfo.name}</Text>
+                                </Flex>
+                                <hr />
+                                {!activeApp && (
+                                    <Grid fullWidth={true} fullHeight={false} overflow="hidden" gap={2}>
+                                        {policeApps.map(app => (
+                                            <Column key={`app_${app.key}`} fullHeight={false} fullWidth={false} size={12} style={{ flex: 0 }}>
+                                                <Button variant={app.color} onClick={() => setActiveApp(app)}>
+                                                    {app.label}
+                                                </Button>
+                                            </Column>
+                                        ))}
+                                    </Grid>
+                                )}
+                                {activeApp && (
+                                    <Column fullWidth={true} fullHeight={true}>
+                                        <div style={{ height: 'calc(100% - 14+0px)', width: '100%' }}>
+                                            {activeApp.children}
+                                        </div>
+                                        <Button variant="dark" onClick={() => setActiveApp(undefined)}>
+                                            <FaCaretLeft style={{ marginRight: 8 }} />
+                                            <Text fontSize={5} variant="white">Go Back</Text>
                                         </Button>
                                     </Column>
-                                ))}
-                            </Grid>
-                        )}
-                        {activeApp && (
-                            <Column fullWidth={true} fullHeight={true}>
-                                {activeApp.children}
-                            </Column>
-                        )}
-                    </div>
-                    {!activeApp && (
-                        <Flex center>
-                            <Text bold fontSize={1} onClick={() => setIsVisible(false)} style={{ cursor: 'pointer', marginRight: 8 }}>
-                                <FaRegTimesCircle style={{ color: 'gray' }} />
-                            </Text>
-                        </Flex>
-                    )}
-                </Flex>
-            </Column>
-        </DraggableWindow >
+                                )}
+                                <hr />
+                            </div>
+                            <div style={{ display: 'flex', gap: 8 }}>
+                                <FaExclamationCircle style={{ color: 'black', fontSize: '2rem' }} />
+                                <Text fontSize={6}>This is a secure system containing <b>confidential information</b>.  <b>Do not share or distribute.</b></Text>
+                            </div>
+                        </NitroCardContentView>
+                    </NitroCardView >
+                )
+            }
+        </>
     )
 }

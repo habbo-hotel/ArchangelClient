@@ -26,6 +26,7 @@ export * from './license/LicenseStatusEvent';
 export * from './police/PoliceCallInfoEvent';
 export * from './police/PoliceListReportsEvent';
 export * from './police/UserArrestedEvent';
+export * from './police/WantedListEvent';
 export * from './room/RoomListUsersEvent';
 export * from './user/UserOpenWardrobeEvent';
 export * from './user/UserRoleplayStatsChangeEvent';

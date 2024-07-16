@@ -25,6 +25,7 @@ export * from './license/LicenseStatusEventParser';
 export * from './police/PoliceCallInfoEventParser';
 export * from './police/PoliceListReportsEventParser';
 export * from './police/UserArrestedEventParser';
+export * from './police/WantedListEventParser';
 export * from './room/RoomListUsersEventParser';
 export * from './taxi/TaxiDispatchedEventParser';
 export * from './taxi/TaxiFeeEventParser'

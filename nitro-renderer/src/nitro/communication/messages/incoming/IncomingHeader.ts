@@ -504,4 +504,5 @@ export class IncomingHeader {
     public static HOT_BAR_LIST_ITEMS = 9032;
     public static USER_ARRESTED = 9033;
     public static USER_DIED = 9034;
+    public static WANTED_LIST = 9035;
 }

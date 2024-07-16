@@ -587,4 +587,10 @@ export class OutgoingHeader {
     public static HOTBAR_ADD_ITEM = 8059;
 
     public static HOTBAR_PICKUP_ITEM = 8060;
+
+    public static WANTED_LIST_QUERY = 8061;
+
+    public static WANTED_LIST_ADD_USER = 8062;
+
+    public static WANTED_LIST_REMOVE_USER = 8063;
 }

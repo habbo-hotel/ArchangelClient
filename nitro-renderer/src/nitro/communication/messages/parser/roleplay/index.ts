@@ -5,6 +5,7 @@ export * from './bank/BankOpenComputerEventParser';
 export * from './billing/BillingInvoiceQueryEventParser';
 export * from './combat/CombatDelayParser';
 export * from './combat/MyWeaponListParser';
+export * from './combat/UserDiedEventParser';
 export * from './corp/CashRegisterParser';
 export * from './corp/CorpEmployeeListEventParser';
 export * from './corp/CorpInfoParser';
@@ -23,6 +24,7 @@ export * from './license/LicenseOpenComputerEventParser';
 export * from './license/LicenseStatusEventParser';
 export * from './police/PoliceCallInfoEventParser';
 export * from './police/PoliceListReportsEventParser';
+export * from './police/UserArrestedEventParser';
 export * from './room/RoomListUsersEventParser';
 export * from './taxi/TaxiDispatchedEventParser';
 export * from './taxi/TaxiFeeEventParser'

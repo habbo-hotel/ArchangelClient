@@ -3,7 +3,9 @@ export * from './bank/BankListEvent';
 export * from './bank/BankOpenATMEvent';
 export * from './bank/BankOpenComputerEvent'
 export * from './billing/BillingInvoiceQueryEvent';
+export * from './combat/CombatDelayEvent';
 export * from './combat/MyWeaponListEvent';
+export * from './combat/UserDiedEvent';
 export * from './corp/CorpInfoQueryEvent';
 export * from './corp/CorpListEvent';
 export * from './corp/CorpOpenComputerEvent';
@@ -23,6 +25,7 @@ export * from './license/LicenseOpenComputerEvent';
 export * from './license/LicenseStatusEvent';
 export * from './police/PoliceCallInfoEvent';
 export * from './police/PoliceListReportsEvent';
+export * from './police/UserArrestedEvent';
 export * from './room/RoomListUsersEvent';
 export * from './user/UserOpenWardrobeEvent';
 export * from './user/UserRoleplayStatsChangeEvent';

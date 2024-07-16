@@ -10,7 +10,6 @@ export function PoliceCall() {
     const [callInfo, setCallInfo] = useState<PoliceCallData>();
 
     function onResolve(flagged: boolean) {
-        console.log(callInfo)
         PoliceResolveReport(callInfo.callId, flagged);
         setCallInfo(undefined);
     }

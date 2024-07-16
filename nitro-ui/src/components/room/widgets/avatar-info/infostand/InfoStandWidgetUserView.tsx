@@ -76,8 +76,6 @@ export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props =
 
     if (!avatarInfo) return null;
 
-    console.log(avatarInfo.groupBadgeId);
-
     return (
         <Column className="nitro-infostand rounded">
             <Column overflow="visible" className="container-fluid content-area" gap={1}>

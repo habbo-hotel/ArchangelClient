@@ -38,7 +38,6 @@ export function CorpPositionEditor({ children, corpID, corpPositionID, onSave }:
     });
 
     useEffect(() => {
-        console.log(corpPosition)
         setPositionDTO({
             corpID,
             name: corpPosition?.name ?? '',
@@ -74,7 +73,6 @@ export function CorpPositionEditor({ children, corpID, corpPositionID, onSave }:
     }
 
     function onSavePosition() {
-        console.log(positionDTO)
         onSave({
             ...positionDTO,
             orderID: corpPositions.length + 1,

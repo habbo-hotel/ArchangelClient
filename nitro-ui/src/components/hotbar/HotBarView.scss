@@ -28,10 +28,19 @@
         border-radius: 5px;
         cursor: pointer;
         transition: background-color 0.3s;
+        position: relative;
 
         &:hover {
             background-color: #555
         }
+    }
+
+    .hotbar-remove {
+        position: absolute;
+        top: -5px;
+        right: 0;
+        color: red;
+        font-size: 12px;
     }
 
 }

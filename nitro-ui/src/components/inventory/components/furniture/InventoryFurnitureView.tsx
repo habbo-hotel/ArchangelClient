@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { attemptItemPlacement, DispatchUiEvent, FurniCategory, GetRoomEngine, GetSessionDataManager, GroupItem, LocalizeText, UnseenItemCategory } from '../../../../api';
 import { AutoGrid, Button, Column, Grid, LayoutLimitedEditionCompactPlateView, LayoutRarityLevelView, LayoutRoomPreviewerView, Text } from '../../../../common';
 import { CatalogPostMarketplaceOfferEvent } from '../../../../events';
-import { useInventoryFurni, useInventoryUnseenTracker } from '../../../../hooks';
+import { useInventoryFurni } from '../../../../hooks';
 import { InventoryCategoryEmptyView } from '../InventoryCategoryEmptyView';
 import { InventoryFurnitureItemView } from './InventoryFurnitureItemView';
 import { InventoryFurnitureSearchView } from './InventoryFurnitureSearchView';
@@ -28,7 +28,6 @@ const attemptPlaceMarketplaceOffer = (groupItem: GroupItem) => {
 export function InventoryFurnitureView({ roomSession = null, roomPreviewer = null }: InventoryFurnitureViewProps) {
     const [filteredGroupItems, setFilteredGroupItems] = useState<GroupItem[]>([]);
     const { groupItems = [], selectedItem = null, activate = null, deactivate = null } = useInventoryFurni();
-    const { resetItems = null } = useInventoryUnseenTracker();
 
     useEffect(() => {
         if (!selectedItem || !roomPreviewer) return;
@@ -83,8 +82,6 @@ export function InventoryFurnitureView({ roomSession = null, roomPreviewer = nul
 
     if (!groupItems || !groupItems.length) return <InventoryCategoryEmptyView title={LocalizeText('inventory.empty.title')} desc={LocalizeText('inventory.empty.desc')} />;
 
-    console.log(selectedItem.getLastItem())
-
     return (
         <Grid>
             <Column size={7} overflow="hidden">
@@ -94,10 +91,10 @@ export function InventoryFurnitureView({ roomSession = null, roomPreviewer = nul
                 </AutoGrid>
             </Column>
             <Column size={5} overflow="auto">
-                <Column overflow="hidden" position="relative">
-                    {
-                        selectedItem && (
-                            <>
+                {
+                    selectedItem && (
+                        <>
+                            <Column overflow="hidden" position="relative">
                                 <LayoutRoomPreviewerView roomPreviewer={roomPreviewer} height={140} />
                                 {selectedItem.stuffData.isUnique &&
                                     <LayoutLimitedEditionCompactPlateView className="top-2 end-2" position="absolute" uniqueNumber={selectedItem.stuffData.uniqueNumber} uniqueSeries={selectedItem.stuffData.uniqueSeries} />
@@ -105,36 +102,35 @@ export function InventoryFurnitureView({ roomSession = null, roomPreviewer = nul
                                 {selectedItem.stuffData.rarityLevel > -1 &&
                                     <LayoutRarityLevelView className="top-2 end-2" position="absolute" level={selectedItem.stuffData.rarityLevel} />
                                 }
-                            </>
-                        )
-                    }
-                </Column>
-                {selectedItem &&
-                    <Column grow justifyContent="between" gap={2}>
-                        <Text grow truncate>{selectedItem.name}</Text>
-                        <Column gap={1}>
-                            {selectedItem.getLastItem().isUsable && (
-                                <>
-                                    <Button variant="primary" onClick={() => HotBarAddItem(selectedItem.getLastItem().id)}>
-                                        Pin to Hotbar
-                                    </Button>
-                                    <Button variant="success" onClick={() => DeviceOpen(selectedItem.getLastItem().id)}>
-                                        Use Device
-                                    </Button>
-                                </>
-                            )}
-                            {!selectedItem.getLastItem().isUsable && !!roomSession && (
-                                <Button variant="primary" onClick={event => attemptItemPlacement(selectedItem)}>
-                                    {LocalizeText('inventory.furni.placetoroom')}
-                                </Button>
-                            )}
-                            {(selectedItem && selectedItem.isSellable) && (
-                                <Button onClick={event => attemptPlaceMarketplaceOffer(selectedItem)}>
-                                    {LocalizeText('inventory.marketplace.sell')}
-                                </Button>
-                            )}
-                        </Column>
-                    </Column>}
+                            </Column>
+                            <Column grow justifyContent="between" gap={2}>
+                                <Text grow truncate>{selectedItem.name}</Text>
+                                <Column gap={1}>
+                                    {selectedItem.getLastItem().isUsable && (
+                                        <>
+                                            <Button variant="primary" onClick={() => HotBarAddItem(selectedItem.getLastItem().id)}>
+                                                Pin to Hotbar
+                                            </Button>
+                                            <Button variant="success" onClick={() => DeviceOpen(selectedItem.getLastItem().id)}>
+                                                Use Device
+                                            </Button>
+                                        </>
+                                    )}
+                                    {!selectedItem.getLastItem().isUsable && !!roomSession && (
+                                        <Button variant="primary" onClick={event => attemptItemPlacement(selectedItem)}>
+                                            {LocalizeText('inventory.furni.placetoroom')}
+                                        </Button>
+                                    )}
+                                    {(selectedItem && selectedItem.isSellable) && (
+                                        <Button onClick={event => attemptPlaceMarketplaceOffer(selectedItem)}>
+                                            {LocalizeText('inventory.marketplace.sell')}
+                                        </Button>
+                                    )}
+                                </Column>
+                            </Column>
+                        </>
+                    )
+                }
             </Column>
         </Grid>
     );

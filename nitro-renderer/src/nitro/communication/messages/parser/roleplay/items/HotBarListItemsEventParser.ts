@@ -3,6 +3,8 @@ import { IMessageDataWrapper, IMessageParser } from "../../../../../../api";
 export interface HotBarItem {
     id: number;
     name: string;
+    baseItemId: number;
+    spriteId: number;
 }
 
 export class HotBarListItemsEventParser implements IMessageParser {
@@ -19,10 +21,12 @@ export class HotBarListItemsEventParser implements IMessageParser {
         const itemCount = wrapper.readInt();
 
         for (let i = 0; i < itemCount; i++) {
-            const [id, name] = wrapper.readString().split(';');
+            const [id, name, baseItemId, spriteId] = wrapper.readString().split(';');
             this._items.push({
                 id: Number(id),
                 name,
+                baseItemId: Number(baseItemId),
+                spriteId: Number(spriteId)
             })
         }
 

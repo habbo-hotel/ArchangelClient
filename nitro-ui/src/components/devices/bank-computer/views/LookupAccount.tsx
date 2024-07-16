@@ -30,7 +30,6 @@ export function LookupAccount({ bankCorpID, onClose }: LookupAccountProps) {
             setConfirm(true);
             return;
         }
-        console.log(user.username)
         BankAccountClose(user.username);
         onClose();
     }

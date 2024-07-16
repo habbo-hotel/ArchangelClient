@@ -281,8 +281,6 @@ const useNavigatorState = () => {
             return newValue;
         });
 
-        console.log(parser.result)
-
         setSearchResult(parser.result);
     });
 

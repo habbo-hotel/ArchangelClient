@@ -67,7 +67,6 @@ export const InventoryView: FC<{}> = () => {
         RoomSessionEvent.CREATED,
         RoomSessionEvent.ENDED
     ], event => {
-        console.log('useRoomSessionManagerEvent: ', event);
         switch (event.type) {
             case RoomSessionEvent.CREATED:
                 setRoomSession(event.session);

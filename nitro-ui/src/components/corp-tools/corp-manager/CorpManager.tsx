@@ -32,7 +32,6 @@ export function CorpManager() {
 
     useMessageEvent<CorpOpenComputerEvent>(CorpOpenComputerEvent, event => {
         const parser = event.getParser();
-        console.log(parser)
         setCorpID(parser.corpID);
         setVisible(true);
     })

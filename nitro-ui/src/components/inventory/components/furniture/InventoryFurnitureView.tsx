@@ -8,6 +8,7 @@ import { InventoryCategoryEmptyView } from '../InventoryCategoryEmptyView';
 import { InventoryFurnitureItemView } from './InventoryFurnitureItemView';
 import { InventoryFurnitureSearchView } from './InventoryFurnitureSearchView';
 import { DeviceOpen } from '../../../../api/roleplay/device/DeviceOpen';
+import { HotBarAddItem } from '../../../../api/roleplay/items/HotBarAddItem';
 
 interface InventoryFurnitureViewProps {
     roomSession: IRoomSession;
@@ -113,9 +114,14 @@ export function InventoryFurnitureView({ roomSession = null, roomPreviewer = nul
                         <Text grow truncate>{selectedItem.name}</Text>
                         <Column gap={1}>
                             {selectedItem.getLastItem().isUsable && (
-                                <Button variant="success" onClick={() => DeviceOpen(selectedItem.getLastItem().id)}>
-                                    Use Device
-                                </Button>
+                                <>
+                                    <Button variant="primary" onClick={() => HotBarAddItem(selectedItem.getLastItem().id)}>
+                                        Pin to Hotbar
+                                    </Button>
+                                    <Button variant="success" onClick={() => DeviceOpen(selectedItem.getLastItem().id)}>
+                                        Use Device
+                                    </Button>
+                                </>
                             )}
                             {!selectedItem.getLastItem().isUsable && !!roomSession && (
                                 <Button variant="primary" onClick={event => attemptItemPlacement(selectedItem)}>

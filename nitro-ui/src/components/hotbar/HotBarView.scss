@@ -1,0 +1,37 @@
+.nitro-hotbar {
+    position: absolute;
+    bottom: 8%;
+    left: 0;
+    width: 100%;
+    height: $toolbar-height;
+    z-index: $toolbar-zindex;
+    pointer-events: all;
+
+    .hotbar-container {
+        display: flex;
+        gap: 10px;
+        padding: 10px;
+        border-radius: 10px;
+        background: rgba($dark, 0.95);
+        box-shadow: inset 0px 5px lighten(rgba($dark, 0.6), 2.5), inset 0 -4px darken(rgba($dark, 0.6), 4);
+    }
+    
+    .hotbar-item {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #444;
+        color: white;
+        font-size: 18px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: #555
+        }
+    }
+
+}

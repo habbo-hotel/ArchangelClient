@@ -4,6 +4,7 @@ import { Base, Column, Flex, Grid, LayoutItemCountView, NitroCardContentView, Ni
 import { useInventoryUnseenTracker, useRoomEngineEvent } from '../../hooks';
 import { HOTEL_NAME } from '../../constant';
 import { useState } from 'react';
+import { HotBar } from '../hotbar/HotBar';
 
 export function ToolbarView() {
     const { getFullCount = 0 } = useInventoryUnseenTracker();

@@ -8,7 +8,6 @@ import { CampaignView } from '../campaign/CampaignView';
 import { CatalogView } from '../catalog/CatalogView';
 import { ChatHistoryView } from '../chat-history/ChatHistoryView';
 import { FloorplanEditorView } from '../floorplan-editor/FloorplanEditorView';
-import { FriendsView } from '../friends/FriendsView';
 import { GroupsView } from '../groups/GroupsView';
 import { HcCenterView } from '../hc-center/HcCenterView';
 import { HelpView } from '../help/HelpView';
@@ -26,6 +25,7 @@ import { CorpTools } from '../corp-tools/CorpTools';
 import { Billing } from '../billing/Billing';
 import { InventoryView } from '../inventory/InventoryView';
 import { Devices } from '../devices/Devices';
+import { HotBarView } from '../hotbar/HotBarView';
 
 export function MainView() {
 
@@ -36,6 +36,7 @@ export function MainView() {
     return (
         <Base fit>
             <ToolbarView />
+            <HotBarView />
             <ModToolsView />
             <RoomView />
             <ChatHistoryView />

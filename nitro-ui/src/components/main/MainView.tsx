@@ -26,6 +26,7 @@ import { Billing } from '../billing/Billing';
 import { InventoryView } from '../inventory/InventoryView';
 import { Devices } from '../devices/Devices';
 import { HotBarView } from '../hotbar/HotBarView';
+import { RoleplayEffects } from '../roleplay-effects/RoleplayEffects';
 
 export function MainView() {
 
@@ -60,6 +61,7 @@ export function MainView() {
             <CorpTools />
             <Billing />
             <Devices />
+            <RoleplayEffects />
         </Base>
     );
 }

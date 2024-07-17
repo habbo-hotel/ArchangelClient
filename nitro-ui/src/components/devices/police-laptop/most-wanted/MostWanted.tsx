@@ -8,6 +8,7 @@ export function MostWanted() {
     useEffect(() => {
         WantedListAddUser('Chris', 'bad stuff');
     }, []);
+    console.log({ bounties })
     return (
         <>
             {

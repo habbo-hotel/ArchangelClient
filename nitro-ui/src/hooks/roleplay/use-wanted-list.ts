@@ -10,7 +10,7 @@ export function useWantedList(): Array<BountyData> {
         WantedListQuery();
     }, []);
 
-    useMessageEvent<WantedListEvent>(BankListEvent, event => {
+    useMessageEvent<WantedListEvent>(WantedListEvent, event => {
         const parser = event.getParser();
         setBounties(parser.bounties);
     });

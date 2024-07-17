@@ -18,9 +18,6 @@ export class WantedListEventParser implements IMessageParser {
 
     public parse(wrapper: IMessageDataWrapper): boolean {
         if (!wrapper) return false
-
-        alert('woo')
-
         const bountyCount = wrapper.readInt();
 
         for (let i = 0; i < bountyCount; i++) {

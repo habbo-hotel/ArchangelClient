@@ -44,7 +44,7 @@ export function RoleplayEffects() {
         setDied(true);
         setTimeout(() => {
             setDied(false);
-        }, 2000);
+        }, 4500);
     });
 
     useMessageEvent<UserArrestedEvent>(UserArrestedEvent, event => {
@@ -56,7 +56,7 @@ export function RoleplayEffects() {
         setArrested(true);
         setTimeout(() => {
             setArrested(false);
-        }, 2000);
+        }, 4500);
     });
 
     return (

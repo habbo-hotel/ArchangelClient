@@ -620,6 +620,7 @@ export class NitroMessages implements IMessageConfiguration {
         this._events.set(IncomingHeader.USER_ARRESTED, UserArrestedEvent);
         this._events.set(IncomingHeader.USER_DIED, UserDiedEvent);
         this._events.set(IncomingHeader.WANTED_LIST, WantedListEvent);
+
     }
 
     private registerComposers(): void {
@@ -1282,6 +1283,7 @@ export class NitroMessages implements IMessageConfiguration {
         this._composers.set(OutgoingHeader.POLICE_RESOLVE_REPORT, PoliceResolveReportComposer);
         this._composers.set(OutgoingHeader.HOTBAR_LIST_ITEMS, HotBarListItemsComposer);
         this._composers.set(OutgoingHeader.HOTBAR_ADD_ITEM, HotBarAddItemComposer);
+        this._composers.set(OutgoingHeader.HOTBAR_PICKUP_ITEM, HotBarPickupItemComposer);
         this._composers.set(OutgoingHeader.WANTED_LIST_ADD_USER, WantedListAddUserComposer);
         this._composers.set(OutgoingHeader.WANTED_LIST_REMOVE_USER, WantedListRemoveUserComposer);
         this._composers.set(OutgoingHeader.WANTED_LIST_QUERY, WantedListQueryComposer);

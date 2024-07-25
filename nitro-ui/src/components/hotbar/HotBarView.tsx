@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Base, Flex, Text } from "../../common";
+import { SyntheticEvent, useEffect, useState } from "react";
+import { Base, Flex } from "../../common";
 import { HotBarItem, HotBarListItemsEvent } from "@nitro-rp/renderer";
 import { useMessageEvent } from "../../hooks";
 import { HotBarListItems } from "../../api/roleplay/items/HotBarListItems";
@@ -20,6 +20,11 @@ export function HotBarView() {
         HotBarListItems();
     }, []);
 
+    function onPickup(event: SyntheticEvent, itemID: number) {
+        event.stopPropagation();
+        HotBarPickupItem(itemID)
+    }
+
     return (
         <Flex alignItems="center" justifyContent="between" gap={2} className="nitro-hotbar">
             <Flex center fullWidth>
@@ -33,7 +38,7 @@ export function HotBarView() {
                                     {
                                         item && (
                                             <>
-                                                <div className="hotbar-remove" onClick={() => HotBarPickupItem(item.id)}>
+                                                <div className="hotbar-remove" onClick={e => onPickup(e, item.id)}>
                                                     <FaTimes />
                                                 </div>
                                                 <Base fit className="unique-bg-override" style={{ backgroundImage: `url(${iconURL})`, backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }} />

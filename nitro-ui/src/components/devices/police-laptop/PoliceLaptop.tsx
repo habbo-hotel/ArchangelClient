@@ -1,4 +1,4 @@
-import { FaCaretLeft, FaExclamationCircle, FaPhone, FaSearch } from "react-icons/fa";
+import { FaExclamationCircle, FaPhone, FaSearch } from "react-icons/fa";
 import { Button, ColorVariantType, Column, Flex, Grid, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from "../../../common";
 import { DeviceClose } from "../../../api/roleplay/device/DeviceClose";
 import { ReactNode, useEffect, useMemo, useState } from "react";
@@ -8,7 +8,6 @@ import { PoliceReportListView } from "./police-reports/PoliceReportListView";
 import { DeviceOpenEvent, InteractionType } from "@nitro-rp/renderer";
 import { useRoleplayStats } from "../../../hooks/roleplay/use-rp-stats";
 import { CorpBadge } from "../../roleplay-stats/corp-badge/CorpBadge";
-import { useCorpData } from "../../../hooks/roleplay/use-corp-data";
 import { MostWanted } from "./most-wanted/MostWanted";
 import { PoliceCall } from "./police-call/PoliceCall";
 
@@ -25,7 +24,10 @@ export function PoliceLaptop() {
     const [activeApp, setActiveApp] = useState<PoliceApp>();
     const { userInfo } = useSessionInfo();
     const rpStats = useRoleplayStats(userInfo?.userId);
-    const corpInfo = useCorpData(rpStats.corporationID);
+
+    function goBack() {
+        setActiveApp(undefined);
+    }
 
     const policeApps: Array<PoliceApp> = useMemo(() => [
         {
@@ -59,9 +61,9 @@ export function PoliceLaptop() {
                 </Flex>
             ),
             color: 'danger',
-            children: <MostWanted />,
+            children: <MostWanted goBack={goBack} />,
         },
-    ], []);
+    ], [goBack]);
 
     useMessageEvent<DeviceOpenEvent>(DeviceOpenEvent, event => {
         if (event.getParser().interactionType !== InteractionType.POLICE_LAPTOP) {
@@ -83,13 +85,12 @@ export function PoliceLaptop() {
             <PoliceCall />
             {
                 isVisible && (
-                    <NitroCardView uniqueKey="policeLaptop" className="nitro-inventory">
+                    <NitroCardView uniqueKey="policeLaptop" className="nitro-inventory" style={{ height: 450 }}>
                         <NitroCardHeaderView headerText="Police Laptop" onCloseClick={() => setIsVisible(false)} />
                         <NitroCardContentView>
-                            <div style={{ height: '100%', width: '100%' }}>
+                            <div style={{ height: 450, width: '100%' }}>
                                 <Flex center column>
                                     <CorpBadge corpID={rpStats.corporationID} />
-                                    <Text bold fontSize={4}>{corpInfo.name}</Text>
                                 </Flex>
                                 <hr />
                                 {!activeApp && (
@@ -104,18 +105,13 @@ export function PoliceLaptop() {
                                     </Grid>
                                 )}
                                 {activeApp && (
-                                    <Column fullWidth={true} fullHeight={true}>
-                                        <div style={{ height: 'calc(100% - 14+0px)', width: '100%' }}>
-                                            {activeApp.children}
-                                        </div>
-                                        <Button variant="dark" onClick={() => setActiveApp(undefined)}>
-                                            <FaCaretLeft style={{ marginRight: 8 }} />
-                                            <Text fontSize={5} variant="white">Go Back</Text>
-                                        </Button>
-                                    </Column>
+                                    <>
+                                        {activeApp.children}
+
+                                    </>
                                 )}
-                                <hr />
                             </div>
+                            <hr />
                             <div style={{ display: 'flex', gap: 8 }}>
                                 <FaExclamationCircle style={{ color: 'black', fontSize: '2rem' }} />
                                 <Text fontSize={6}>This is a secure system containing <b>confidential information</b>.  <b>Do not share or distribute.</b></Text>

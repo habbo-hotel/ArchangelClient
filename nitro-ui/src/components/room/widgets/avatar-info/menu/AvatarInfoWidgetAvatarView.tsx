@@ -39,7 +39,7 @@ export const AvatarInfoWidgetAvatarView: FC<AvatarInfoWidgetAvatarViewProps> = p
     const combatDelay = useCombatDelay();
     const sessionRoleplayStats = useRoleplayStats(sessionInfo?.userId);
     const [mode, setMode] = useState(MODE_NORMAL);
-    const { canRequestFriend = null, getFriend, requestFriend } = useFriends();
+    const { canRequestFriend = null, getFriend } = useFriends();
     const crimeList = useCrimes();
 
     const myRoleplayStats = useRoleplayStats(sessionInfo?.userId)

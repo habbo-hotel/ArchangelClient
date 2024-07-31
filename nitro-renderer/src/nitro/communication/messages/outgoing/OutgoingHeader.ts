@@ -595,4 +595,6 @@ export class OutgoingHeader {
     public static WANTED_LIST_REMOVE_USER = 8063;
 
     public static TURF_START_CAPTURE_COMPOSER = 8064;
+
+    public static TURF_TIMER_QUERY_COMPOSER = 8065;
 }

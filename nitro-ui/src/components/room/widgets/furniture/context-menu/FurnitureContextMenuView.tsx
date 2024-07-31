@@ -16,8 +16,6 @@ export const FurnitureContextMenuView: FC<{}> = props => {
     const { navigatorData = null } = useNavigator();
     const { closeConfirm = null, processAction = null, onClose = null, objectId = -1, mode = null, confirmMode = null, confirmingObjectId = -1, groupData = null, isGroupMember = false, objectOwnerId = -1 } = useFurnitureContextMenuWidget();
     const { simpleAlert = null } = useNotification();
-
-    console.log(navigatorData.enteredGuestRoom.tags)
     useMessageEvent<CustomUserNotificationMessageEvent>(CustomUserNotificationMessageEvent, event => {
         const parser = event.getParser();
 
@@ -117,7 +115,7 @@ export const FurnitureContextMenuView: FC<{}> = props => {
                                     {LocalizeText('widget.furniture.button.join.group')}
                                 </ContextMenuListItemView>}
                             {
-                                navigatorData.enteredGuestRoom.tags.includes(RoomType.TURF) && (
+                                navigatorData?.enteredGuestRoom?.tags?.includes(RoomType.TURF) && (
                                     <ContextMenuListItemView onClick={event => processAction('capture_turf')}>
                                         Capture
                                     </ContextMenuListItemView>

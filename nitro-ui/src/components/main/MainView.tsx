@@ -27,6 +27,7 @@ import { InventoryView } from '../inventory/InventoryView';
 import { Devices } from '../devices/Devices';
 import { HotBarView } from '../hotbar/HotBarView';
 import { RoleplayEffects } from '../roleplay-effects/RoleplayEffects';
+import { MiddleView } from '../middle/MiddleView';
 
 export function MainView() {
 
@@ -48,6 +49,7 @@ export function MainView() {
             <InventoryView />
             <CatalogView />
             <LeftSideView />
+            <MiddleView />
             <RightSideView />
             <UserSettingsView />
             <UserProfileView />

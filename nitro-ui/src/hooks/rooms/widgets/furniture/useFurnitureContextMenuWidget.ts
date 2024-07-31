@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { GetRoomEngine, IsOwnerOfFurniture, TryJoinGroup, TryVisitRoom } from '../../../../api';
 import { useMessageEvent, useRoomEngineEvent } from '../../../events';
 import { useRoom } from '../../useRoom';
+import { TurfStartCapture } from '../../../../api/roleplay/gang/TurfStartCapture';
 
 export const MONSTERPLANT_SEED_CONFIRMATION: string = 'MONSTERPLANT_SEED_CONFIRMATION';
 export const PURCHASABLE_CLOTHING_CONFIRMATION: string = 'PURCHASABLE_CLOTHING_CONFIRMATION';
@@ -65,6 +66,9 @@ const useFurnitureContextMenuWidgetState = () => {
                     return;
                 case 'go_to_group_homeroom':
                     if (groupData) TryVisitRoom(groupData.guildHomeRoomId);
+                    break;
+                case 'capture_turf':
+                    TurfStartCapture();
                     break;
             }
         }

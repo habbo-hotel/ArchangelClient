@@ -38,6 +38,7 @@ export * from './gang/GangInfoQueryComposer';
 export * from './gang/GangInviteAcceptComposer';
 export * from './gang/GangInviteUserEventComposer';
 export * from './gang/GangLeaveComposer';
+export * from './gang/TurfStartCaptureComposer';
 export * from './items/HotBarAddItemComposer';
 export * from './items/HotBarListItemsComposer';
 export * from './items/HotBarPickupItemComposer';

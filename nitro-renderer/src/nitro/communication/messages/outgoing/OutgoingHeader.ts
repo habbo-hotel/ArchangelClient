@@ -593,4 +593,6 @@ export class OutgoingHeader {
     public static WANTED_LIST_ADD_USER = 8062;
 
     public static WANTED_LIST_REMOVE_USER = 8063;
+
+    public static TURF_START_CAPTURE_COMPOSER = 8064;
 }

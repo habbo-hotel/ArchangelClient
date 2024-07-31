@@ -505,4 +505,6 @@ export class IncomingHeader {
     public static USER_ARRESTED = 9033;
     public static USER_DIED = 9034;
     public static WANTED_LIST = 9035;
+    public static TURF_CONTEXT_MENU_INFO_EVENT = 9036;
+    public static TURF_CAPTURE_TIME_LEFT_EVENT = 9037;
 }

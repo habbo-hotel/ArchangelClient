@@ -6,7 +6,8 @@ import { TaxiDispatchedEvent } from '@nitro-rp/renderer/src/nitro/communication/
 import { useEffect, useState } from 'react';
 
 export enum RoomType {
-    TAXI = "taxi"
+    TAXI = "taxi",
+    TURF = "turf"
 }
 
 export interface NavigatorSearchResultItemViewProps extends LayoutGridItemProps {

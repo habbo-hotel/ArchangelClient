@@ -231,8 +231,8 @@ export function NavigatorView() {
                         {
                             rpPerms.canSeeAllRooms && (
                                 <Base className="form-check">
-                                    <input className="form-check-input" type="checkbox" name="taxiOnly" checked={!taxiOnly} onChange={onToggleTaxi} />
-                                    <label className="form-check-label" style={{ color: 'black' }}>Taxi only</label>
+                                    <input className="form-check-input" type="checkbox" name="taxiOnly" checked={taxiOnly} onChange={onToggleTaxi} />
+                                    <label className="form-check-label" style={{ color: 'black' }}>Show all rooms</label>
                                 </Base>
                             )
                         }

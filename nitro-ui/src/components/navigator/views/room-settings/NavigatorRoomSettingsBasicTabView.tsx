@@ -122,10 +122,6 @@ export const NavigatorRoomSettingsBasicTabView: FC<NavigatorRoomSettingsTabViewP
                 }
             </AutoGrid>
             <Flex alignItems="center" gap={1}>
-                <Text className="col-3">{LocalizeText('navigator.tags')}</Text>
-
-            </Flex>
-            <Flex alignItems="center" gap={1}>
                 <Base className="col-3" />
                 <input className="form-check-input" type="checkbox" checked={roomData.allowWalkthrough} onChange={event => handleChange('allow_walkthrough', event.target.checked)} />
                 <Text>{LocalizeText('navigator.roomsettings.allow_walk_through')}</Text>

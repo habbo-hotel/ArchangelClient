@@ -4,9 +4,7 @@ import { useTurfTimer } from "../../../hooks/roleplay/use-turf-timer";
 export function TurfTimer() {
     const timer = useTurfTimer();
 
-    console.log(timer);
-
-    if (timer.userId <= 0) {
+    if (timer.secondsLeft <= 0) {
         return null;
     }
 

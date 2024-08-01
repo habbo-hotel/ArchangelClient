@@ -1,9 +1,13 @@
-import { RoleplayStatsView } from '../roleplay-stats/RoleplayStatsView';
+import { MyRoleplayStats } from '../roleplay-stats/MyRoleplayStats';
+import { TargetRoleplayStats } from '../roleplay-stats/TargetRoleplayStats';
 
 export function LeftSideView() {
     return (
         <div className="nitro-left-side">
-            <RoleplayStatsView />
+            <TargetRoleplayStats />
+            <div style={{ position: 'absolute', bottom: 20, left: 20 }}>
+                <MyRoleplayStats />
+            </div>
         </div>
     );
 }

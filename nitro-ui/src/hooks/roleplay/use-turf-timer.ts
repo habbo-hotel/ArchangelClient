@@ -5,11 +5,9 @@ import { TurfTimerQuery } from "../../api/roleplay/gang/TurfTimerQuery";
 
 export function useTurfTimer(): TurfCaptureTimeLeftData {
     const [timer, setTimer] = useState<TurfCaptureTimeLeftData>({
-        userId: -1,
-        username: '',
-        figure: '-',
         secondsLeft: -1,
         isCapturing: false,
+        gangs: [],
     });
 
     useEffect(() => {

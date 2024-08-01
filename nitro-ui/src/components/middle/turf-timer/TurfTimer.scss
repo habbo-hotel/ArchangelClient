@@ -1,0 +1,110 @@
+.game-hud {
+  background: rgba(20, 20, 20, 0.8);
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  padding: 4px;
+  width: 400px;
+  
+  .objective {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    color: #ecf0f1;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  }
+  
+  .timer {
+    text-align: right;
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #e74c3c;
+    font-weight: bold;
+  }
+  
+  .score-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+    .team {
+      display: flex;
+      align-items: center;
+      padding: 4px 5px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      
+      &.blue {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+      }
+      
+      &.red {
+        background: linear-gradient(135deg, #e74c3c, #c0392b);
+      }
+      
+      .score {
+        font-size: 28px;
+        font-weight: bold;
+      }
+    }
+    
+    .progress-bar {
+      flex-grow: 1;
+      height: 15px;
+      background: rgba(255, 255, 255, 0.1);
+      margin: 0 20px;
+      position: relative;
+      border-radius: 10px;
+      overflow: visible;
+      
+      &.contested {
+        .progress, .marker {
+          opacity: 0.3;
+        }
+      }
+      
+      .progress {
+        height: 100%;
+        position: absolute;
+        top: 0;
+        transition: width 0.5s ease;
+        
+        &.blue {
+          background: linear-gradient(90deg, #3498db, #2980b9);
+          left: 0;
+        }
+        
+        &.red {
+          background: linear-gradient(90deg, #e74c3c, #c0392b);
+          right: 0;
+        }
+      }
+      
+      .marker {
+        width: 25px;
+        height: 25px;
+        background: #ecf0f1;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+      }
+      
+      .contested-overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 32px;
+        font-weight: bold;
+        color: #f1c40f;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        white-space: nowrap;
+        z-index: 10;
+      }
+    }
+  }
+}

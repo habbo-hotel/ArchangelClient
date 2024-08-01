@@ -23,7 +23,7 @@ export function TimeOfDay() {
             <div className="d-flex" style={{ justifyContent: 'space-between' }}>
                 <Flex pointer alignItems="center" gap={2}>
                     <Text bold fontSize={4} variant="white">
-                        <FaClock />
+                        <FaClock style={{ marginRight: 8 }} />
                     </Text>
                 </Flex>
                 <Flex pointer alignItems="center" gap={2}>

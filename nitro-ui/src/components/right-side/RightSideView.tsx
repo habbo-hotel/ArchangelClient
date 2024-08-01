@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Column } from '../../common';
+import { Column, Flex } from '../../common';
 import { OfferView } from '../catalog/views/targeted-offer/OfferView';
 import { GroupRoomInformationView } from '../groups/views/GroupRoomInformationView';
 import { NotificationCenterView } from '../notification-center/NotificationCenterView';
@@ -13,9 +13,15 @@ export const RightSideView: FC<{}> = props => {
     return (
         <div className="nitro-right-side">
             <Column position="relative" gap={1}>
+                <Flex fullWidth>
+                    <Flex fullWidth>
+                        <TimeOfDay />
+                    </Flex>
+                    <Flex fullWidth>
+                        <OnlineUserCount />
+                    </Flex>
+                </Flex>
                 <RoomInformationView />
-                <OnlineUserCount />
-                <TimeOfDay />
                 <GroupRoomInformationView />
                 <MysteryBoxExtensionView />
                 <OfferView />

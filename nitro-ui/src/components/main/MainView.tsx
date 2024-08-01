@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { GetCommunication } from '../../api';
-import { Base } from '../../common';
+import { Base, Flex } from '../../common';
 import { AchievementsView } from '../achievements/AchievementsView';
 import { AvatarEditorView } from '../avatar-editor/AvatarEditorView';
 import { CameraWidgetView } from '../camera/CameraWidgetView';
@@ -16,7 +16,6 @@ import { NavigatorView } from '../navigator/NavigatorView';
 import { NitropediaView } from '../nitropedia/NitropediaView';
 import { RightSideView } from '../right-side/RightSideView';
 import { RoomView } from '../room/RoomView';
-import { ToolbarView } from '../toolbar/ToolbarView';
 import { UserProfileView } from '../user-profile/UserProfileView';
 import { UserSettingsView } from '../user-settings/UserSettingsView';
 import { WiredView } from '../wired/WiredView';
@@ -37,8 +36,10 @@ export function MainView() {
 
     return (
         <Base fit>
-            <ToolbarView />
             <HotBarView />
+            <Flex center className="nitro-chatbar">
+                <Flex id="toolbar-chat-input-container" />
+            </Flex>
             <ModToolsView />
             <RoomView />
             <ChatHistoryView />

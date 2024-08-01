@@ -1,6 +1,6 @@
 .game-hud {
-  background: rgba(20, 20, 20, 0.8);
-  border-radius: 15px;
+  background: $dark;
+  border-radius: $border-radius;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
   padding: 4px;
   width: 400px;
@@ -9,7 +9,6 @@
     text-align: center;
     font-size: 24px;
     font-weight: bold;
-    margin-bottom: 15px;
     text-transform: uppercase;
     color: #ecf0f1;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
@@ -18,7 +17,6 @@
   .timer {
     text-align: right;
     font-size: 28px;
-    margin-bottom: 20px;
     color: #e74c3c;
     font-weight: bold;
   }

@@ -44,14 +44,6 @@ export function PlayerStats() {
                             </div>
                         </div>
                     </div>
-                    <div className="status-bar">
-                        <div className="bar-container full-width">
-                            <div className="bar xp" style={{ height: 30 }}>
-                                <div className="bar-fill" style={{ width: "60%" }}></div>
-                                <span className="percent">Level 20</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </Flex>
         </div>

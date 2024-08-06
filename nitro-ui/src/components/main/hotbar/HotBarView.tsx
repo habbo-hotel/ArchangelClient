@@ -1,12 +1,12 @@
 import { SyntheticEvent, useEffect, useState } from "react";
-import { Base, Flex } from "../../common";
+import { Base, Flex } from "../../../common";
 import { HotBarItem, HotBarListItemsEvent } from "@nitro-rp/renderer";
-import { useMessageEvent } from "../../hooks";
-import { HotBarListItems } from "../../api/roleplay/items/HotBarListItems";
+import { useMessageEvent } from "../../../hooks";
+import { HotBarListItems } from "../../../api/roleplay/items/HotBarListItems";
 import { FaTimes } from "react-icons/fa";
-import { DeviceOpen } from "../../api/roleplay/device/DeviceOpen";
-import { HotBarPickupItem } from "../../api/roleplay/items/HotBarPickupItem";
-import { GetRoomEngine } from "../../api";
+import { DeviceOpen } from "../../../api/roleplay/device/DeviceOpen";
+import { HotBarPickupItem } from "../../../api/roleplay/items/HotBarPickupItem";
+import { GetRoomEngine } from "../../../api";
 
 export function HotBarView() {
     const [items, setItems] = useState<HotBarItem[]>([]);

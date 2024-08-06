@@ -8,8 +8,6 @@ export function TurfTimer() {
     const { userInfo } = useSessionInfo();
     const rpStats = useRoleplayStats(userInfo?.userId);
 
-    console.log({ timer, rpStats })
-
     const allyPlayers = useMemo(() => {
         return timer.gangs.find(_ => _.gangId === (rpStats.gangID || 0))?.userCount ?? 0
     }, [timer.gangs, rpStats.gangID]);

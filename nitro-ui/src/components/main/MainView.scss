@@ -10,7 +10,7 @@
     z-index: $toolbar-zindex;
     
     #toolbar-chat-input-container {
-        width: 800px;
+        width: 600px;
         @include media-breakpoint-down(sm) {
             width: 0px;
             height: 0px;

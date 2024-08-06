@@ -5,9 +5,6 @@ export function LeftSideView() {
     return (
         <div className="nitro-left-side">
             <TargetRoleplayStats />
-            <div style={{ position: 'absolute', bottom: 20, left: 20 }}>
-                <MyRoleplayStats />
-            </div>
         </div>
     );
 }

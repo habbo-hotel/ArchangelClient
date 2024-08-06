@@ -1,6 +1,6 @@
 .nitro-player-stats {
     position: absolute;
-    bottom: 175px;
+    bottom: 235px;
     left: 0;
     width: 100%;
     height: $toolbar-height;
@@ -8,53 +8,64 @@
     pointer-events: all;
 }
 
-.player-stats {
-    background: rgba($dark, 0.6);
-    border-radius: 5px;
-    padding: 5px;
-    display: flex;
-    width: 400px;
+.game-ui {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    width: 600px;
 }
 
-.circular-stats {
+.status-bar {
     display: flex;
-    gap: 10px;
     justify-content: space-between;
-    flex: 1;
+    margin-bottom: 10px;
 }
 
-.stat-circle {
-    position: relative;
-    width: 40px;
-    height: 40px;
+.bar-container {
+    width: 32%;
 }
 
-.stat-icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 16px;
-    color: #aaa;
-    z-index: 2;
-}
-
-.circular-chart {
+.bar-container.full-width {
     width: 100%;
+}
+
+.bar {
+    height: 30px;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.2);
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+}
+
+.bar-fill {
+    position: absolute;
+    left: 0;
+    top: 0;
     height: 100%;
-    transform: rotate(-90deg);
+    transition: width 0.3s ease;
 }
 
-.circle-bg {
-    fill: none;
-    stroke: #333;
-    stroke-width: 2.8;
+.icon {
+    width: 20px;
+    height: 20px;
+    color: #fff;
+    margin-left: 10px;
+    margin-right: 5px;
+    z-index: 1;
 }
 
-.circle {
-    fill: none;
-    stroke: #666;
-    stroke-width: 2.8;
-    stroke-linecap: round;
-    transition: stroke-dasharray 0.3s ease;
+.percent {
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: auto;
+    z-index: 1;
 }
+
+.shield .bar-fill { background-color: #4a90e2; }
+.thirst .bar-fill { background-color: #50e3c2; }
+.health .bar-fill { background-color: #e25f5f; }
+.hunger .bar-fill { background-color: #f5a623; }
+.xp .bar-fill { background-color: #9b59b6; }

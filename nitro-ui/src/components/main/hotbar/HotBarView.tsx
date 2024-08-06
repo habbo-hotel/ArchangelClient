@@ -30,7 +30,7 @@ export function HotBarView() {
             <Flex center fullWidth>
                 <div className="hotbar-container">
                     {
-                        Array.from(new Array(8)).map((_, i) => {
+                        Array.from(new Array(12)).map((_, i) => {
                             const item = items[i]
                             const iconURL = item?.spriteId && GetRoomEngine().getFurnitureFloorIconUrl(item.spriteId);
                             return (

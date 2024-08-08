@@ -28,13 +28,13 @@ export function HotBarView() {
     return (
         <Flex alignItems="center" justifyContent="between" gap={2} className="nitro-hotbar">
             <Flex center fullWidth>
-                <div className="hotbar-container">
+                <div className="hotbar glass-panel neon-border">
                     {
                         Array.from(new Array(12)).map((_, i) => {
                             const item = items[i]
                             const iconURL = item?.spriteId && GetRoomEngine().getFurnitureFloorIconUrl(item.spriteId);
                             return (
-                                <div className="hotbar-item" key={`hotbar-item_${i}`} onClick={() => item ? DeviceOpen(item.id) : null}>
+                                <div className="hotbar-slot" key={`hotbar-item_${i}`} onClick={() => item ? DeviceOpen(item.id) : null}>
                                     {
                                         item && (
                                             <>

@@ -5,29 +5,31 @@ import { GroupRoomInformationView } from '../groups/views/GroupRoomInformationVi
 import { NotificationCenterView } from '../notification-center/NotificationCenterView';
 import { MysteryBoxExtensionView } from '../room/widgets/mysterybox/MysteryBoxExtensionView';
 import { RoomPromotesWidgetView } from '../room/widgets/room-promotes/RoomPromotesWidgetView';
-import { RoomInformationView } from '../room/RoomInformationView';
 import { OnlineUserCount } from './online-user-count/OnlineUserCount';
 import { TimeOfDay } from './time-of-day/TimeOfDay';
+import { GameTools } from './game-tools/GameTools';
+import { CashBalance } from './cash-balance/CashBalance';
 
 export const RightSideView: FC<{}> = props => {
     return (
-        <div className="nitro-right-side">
-            <Column position="relative" gap={1}>
-                <Flex fullWidth>
-                    <Flex fullWidth>
+        <>
+            <div className="nitro-right-side">
+                <Column position="relative" gap={1}>
+                    <CashBalance />
+                    <br />
+                    <Flex gap={4}>
                         <TimeOfDay />
-                    </Flex>
-                    <Flex fullWidth>
                         <OnlineUserCount />
                     </Flex>
-                </Flex>
-                <RoomInformationView />
-                <GroupRoomInformationView />
-                <MysteryBoxExtensionView />
-                <OfferView />
-                <RoomPromotesWidgetView />
-                <NotificationCenterView />
-            </Column>
-        </div>
+                    <br />
+                    <GroupRoomInformationView />
+                    <MysteryBoxExtensionView />
+                    <OfferView />
+                    <RoomPromotesWidgetView />
+                    <NotificationCenterView />
+                    <GameTools />
+                </Column>
+            </div >
+        </>
     );
 }

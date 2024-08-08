@@ -5,6 +5,7 @@ export function LeftSideView() {
     return (
         <div className="nitro-left-side">
             <TargetRoleplayStats />
+            <MyRoleplayStats />
         </div>
     );
 }

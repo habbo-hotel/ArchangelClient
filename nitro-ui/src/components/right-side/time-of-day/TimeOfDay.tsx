@@ -1,5 +1,5 @@
 import { FaClock } from "react-icons/fa";
-import { Base, Flex, Text } from "../../../common";
+import { Flex } from "../../../common";
 import { useEffect, useState } from "react";
 import { TimeOfDayEvent } from "@nitro-rp/renderer";
 import { useMessageEvent } from "../../../hooks";
@@ -19,19 +19,11 @@ export function TimeOfDay() {
     });
 
     return (
-        <Base className="nitro-notification-bubble rounded">
-            <div className="d-flex" style={{ justifyContent: 'space-between' }}>
-                <Flex pointer alignItems="center" gap={2}>
-                    <Text bold fontSize={4} variant="white">
-                        <FaClock style={{ marginRight: 8 }} />
-                    </Text>
-                </Flex>
-                <Flex pointer alignItems="center" gap={2}>
-                    <Text bold fontSize={5} variant="white">
-                        {timeOfDay}
-                    </Text>
-                </Flex>
-            </div>
-        </Base>
+        <div className="cash-balance glass-panel neon-border">
+            <Flex>
+                <FaClock style={{ marginRight: 8 }} />
+                {timeOfDay}
+            </Flex>
+        </div>
     )
 }

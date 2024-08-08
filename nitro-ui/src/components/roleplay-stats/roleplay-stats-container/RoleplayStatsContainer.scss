@@ -1,42 +1,70 @@
-.nitro-roleplay-stats-container {
-    font-size: $font-size-sm;
-    pointer-events: all;
-
-    .nitro-roleplay-stats {
-        background-color: rgba($dark, 0.95);
-        box-shadow: inset 0px 5px lighten(rgba($dark, 0.6), 2.5), inset 0 -4px darken(rgba($dark, 0.6), 4);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        padding: 12px;
-        width: fit-content;
-
-        .nitro-roleplay-user {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 40px;
-            
-            .nitro-roleplay-avatar {
-                height: 40px;
-                overflow: hidden;
-                .avatar-image, .avatar {
-                    background-position: center -40px !important;
-                }
-            }
+       
+        .glass-panel {
+            background: rgba(0, 15, 30, 0.6);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            border: 1px solid rgba(0, 247, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(0, 247, 255, 0.2);
+        }
+       
+       .neon-border {
+            position: relative;
         }
 
-        .nitro-stats-item {
-            margin-top: 4px;
-            padding: 4px;
-            background-color: rgba($light, 0.1);
-    
-            &:hover {
-                background-color: rgba($light, 0.4);
-            }
+        .neon-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00f7ff, #7700ff, #ff00e6);
+            border-radius: inherit;
+            z-index: -1;
+            filter: blur(10px);
+            opacity: 0.7;
+        }
+        
+           .stats {
+            position: absolute;
+            top: 100px;
+            left: 20px;
+            width: 250px;
+            padding: 20px;
         }
 
-    }
+        .stat-bar {
+            height: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            position: relative;
+        }
 
-}
+        .stat-fill {
+            height: 100%;
+            border-radius: 5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transform: translateX(-100%);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            100% { transform: translateX(100%); }
+        }
+
+        .health-fill { width: 70%; background: linear-gradient(90deg, #ff4757, #ff6b81); }
+        .energy-fill { width: 50%; background: linear-gradient(90deg, #5352ed, #3742fa); }
+        .xp-fill { width: 30%; background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); }

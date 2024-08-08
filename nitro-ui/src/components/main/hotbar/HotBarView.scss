@@ -6,42 +6,65 @@
     height: $toolbar-height;
     z-index: $toolbar-zindex;
     pointer-events: all;
-
-    .hotbar-container {
-        display: flex;
-        gap: 10px;
-        padding: 10px;
-        border-radius: 10px;
-        background: rgba($dark, 0.95);
-        box-shadow: inset 0px 5px lighten(rgba($dark, 0.6), 2.5), inset 0 -4px darken(rgba($dark, 0.6), 4);
-        width: 600px;
-    }
     
-    .hotbar-item {
-        width: 40px;
-        height: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #444;
-        color: white;
-        font-size: 18px;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s;
-        position: relative;
-
-        &:hover {
-            background-color: #555
+    .hotbar {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            padding: 15px;
         }
-    }
 
-    .hotbar-remove {
-        position: absolute;
-        top: -5px;
-        right: 0;
-        color: red;
-        font-size: 12px;
-    }
+        .hotbar-slot {
+            width: 45px;
+            height: 45px;
+            background: rgba(0, 247, 255, 0.1);
+            border: 2px solid rgba(0, 247, 255, 0.5);
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            transition: all 0.3s ease;
+            color: var(--primary-color);
+            position: relative;
+        }
+
+        .hotbar-slot::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(transparent, var(--primary-color), transparent 30%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .hotbar-slot:hover::before {
+            opacity: 1;
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        .hotbar-slot:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 0 20px var(--primary-color);
+        }
+
+        .hotbar-remove {
+            position: absolute;
+            top: -15px;
+            right: -5px;
+            font-size: 14px;
+            color: red;
+        }
+
 
 }

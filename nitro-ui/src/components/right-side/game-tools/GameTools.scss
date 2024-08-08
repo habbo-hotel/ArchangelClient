@@ -1,0 +1,50 @@
+ .quick-menu {
+            position: absolute;
+            right: 0px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .menu-button {
+            width: 60px;
+            height: 60px;
+            font-size: 28px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            color: #00f7ff;
+            position: relative;
+            overflow: hidden;
+
+            &:hover {
+                color: red !important;
+            }
+        }
+
+        .menu-button::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, #00f7ff 10%, transparent 10%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .menu-button:hover::after {
+            opacity: 1;
+            animation: ripple 1s linear infinite;
+        }
+
+        @keyframes ripple {
+            to { transform: scale(3); opacity: 0; }
+        }
+
+        .menu-button:hover {
+            transform: scale(1.2);
+            box-shadow: 0 0 20px #00f7ff;
+        }

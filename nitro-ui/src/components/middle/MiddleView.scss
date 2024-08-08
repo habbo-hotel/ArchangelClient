@@ -1,6 +1,51 @@
 @import './turf-timer//TurfTimer';
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Exo+2:wght@300;400;700&display=swap');
+
 .nitro-middle {
     position: absolute;
     top:50px;
     left: 44%;
 }
+
+  .top-bar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .location-info {
+            font-family: 'Audiowide', cursive;
+            font-size: 18px;
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .player-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            background: url('https://via.placeholder.com/100?text=Avatar') no-repeat center center;
+            background-size: cover;
+            border: 2px solid var(--primary-color);
+            box-shadow: 0 0 15px var(--primary-color);
+        }
+
+        .level-badge {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: var(--bg-color);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-weight: bold;
+            margin-right: 10px;
+        }

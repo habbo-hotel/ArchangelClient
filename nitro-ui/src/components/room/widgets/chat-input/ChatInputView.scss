@@ -3,14 +3,15 @@
     justify-content: flex-start;
     align-items: center;
     position: relative;
-    height: 40px;
+    height: 60px;
     border-radius: 8px;
     border: 2px solid rgb(0, 0, 0);
-    background: #EDEDED;
+    background: linear-gradient(45deg, #00f7ff, #7700ff, #ff00e6);
     padding-right: 10px;
     width: 100%;
     overflow: hidden;
     margin: 0 auto;
+    min-width: 300px;
 
     @include media-breakpoint-down(sm) {
         display: flex;
@@ -29,7 +30,6 @@
         left: 0;
         right: 0;
         margin: auto;
-        background: rgb(255, 255, 255);
         z-index: 1;
     }
 
@@ -40,7 +40,7 @@
         vertical-align: top;
         height: 100%;
         justify-content: flex-start;
-        
+
         &::after,
         input,
         textarea {
@@ -52,7 +52,14 @@
             appearance: none;
             border: none;
             outline: none;
-            padding: 0 10px;
+            padding: 15px;
+            color: white; 
+            font-size: 20px;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: white; 
         }
         
         &::after {
@@ -69,8 +76,6 @@
 }
 
 .nitro-chat-style-selector-container {
-    width: $chat-input-style-selector-widget-width;
-    max-height: $chat-input-style-selector-widget-height;
     justify-content: flex-end !important;
 
     .content-area {

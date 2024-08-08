@@ -27,7 +27,6 @@ import { Devices } from '../devices/Devices';
 import { RoleplayEffects } from '../roleplay-effects/RoleplayEffects';
 import { MiddleView } from '../middle/MiddleView';
 import { HotBarView } from './hotbar/HotBarView';
-import { PlayerStats } from './player-stats/PlayerStats';
 
 export function MainView() {
 
@@ -38,7 +37,6 @@ export function MainView() {
     return (
         <Base fit>
             <HotBarView />
-            <PlayerStats />
             <Flex center className="nitro-chatbar">
                 <Flex id="toolbar-chat-input-container" />
             </Flex>

@@ -30,16 +30,25 @@
             align-items: center;
         }
 
-        .avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            margin-right: 15px;
-            background: url('https://via.placeholder.com/100?text=Avatar') no-repeat center center;
-            background-size: cover;
-            border: 2px solid var(--primary-color);
-            box-shadow: 0 0 15px var(--primary-color);
-        }
+.avatar {
+    width: 50px; /* Size of the avatar */
+    height: 50px; /* Size of the avatar */
+    border-radius: 50%; /* Makes the avatar circular */
+    margin-right: 15px;
+    border: 2px solid var(--primary-color); /* Adds a border around the avatar */
+    box-shadow: 0 0 15px var(--primary-color); /* Adds a shadow */
+    overflow: hidden; /* Ensures the image stays within the circular frame */
+    display: inline-block; /* Keeps the div inline for proper layout */
+}
+
+.avatar-image {
+    width: 100%; /* Image fills the entire avatar */
+    height: 100%; /* Image fills the entire avatar */
+    background-size: cover; /* Ensures the image covers the entire area without distortion */
+    background-position: center; /* Centers the image */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+}
+
 
         .level-badge {
             background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));

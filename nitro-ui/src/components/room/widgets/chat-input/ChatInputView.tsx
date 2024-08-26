@@ -4,7 +4,6 @@ import { createPortal } from 'react-dom';
 import { ChatMessageTypeEnum, GetClubMemberLevel, GetConfiguration, GetSessionDataManager, LocalizeText, RoomWidgetUpdateChatInputContentEvent } from '../../../../api';
 import { Text } from '../../../../common';
 import { useChatInputWidget, useRoom, useSessionInfo, useUiEvent } from '../../../../hooks';
-import { ChatInputStyleSelectorView } from './ChatInputStyleSelectorView';
 
 export const ChatInputView: FC<{}> = props => {
     const [chatValue, setChatValue] = useState<string>('');
@@ -213,7 +212,6 @@ export const ChatInputView: FC<{}> = props => {
                     {floodBlocked &&
                         <Text variant="danger">{LocalizeText('chat.input.alert.flood', ['time'], [floodBlockedSeconds.toString()])} </Text>}
                 </div>
-                <ChatInputStyleSelectorView chatStyleId={chatStyleId} chatStyleIds={chatStyleIds} selectChatStyleId={updateChatStyleId} />
             </div>, document.getElementById('toolbar-chat-input-container'))
     );
 }

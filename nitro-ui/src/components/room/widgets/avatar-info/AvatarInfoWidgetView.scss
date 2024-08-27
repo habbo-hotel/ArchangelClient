@@ -36,8 +36,8 @@
         max-width: 190px;
         z-index: $infostand-zindex;
         pointer-events: auto;
-        background: rgba($dark, .95);
-        box-shadow: inset 0px 5px lighten(rgba($dark, .6), 2.5), inset 0 -4px darken(rgba($dark, .6), 4);
+        background: linear-gradient(45deg, #60c7d4, #8360c7, #d460c7);
+        box-shadow: 0 8px 32px 0 rgba(0, 247, 255, 0.2);
 
         .form-control-sm {
             height: 25px;
@@ -49,6 +49,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            background: url('https://img.freepik.com/free-vector/realistic-cannabis-leaf-background_52683-51735.jpg?semt=ais_hybrid');
+            background-size: cover;
             background-color: rgba($light-dark, 1);
             width: 100%;
             max-width: 68px;

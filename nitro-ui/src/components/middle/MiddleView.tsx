@@ -1,11 +1,12 @@
 import { FaMapPin } from 'react-icons/fa';
 import { TurfTimer } from './turf-timer/TurfTimer';
 import { useNavigator, useSessionInfo } from '../../hooks';
-import { LayoutAvatarImageView, Text } from '../../common';
+import { Flex, LayoutAvatarImageView, Text } from '../../common';
 
 export function MiddleView() {
     const { navigatorData = null } = useNavigator();
     const { userInfo } = useSessionInfo();
+    console.log(navigatorData)
     return (
         <>
             <div className="nitro-middle">
@@ -14,6 +15,15 @@ export function MiddleView() {
             <div className="top-bar glass-panel neon-border">
                 <div className="location-info">
                     <FaMapPin />  {navigatorData?.enteredGuestRoom?.roomName}
+                    <Flex gap={4}>
+                        {
+                            navigatorData?.enteredGuestRoom?.tags?.map(_ => (
+                                <Text fontSize={6} variant="white">
+                                    #{_}
+                                </Text>
+                            ))
+                        }
+                    </Flex>
                 </div>
                 <div className="player-info">
 

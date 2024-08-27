@@ -1,10 +1,9 @@
 import { ExtendedProfileChangedMessageEvent, RelationshipStatusInfoEvent, RelationshipStatusInfoMessageParser, RoomEngineObjectEvent, RoomObjectCategory, RoomObjectType, UserCurrentBadgesComposer, UserCurrentBadgesEvent, UserProfileEvent, UserProfileParser, UserRelationshipsComposer } from '@nitro-rp/renderer';
 import { FC, useState } from 'react';
 import { GetRoomSession, GetSessionDataManager, GetUserProfile, LocalizeText, SendMessageComposer } from '../../api';
-import { Column, Flex, Grid, NitroCardAccordionSetView, NitroCardAccordionView, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../common';
+import { Column, Grid, NitroCardAccordionSetView, NitroCardAccordionView, NitroCardContentView, NitroCardHeaderView, NitroCardView, Text } from '../../common';
 import { useMessageEvent, useRoomEngineEvent } from '../../hooks';
 import { BadgesContainerView } from './views/BadgesContainerView';
-import { FriendsContainerView } from './views/FriendsContainerView';
 import { GroupsContainerView } from './views/GroupsContainerView';
 import { UserContainerView } from './views/UserContainerView';
 import { RoleplayStatsContainerView } from './views/RoleplayStatsContainerView';
@@ -12,12 +11,10 @@ import { RoleplayStatsContainerView } from './views/RoleplayStatsContainerView';
 export const UserProfileView: FC<{}> = props => {
     const [userProfile, setUserProfile] = useState<UserProfileParser>(null);
     const [userBadges, setUserBadges] = useState<string[]>([]);
-    const [userRelationships, setUserRelationships] = useState<RelationshipStatusInfoMessageParser>(null);
 
     const onClose = () => {
         setUserProfile(null);
         setUserBadges([]);
-        setUserRelationships(null);
     }
 
     const onLeaveGroup = () => {
@@ -38,8 +35,6 @@ export const UserProfileView: FC<{}> = props => {
         const parser = event.getParser();
 
         if (!userProfile || (parser.userId !== userProfile.id)) return;
-
-        setUserRelationships(parser);
     });
 
     useMessageEvent<UserProfileEvent>(UserProfileEvent, event => {
@@ -55,7 +50,6 @@ export const UserProfileView: FC<{}> = props => {
 
         if (!isSameProfile) {
             setUserBadges([]);
-            setUserRelationships(null);
         }
 
         SendMessageComposer(new UserCurrentBadgesComposer(parser.id));

@@ -152,9 +152,6 @@ export const ContextMenuView: FC<ContextMenuViewProps> = props => {
         <>
             <Base innerRef={elementRef} position={position} classNames={getClassNames} style={getStyle} {...rest}>
                 {!(collapsable && COLLAPSED) && children}
-                <Flex justifyContent="center" alignItems="center" classNames={getClassNames} {...rest}>
-                    100% HEALTH
-                </Flex>
                 {collapsable && <ContextMenuCaretView onClick={() => setIsCollapsed(!isCollapsed)} collapsed={isCollapsed} />}
             </Base>
         </>

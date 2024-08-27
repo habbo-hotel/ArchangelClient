@@ -19,7 +19,7 @@ export function MiddleView() {
 
                     <div className="avatar">
                         <div className="avatar-image" >
-                            <LayoutAvatarImageView figure={userInfo.figure} direction={2} style={{ height: 125, marginTop: -35 }} />
+                            <LayoutAvatarImageView figure={userInfo?.figure} direction={2} style={{ height: 125, marginTop: -35 }} />
                         </div>
                     </div>
                     <Text bold className="level-badge" variant="white" fontSize={6}>LVL 1</Text>

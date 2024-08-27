@@ -62,3 +62,26 @@
   font-weight: bold;
   text-transform: uppercase;
 }
+
+.progress {
+  height: 1.8em;
+  width: 100%;
+  background-color: #c9c9c9;
+  position: relative;
+}
+.progress:before {
+  content: attr(data-label);
+  font-size: 1.1em;
+  position: absolute;
+  text-align: center;
+  top: 5px;
+  left: 0;
+  right: 0;
+  font-weight: bold;
+}
+
+.progress .value {
+  background-color: #7cc4ff;
+  display: inline-block;
+  height: 100%;
+}

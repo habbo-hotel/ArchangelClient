@@ -33,15 +33,3 @@ function PlayerStats({ name, avatar, health, energy }) {
         </div>
     );
 };
-
-function StatBar({ type, value, max }) {
-    const percentage = (value / max) * 100;
-    return (
-        <div className={`stat-bar ${type}`}>
-            <div className="value">{value}</div>
-            <div className="bar">
-                <div className="fill" style={{ width: `${percentage}%` }}></div>
-            </div>
-        </div>
-    );
-};

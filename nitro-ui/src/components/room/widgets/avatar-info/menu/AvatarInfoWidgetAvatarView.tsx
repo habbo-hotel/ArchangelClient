@@ -20,6 +20,7 @@ import { PoliceEscortUser } from '../../../../../api/roleplay/police/PoliceEscor
 import { useCrimes } from '../../../../../api/roleplay/police/GetCrimes';
 import { useCombatDelay } from '../../../../../hooks/roleplay/use-combat-delay';
 import { useCorpData } from '../../../../../hooks/roleplay/use-corp-data';
+import { AvatarQuickView } from '../AvatarQuickView';
 
 interface AvatarInfoWidgetAvatarViewProps {
     avatarInfo: AvatarInfoUser;

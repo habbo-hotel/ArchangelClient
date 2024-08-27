@@ -16,6 +16,7 @@ import { useMyWeaponList } from '../../../../../hooks/roleplay/use-my-weapon-lis
 import { EquipWeapon } from '../../../../../api/roleplay/combat/EquipWeapon';
 import { useCorpData } from '../../../../../hooks/roleplay/use-corp-data';
 import { useCorpPositionData } from '../../../../../hooks/roleplay/use-corp-position-data';
+import { AvatarQuickView } from '../AvatarQuickView';
 
 interface AvatarInfoWidgetOwnAvatarViewProps {
     avatarInfo: AvatarInfoUser;
@@ -132,13 +133,7 @@ export const AvatarInfoWidgetOwnAvatarView: FC<AvatarInfoWidgetOwnAvatarViewProp
 
     const isRidingHorse = IsRidingHorse();
 
-    function onEquip(weapon: MyWeaponData) {
-        EquipWeapon(weapon.uniqueName);
-        onClose();
-    }
-
     return (
-
         <ContextMenuView objectId={avatarInfo.roomIndex} category={RoomObjectCategory.UNIT} userType={avatarInfo.userType} onClose={onClose} collapsable={true}>
 
             <ContextMenuHeaderView className="cursor-pointer" onClick={event => GetUserProfile(avatarInfo.webID)}>

@@ -25,8 +25,7 @@ settings.SCALE_MODE = (!(window.devicePixelRatio % 1)) ? SCALE_MODES.NEAREST : S
 settings.ROUND_PIXELS = true;
 settings.GC_MAX_IDLE = 120;
 
-export class Nitro implements INitro
-{
+export class Nitro implements INitro {
     public static WEBGL_CONTEXT_LOST: string = 'NE_WEBGL_CONTEXT_LOST';
     public static WEBGL_UNAVAILABLE: string = 'NE_WEBGL_UNAVAILABLE';
     public static READY: string = 'NE_READY!';
@@ -50,9 +49,8 @@ export class Nitro implements INitro
     private _isReady: boolean;
     private _isDisposed: boolean;
 
-    constructor(core: INitroCore, options?: IApplicationOptions)
-    {
-        if(!Nitro.INSTANCE) Nitro.INSTANCE = this;
+    constructor(core: INitroCore, options?: IApplicationOptions) {
+        if (!Nitro.INSTANCE) Nitro.INSTANCE = this;
 
         this._application = new PixiApplicationProxy(options);
         this._core = core;
@@ -75,10 +73,8 @@ export class Nitro implements INitro
         this._roomEngine.events.addEventListener(RoomEngineEvent.ENGINE_INITIALIZED, this.onRoomEngineReady.bind(this));
     }
 
-    public static bootstrap(): void
-    {
-        if(Nitro.INSTANCE)
-        {
+    public static bootstrap(): void {
+        if (Nitro.INSTANCE) {
             Nitro.INSTANCE.dispose();
 
             Nitro.INSTANCE = null;
@@ -91,34 +87,31 @@ export class Nitro implements INitro
             width: window.innerWidth,
             height: window.innerHeight,
             resolution: window.devicePixelRatio,
-            view: canvas
+            view: canvas,
         });
 
         canvas.addEventListener('webglcontextlost', () => instance.events.dispatchEvent(new NitroEvent(Nitro.WEBGL_CONTEXT_LOST)));
     }
 
-    public init(): void
-    {
-        if(this._isReady || this._isDisposed) return;
+    public init(): void {
+        if (this._isReady || this._isDisposed) return;
 
-        if(this._avatar) this._avatar.init();
+        if (this._avatar) this._avatar.init();
 
-        if(this._soundManager) this._soundManager.init();
+        if (this._soundManager) this._soundManager.init();
 
-        if(this._roomEngine)
-        {
+        if (this._roomEngine) {
             this._roomEngine.sessionDataManager = this._sessionDataManager;
             this._roomEngine.roomSessionManager = this._roomSessionManager;
             this._roomEngine.roomManager = this._roomManager;
 
-            if(this._sessionDataManager) this._sessionDataManager.init();
-            if(this._roomSessionManager) this._roomSessionManager.init();
+            if (this._sessionDataManager) this._sessionDataManager.init();
+            if (this._roomSessionManager) this._roomSessionManager.init();
 
             this._roomEngine.init();
         }
 
-        if(!this._communication.connection)
-        {
+        if (!this._communication.connection) {
             throw new Error('No connection found');
         }
 
@@ -127,61 +120,52 @@ export class Nitro implements INitro
         this._isReady = true;
     }
 
-    public dispose(): void
-    {
-        if(this._isDisposed) return;
+    public dispose(): void {
+        if (this._isDisposed) return;
 
-        if(this._roomManager)
-        {
+        if (this._roomManager) {
             this._roomManager.dispose();
 
             this._roomManager = null;
         }
 
-        if(this._roomSessionManager)
-        {
+        if (this._roomSessionManager) {
             this._roomSessionManager.dispose();
 
             this._roomSessionManager = null;
         }
 
-        if(this._sessionDataManager)
-        {
+        if (this._sessionDataManager) {
             this._sessionDataManager.dispose();
 
             this._sessionDataManager = null;
         }
 
-        if(this._roomEngine)
-        {
+        if (this._roomEngine) {
             this._roomEngine.dispose();
 
             this._roomEngine = null;
         }
 
-        if(this._avatar)
-        {
+        if (this._avatar) {
             this._avatar.dispose();
 
             this._avatar = null;
         }
 
-        if(this._soundManager)
-        {
+        if (this._soundManager) {
             this._soundManager.dispose();
 
             this._soundManager = null;
         }
 
-        if(this._communication)
-        {
+        if (this._communication) {
             this._communication.dispose();
 
             this._communication = null;
         }
 
-        if(this._application)
-        {
+        if (this._application) {
             this._application.destroy();
 
             this._application = null;
@@ -191,8 +175,7 @@ export class Nitro implements INitro
         this._isReady = false;
     }
 
-    private onConfigurationLoadedEvent(event: ConfigurationEvent): void
-    {
+    private onConfigurationLoadedEvent(event: ConfigurationEvent): void {
         GetTicker().maxFPS = NitroConfiguration.getValue<number>('system.fps.max', 24);
 
         NitroLogger.LOG_DEBUG = NitroConfiguration.getValue<boolean>('system.log.debug', true);
@@ -204,162 +187,132 @@ export class Nitro implements INitro
         LandscapeRasterizer.LANDSCAPES_ENABLED = NitroConfiguration.getValue<boolean>('room.landscapes.enabled', true);
     }
 
-    private onRoomEngineReady(event: RoomEngineEvent): void
-    {
+    private onRoomEngineReady(event: RoomEngineEvent): void {
         this.startSendingHeartBeat();
     }
 
-    public getConfiguration<T>(key: string, value: T = null): T
-    {
+    public getConfiguration<T>(key: string, value: T = null): T {
         return NitroConfiguration.getValue<T>(key, value);
     }
 
-    public getLocalization(key: string): string
-    {
+    public getLocalization(key: string): string {
         return this._localization.getValue(key);
     }
 
-    public getLocalizationWithParameter(key: string, parameter: string, replacement: string): string
-    {
+    public getLocalizationWithParameter(key: string, parameter: string, replacement: string): string {
         return this._localization.getValueWithParameter(key, parameter, replacement);
     }
 
-    public getLocalizationWithParameters(key: string, parameters: string[], replacements: string[]): string
-    {
+    public getLocalizationWithParameters(key: string, parameters: string[], replacements: string[]): string {
         return this._localization.getValueWithParameters(key, parameters, replacements);
     }
 
-    public addLinkEventTracker(tracker: ILinkEventTracker): void
-    {
-        if(this._linkTrackers.indexOf(tracker) >= 0) return;
+    public addLinkEventTracker(tracker: ILinkEventTracker): void {
+        if (this._linkTrackers.indexOf(tracker) >= 0) return;
 
         this._linkTrackers.push(tracker);
     }
 
-    public removeLinkEventTracker(tracker: ILinkEventTracker): void
-    {
+    public removeLinkEventTracker(tracker: ILinkEventTracker): void {
         const index = this._linkTrackers.indexOf(tracker);
 
-        if(index === -1) return;
+        if (index === -1) return;
 
         this._linkTrackers.splice(index, 1);
     }
 
-    public createLinkEvent(link: string): void
-    {
-        if(!link || (link === '')) return;
+    public createLinkEvent(link: string): void {
+        if (!link || (link === '')) return;
 
-        for(const tracker of this._linkTrackers)
-        {
-            if(!tracker) continue;
+        for (const tracker of this._linkTrackers) {
+            if (!tracker) continue;
 
             const prefix = tracker.eventUrlPrefix;
 
-            if(prefix.length > 0)
-            {
-                if(link.substr(0, prefix.length) === prefix) tracker.linkReceived(link);
+            if (prefix.length > 0) {
+                if (link.substr(0, prefix.length) === prefix) tracker.linkReceived(link);
             }
-            else
-            {
+            else {
                 tracker.linkReceived(link);
             }
         }
     }
 
-    private startSendingHeartBeat(): void
-    {
+    private startSendingHeartBeat(): void {
         this.sendHeartBeat();
 
         setInterval(this.sendHeartBeat, 10000);
     }
 
-    private sendHeartBeat(): void
-    {
+    private sendHeartBeat(): void {
         HabboWebTools.sendHeartBeat();
     }
 
-    public get application(): Application
-    {
+    public get application(): Application {
         return this._application;
     }
 
-    public get core(): INitroCore
-    {
+    public get core(): INitroCore {
         return this._core;
     }
 
-    public get events(): IEventDispatcher
-    {
+    public get events(): IEventDispatcher {
         return this._events;
     }
 
-    public get localization(): INitroLocalizationManager
-    {
+    public get localization(): INitroLocalizationManager {
         return this._localization;
     }
 
-    public get communication(): INitroCommunicationManager
-    {
+    public get communication(): INitroCommunicationManager {
         return this._communication;
     }
 
-    public get avatar(): IAvatarRenderManager
-    {
+    public get avatar(): IAvatarRenderManager {
         return this._avatar;
     }
 
-    public get roomEngine(): IRoomEngine
-    {
+    public get roomEngine(): IRoomEngine {
         return this._roomEngine;
     }
 
-    public get sessionDataManager(): ISessionDataManager
-    {
+    public get sessionDataManager(): ISessionDataManager {
         return this._sessionDataManager;
     }
 
-    public get roomSessionManager(): IRoomSessionManager
-    {
+    public get roomSessionManager(): IRoomSessionManager {
         return this._roomSessionManager;
     }
 
-    public get roomManager(): IRoomManager
-    {
+    public get roomManager(): IRoomManager {
         return this._roomManager;
     }
 
-    public get cameraManager(): IRoomCameraWidgetManager
-    {
+    public get cameraManager(): IRoomCameraWidgetManager {
         return this._cameraManager;
     }
 
-    public get soundManager(): ISoundManager
-    {
+    public get soundManager(): ISoundManager {
         return this._soundManager;
     }
 
-    public get width(): number
-    {
+    public get width(): number {
         return this._application.renderer.width;
     }
 
-    public get height(): number
-    {
+    public get height(): number {
         return this._application.renderer.height;
     }
 
-    public get isReady(): boolean
-    {
+    public get isReady(): boolean {
         return this._isReady;
     }
 
-    public get isDisposed(): boolean
-    {
+    public get isDisposed(): boolean {
         return this._isDisposed;
     }
 
-    public static get instance(): INitro
-    {
+    public static get instance(): INitro {
         return this.INSTANCE || null;
     }
 }

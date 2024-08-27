@@ -25,7 +25,7 @@ export const AvatarQuickView: FC<AvatarQuickViewProps> = ({ objectId = -1, categ
     const roleplayStats = useRoleplayStats((avatarInfo as AvatarInfoUser)?.webID);
 
     const updatePosition = useCallback((bounds: NitroRectangle, location: NitroPoint) => {
-        if (!bounds || !location || !FIXED_STACK) return;
+        if (!bounds || !location || !FIXED_STACK || !elementRef.current) return;
 
         let offset = -(elementRef.current.offsetHeight);
 
@@ -82,7 +82,7 @@ export const AvatarQuickView: FC<AvatarQuickViewProps> = ({ objectId = -1, categ
             <Flex justifyContent="center" alignItems="center" column gap={4}>
                 <div style={{ border: '1px solid white', borderRadius: 4, width: 100 }}>
                     <div className="progress" data-label={healthPercent <= 0 ? 'Dead' : `Health ${healthPercent}%`} >
-                        <span className="value" style={{ background: 'linear-gradient(90deg, #ff4757, #ff6b81)', width: healthPercent }}></span>
+                        <span className="value" style={{ background: 'linear-gradient(45deg, #00f7ff 20%, #7700ff 50%, #ff00e6 80%)', width: healthPercent }}></span>
                     </div>
                 </div>
             </Flex>

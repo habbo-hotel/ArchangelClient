@@ -105,7 +105,7 @@ export const AvatarInfoWidgetView: FC<{}> = props => {
             )}
             {getMenuView()}
             {avatarInfo &&
-                <Column alignItems="end" className="nitro-infostand-container">
+                <Column alignItems="end" className="nitro-infostand-container glass-panel">
                     {getInfostandView()}
                 </Column>}
             {(nameBubbles.length > 0) && nameBubbles.map((name, index) => <AvatarInfoWidgetNameView key={index} nameInfo={name} onClose={() => removeNameBubble(index)} />)}

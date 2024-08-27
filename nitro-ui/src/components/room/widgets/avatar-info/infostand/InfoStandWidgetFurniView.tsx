@@ -294,7 +294,7 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
 
     return (
         <Column gap={1} alignItems="end">
-            <Column className="nitro-infostand rounded">
+            <Column className="nitro-infostand rounded glass-panel">
                 <Column overflow="visible" className="container-fluid content-area" gap={1}>
                     <Column gap={1}>
                         <Flex alignItems="center" justifyContent="between" gap={1}>

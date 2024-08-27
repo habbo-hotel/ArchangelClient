@@ -19,7 +19,7 @@ export function TimeOfDay() {
     });
 
     return (
-        <div className="cash-balance glass-panel neon-border">
+        <div className="cash-balance glass-panel ">
             <Flex>
                 <FaClock style={{ marginRight: 8 }} />
                 {timeOfDay}

@@ -77,7 +77,7 @@ export const InfoStandWidgetUserView: FC<InfoStandWidgetUserViewProps> = props =
     if (!avatarInfo) return null;
 
     return (
-        <Column className="nitro-infostand rounded">
+        <Column className="nitro-infostand rounded glass-panel">
             <Column overflow="visible" className="container-fluid content-area" gap={1}>
                 <Column gap={1}>
                     <Flex alignItems="center" justifyContent="between">

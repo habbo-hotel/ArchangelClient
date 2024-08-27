@@ -28,7 +28,7 @@ export function HotBarView() {
     return (
         <Flex alignItems="center" justifyContent="between" gap={2} className="nitro-hotbar">
             <Flex center fullWidth>
-                <div className="hotbar glass-panel neon-border">
+                <div className="hotbar glass-panel ">
                     {
                         Array.from(new Array(12)).map((_, i) => {
                             const item = items[i]

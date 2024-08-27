@@ -6,7 +6,7 @@ export function CashBalance() {
     const userInfo = useSessionInfo();
     const rpStats = useRoleplayStats(userInfo?.userInfo?.userId);
     return (
-        <div className="cash-balance glass-panel neon-border" style={{ width: '100%' }}>
+        <div className="cash-balance glass-panel " style={{ width: '100%' }}>
             <FaDollarSign style={{ marginRight: 8 }} />
             {Number(rpStats.cashBalance).toLocaleString()}
         </div>

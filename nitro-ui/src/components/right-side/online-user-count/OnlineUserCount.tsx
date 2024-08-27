@@ -5,7 +5,7 @@ import { useUserOnlineCount } from "../../../hooks/roleplay/use-user-online-coun
 export function OnlineUserCount() {
     const usersOnline = useUserOnlineCount();
     return (
-        <div className="cash-balance glass-panel neon-border">
+        <div className="cash-balance glass-panel ">
             <Flex>
                 <FaUsers style={{ marginRight: 8 }} />
                 {usersOnline}

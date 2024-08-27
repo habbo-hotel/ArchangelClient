@@ -6,31 +6,15 @@
             border: 1px solid rgba(0, 247, 255, 0.3);
             box-shadow: 0 8px 32px 0 rgba(0, 247, 255, 0.2);
         }
-       
-       .neon-border {
-            position: relative;
-        }
-
-        .neon-border::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, #00f7ff 20%, #7700ff 50%, #ff00e6 80%);
-            border-radius: inherit;
-            z-index: -1;
-            filter: blur(10px);
-            opacity: 0.7;
-        }
+           
         
-           .stats {
+        .stats {
             position: absolute;
+            pointer-events: all;
             top: 100px;
             left: 20px;
-            width: 250px;
-            padding: 20px;
+            width: 240px;
+            padding: 8px;
         }
 
         .stat-bar {

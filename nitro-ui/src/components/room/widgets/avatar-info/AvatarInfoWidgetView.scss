@@ -36,8 +36,6 @@
         max-width: 190px;
         z-index: $infostand-zindex;
         pointer-events: auto;
-        background: linear-gradient(45deg, #60c7d4, #8360c7, #d460c7);
-        box-shadow: 0 8px 32px 0 rgba(0, 247, 255, 0.2);
 
         .form-control-sm {
             height: 25px;

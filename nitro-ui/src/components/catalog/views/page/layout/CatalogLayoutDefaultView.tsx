@@ -12,48 +12,47 @@ import { CatalogTotalPriceWidget } from '../widgets/CatalogTotalPriceWidget';
 import { CatalogViewProductWidgetView } from '../widgets/CatalogViewProductWidgetView';
 import { CatalogLayoutProps } from './CatalogLayout.types';
 
-export const CatalogLayoutDefaultView: FC<CatalogLayoutProps> = props =>
-{
+export const CatalogLayoutDefaultView: FC<CatalogLayoutProps> = props => {
     const { page = null } = props;
     const { currentOffer = null, currentPage = null } = useCatalog();
 
     return (
         <>
             <Grid>
-                <Column size={ 7 } overflow="hidden">
-                    { GetConfiguration('catalog.headers') &&
-                        <CatalogHeaderView imageUrl={ currentPage.localization.getImage(0) }/> }
+                <Column size={7} overflow="hidden">
+                    {GetConfiguration('catalog.headers') &&
+                        <CatalogHeaderView imageUrl={currentPage.localization.getImage(0)} />}
                     <CatalogItemGridWidgetView />
                 </Column>
-                <Column center={ !currentOffer } size={ 5 } overflow="hidden">
-                    { !currentOffer &&
+                <Column center={!currentOffer} size={5} overflow="hidden">
+                    {!currentOffer &&
                         <>
-                            { !!page.localization.getImage(1) && 
-                                <LayoutImage imageUrl={ page.localization.getImage(1) } /> }
-                            <Text center dangerouslySetInnerHTML={ { __html: page.localization.getText(0) } } />
-                        </> }
-                    { currentOffer &&
+                            {!!page.localization.getImage(1) &&
+                                <LayoutImage imageUrl={page.localization.getImage(1)} />}
+                            <Text center dangerouslySetInnerHTML={{ __html: page.localization.getText(0) }} variant="white" />
+                        </>}
+                    {currentOffer &&
                         <>
-                            <Flex center overflow="hidden" style={ { height: 140 } }>
-                                { (currentOffer.product.productType !== ProductTypeEnum.BADGE) &&
+                            <Flex center overflow="hidden" style={{ height: 140 }}>
+                                {(currentOffer.product.productType !== ProductTypeEnum.BADGE) &&
                                     <>
                                         <CatalogViewProductWidgetView />
                                         <CatalogAddOnBadgeWidgetView className="bg-muted rounded bottom-1 end-1" />
-                                    </> }
-                                { (currentOffer.product.productType === ProductTypeEnum.BADGE) && <CatalogAddOnBadgeWidgetView className="scale-2" /> }
+                                    </>}
+                                {(currentOffer.product.productType === ProductTypeEnum.BADGE) && <CatalogAddOnBadgeWidgetView className="scale-2" />}
                             </Flex>
-                            <Column grow gap={ 1 }>
+                            <Column grow gap={1}>
                                 <CatalogLimitedItemWidgetView fullWidth />
-                                <Text grow truncate>{ currentOffer.localizationName }</Text>
+                                <Text grow truncate variant="white">{currentOffer.localizationName}</Text>
                                 <Flex justifyContent="between">
-                                    <Column gap={ 1 }>
+                                    <Column gap={1}>
                                         <CatalogSpinnerWidgetView />
                                     </Column>
                                     <CatalogTotalPriceWidget justifyContent="end" alignItems="end" />
                                 </Flex>
                                 <CatalogPurchaseWidgetView />
                             </Column>
-                        </> }
+                        </>}
                 </Column>
             </Grid>
         </>

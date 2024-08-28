@@ -2,13 +2,13 @@
     height: var(--nitro-grid-column-min-height, unset);
     background-position: center;
     background-repeat: no-repeat;
-    background-color: $grid-bg-color;
+    background-color: rgba(0, 15, 30, 0.6);
 
     &.active {
-        border-color: $grid-active-border-color  !important;
+        border-color: rgba(0, 15, 30, 0.551)  !important;
 
         &:not(.clear-bg) {
-            background-color: $grid-active-bg-color  !important;
+            background-color: rgba(80, 143, 205, 0.305);
         }
     }
 

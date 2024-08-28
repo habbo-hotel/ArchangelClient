@@ -61,8 +61,8 @@ export const HelpView: FC<{}> = props => {
     return (
         <>
             {isVisible &&
-                <NitroCardView className="nitro-help" theme="primary-slim">
-                    <NitroCardHeaderView headerText={LocalizeText('help.button.cfh')} onCloseClick={onClose} />
+                <NitroCardView className="nitro-help" theme="primary-slim" style={{ height: 350, width: 500 }}>
+                    <NitroCardHeaderView onCloseClick={onClose} />
                     <NitroCardContentView className="text-black">
                         <Grid>
                             <Column center size={5} overflow="hidden">
@@ -70,14 +70,16 @@ export const HelpView: FC<{}> = props => {
                             </Column>
                             <Column justifyContent="between" size={7} overflow="hidden">
                                 <Column center gap={1}>
-                                    <Text fontSize={3}>How to play</Text>
-                                    <Text fontSize={5}>Everything you need to become a pro</Text>
+                                    <Text fontSize={3} variant="white">How to play</Text>
+                                    <Text fontSize={5} variant="white">Everything you need to become a pro</Text>
                                 </Column>
                                 <Column gap={1}>
                                     <Button>Storyline</Button>
                                     <Button>Controls</Button>
                                     <Button>Factions</Button>
                                     <Button>Corporations</Button>
+                                    <br />
+                                    <Button variant="danger">Project Archangel</Button>
                                 </Column>
                             </Column>
                         </Grid>

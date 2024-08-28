@@ -1,24 +1,13 @@
-import { SyntheticEvent, useEffect, useState } from "react";
-import { Base, Flex } from "../../../common";
-import { HotBarItem, HotBarListItemsEvent } from "@nitro-rp/renderer";
-import { useMessageEvent } from "../../../hooks";
-import { HotBarListItems } from "../../../api/roleplay/items/HotBarListItems";
+import { SyntheticEvent } from "react";
 import { FaTimes } from "react-icons/fa";
+import { Base, Flex } from "../../../common";
+import { CreateLinkEvent, GetRoomEngine } from "../../../api";
+import { useHotBar } from "../../../hooks/roleplay/use-hotbar";
 import { DeviceOpen } from "../../../api/roleplay/device/DeviceOpen";
 import { HotBarPickupItem } from "../../../api/roleplay/items/HotBarPickupItem";
-import { CreateLinkEvent, GetRoomEngine } from "../../../api";
 
 export function HotBarView() {
-    const [items, setItems] = useState<HotBarItem[]>([]);
-
-    useMessageEvent<HotBarListItemsEvent>(HotBarListItemsEvent, event => {
-        const parser = event.getParser();
-        setItems(parser.items);
-    });
-
-    useEffect(() => {
-        HotBarListItems();
-    }, []);
+    const items = useHotBar();
 
     function onPickup(event: SyntheticEvent, itemID: number) {
         event.stopPropagation();

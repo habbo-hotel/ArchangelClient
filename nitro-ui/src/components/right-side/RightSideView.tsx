@@ -9,6 +9,8 @@ import { OnlineUserCount } from './online-user-count/OnlineUserCount';
 import { TimeOfDay } from './time-of-day/TimeOfDay';
 import { GameTools } from './game-tools/GameTools';
 import { CashBalance } from './cash-balance/CashBalance';
+import { WeaponWheel } from './weapon-wheel/WeaponWheel';
+import { EquippedWeapon } from './equipped-weapon/EquippedWeapon';
 
 export const RightSideView: FC<{}> = props => {
     return (
@@ -28,6 +30,8 @@ export const RightSideView: FC<{}> = props => {
                     <RoomPromotesWidgetView />
                     <NotificationCenterView />
                     <GameTools />
+                    <EquippedWeapon />
+                    <WeaponWheel />
                 </Column>
             </div >
         </>

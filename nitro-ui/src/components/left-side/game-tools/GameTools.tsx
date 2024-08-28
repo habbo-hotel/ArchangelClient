@@ -1,4 +1,4 @@
-import { FaBox, FaCamera, FaCog, FaShieldAlt, FaStore, FaTaxi } from "react-icons/fa";
+import { FaBox, FaCamera, FaCog, FaInfo, FaShieldAlt, FaStore, FaTaxi } from "react-icons/fa";
 import { CreateLinkEvent, GetSessionDataManager } from "../../../api";
 
 export function GameTools() {
@@ -28,6 +28,9 @@ export function GameTools() {
                 }
                 <div className="menu-button glass-panel " onClick={() => CreateLinkEvent('navigator/toggle-room-info')} >
                     <FaCog size={20} />
+                </div>
+                <div className="menu-button glass-panel " onClick={() => CreateLinkEvent('help/toggle')} >
+                    <FaInfo size={20} />
                 </div>
             </div>
         </div>

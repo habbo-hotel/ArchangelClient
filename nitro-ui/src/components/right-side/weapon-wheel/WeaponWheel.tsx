@@ -1,6 +1,6 @@
 import { Text } from "../../../common";
 import { useCallback, useEffect, useState } from "react";
-import { ILinkEventTracker, MyWeaponData } from "@nitro-rp/renderer";
+import { ILinkEventTracker, MyWeaponData, NitroConfiguration } from "@nitro-rp/renderer";
 import { EquipWeapon } from "../../../api/roleplay/combat/EquipWeapon";
 import { AddEventLinkTracker, RemoveLinkEventTracker } from "../../../api";
 import { useMyWeaponList } from "../../../hooks/roleplay/use-my-weapon-list";
@@ -53,9 +53,9 @@ export function WeaponWheel() {
         <div id="weapon-wheel" className="modal" onClick={() => setVisible(false)}>
             <div className="wheel" onClick={e => e.stopPropagation()}>
                 {
-                    weapons.map((weapon, i) => (
+                    (weapons.slice(0, 8)).map((weapon, i) => (
                         <div className="wheel-item" key={`weapon_${weapon.uniqueName}`} id={`item${i + 1}`} onMouseEnter={() => setHoveredItem(weapon)} onClick={() => onEquip(weapon.uniqueName)}>
-                            <img src="https://i.imgur.com/ln9rPLu.png" alt="Weapon 1" />
+                            <img src={`${NitroConfiguration.getValue('image.library.url')}/weapon_icons/${weapon.uniqueName}.png`} alt={weapon.uniqueName} className="weapon-icon" />
                         </div>
                     ))
                 }

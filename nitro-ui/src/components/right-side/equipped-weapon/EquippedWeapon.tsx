@@ -4,6 +4,7 @@ import { Text } from "../../../common";
 import { useSessionInfo } from "../../../hooks";
 import { useMyWeaponList } from "../../../hooks/roleplay/use-my-weapon-list";
 import { useRoleplayStats } from "../../../hooks/roleplay/use-rp-stats";
+import { NitroConfiguration } from "@nitro-rp/renderer";
 
 export function EquippedWeapon() {
     const session = useSessionInfo();
@@ -18,7 +19,7 @@ export function EquippedWeapon() {
                 <div className="weapon-info">
                     {equippedWeapon && (
                         <>
-                            <img src="https://i.imgur.com/LrPw0Zx.png" alt="M4" className="weapon-icon" />
+                            <img src={`${NitroConfiguration.getValue('image.library.url')}/weapon_icons/${equippedWeapon.uniqueName}.png`} alt={equippedWeapon.uniqueName} className="weapon-icon" />
                             <div className="weapon-name">
                                 <Text bold center variant="white" fontSize={4} style={{ paddingTop: 20 }}>
                                     {equippedWeapon.displayName}

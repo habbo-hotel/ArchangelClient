@@ -1,4 +1,4 @@
-import { FaBox, FaCamera, FaCog, FaShieldAlt, FaStore, FaTaxi, FaUsers } from "react-icons/fa";
+import { FaBox, FaCamera, FaCog, FaShieldAlt, FaStore, FaTaxi } from "react-icons/fa";
 import { CreateLinkEvent, GetSessionDataManager } from "../../../api";
 
 export function GameTools() {

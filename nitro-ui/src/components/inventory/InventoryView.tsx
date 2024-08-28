@@ -8,8 +8,8 @@ import { Tab } from './Inventory.types';
 import { CorpInventory } from './views/CorpInventory';
 import { GangInventory } from './views/GangInventory';
 import { useRoleplayStats } from '../../hooks/roleplay/use-rp-stats';
-import { GangBadge } from '../roleplay-stats/gang-badge/GangBadge';
-import { CorpBadge } from '../roleplay-stats/corp-badge/CorpBadge';
+import { GangBadge } from '../left-side/roleplay-stats/gang-badge/GangBadge';
+import { CorpBadge } from '../left-side/roleplay-stats/corp-badge/CorpBadge';
 
 
 export const InventoryView: FC<{}> = () => {

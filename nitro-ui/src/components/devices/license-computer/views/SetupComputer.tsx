@@ -1,6 +1,6 @@
 import { Button } from "react-bootstrap";
 import { Column, Grid, Text } from "../../../../common";
-import { CorpBadge } from "../../../roleplay-stats/corp-badge/CorpBadge";
+import { CorpBadge } from "../../../left-side/roleplay-stats/corp-badge/CorpBadge";
 import { useState } from "react";
 import { LicenseAgencyData, LicenseType } from "@nitro-rp/renderer";
 import { LicenseAgencySelect } from "../../../roleplay/LicenseAgencySelect";

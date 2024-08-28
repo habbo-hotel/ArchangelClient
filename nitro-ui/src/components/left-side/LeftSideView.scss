@@ -1,4 +1,6 @@
-@import './player-health/PlayerHealth';
+@import './game-tools/GameTools';
+@import './roleplay-stats/progress-bar/ProgressBar.scss';
+@import './roleplay-stats/roleplay-stats-container/RoleplayStatsContainer.scss';
 
 .nitro-left-side {
     position: absolute;

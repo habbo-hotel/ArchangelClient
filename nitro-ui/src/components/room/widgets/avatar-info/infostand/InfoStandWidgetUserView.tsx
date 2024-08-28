@@ -6,10 +6,10 @@ import { Column, Flex, LayoutAvatarImageView, LayoutBadgeImageView, Text, UserPr
 import { useMessageEvent, useRoomSessionManagerEvent } from '../../../../../hooks';
 import { InfoStandWidgetUserRelationshipsView } from './InfoStandWidgetUserRelationshipsView';
 import { InfoStandWidgetUserTagsView } from './InfoStandWidgetUserTagsView';
-import { ProgressBar } from '../../../../roleplay-stats/progress-bar/ProgressBar';
-import { CorpBadge } from '../../../../roleplay-stats/corp-badge/CorpBadge';
-import { GangBadge } from '../../../../roleplay-stats/gang-badge/GangBadge';
 import { useRoleplayStats } from '../../../../../hooks/roleplay/use-rp-stats';
+import { ProgressBar } from '../../../../left-side/roleplay-stats/progress-bar/ProgressBar';
+import { CorpBadge } from '../../../../left-side/roleplay-stats/corp-badge/CorpBadge';
+import { GangBadge } from '../../../../left-side/roleplay-stats/gang-badge/GangBadge';
 
 interface InfoStandWidgetUserViewProps {
     avatarInfo: AvatarInfoUser;

@@ -2,7 +2,7 @@ import { CorpType } from "@nitro-rp/renderer";
 import { Column, Flex, Grid, Text } from "../../../../../common";
 import { useCorpData } from "../../../../../hooks/roleplay/use-corp-data";
 import { CorpManagerViewProps } from "../../CorpManager";
-import { CorpBadge } from "../../../../roleplay-stats/corp-badge/CorpBadge";
+import { CorpBadge } from "../../../../left-side/roleplay-stats/corp-badge/CorpBadge";
 import { FaInfoCircle, FaShieldAlt } from "react-icons/fa";
 
 export function CorpInfo({ corpID }: CorpManagerViewProps) {

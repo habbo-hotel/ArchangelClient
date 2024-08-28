@@ -7,9 +7,9 @@ import { LookupUserView } from "./lookup-user/LookupUserView";
 import { PoliceReportListView } from "./police-reports/PoliceReportListView";
 import { DeviceOpenEvent, InteractionType } from "@nitro-rp/renderer";
 import { useRoleplayStats } from "../../../hooks/roleplay/use-rp-stats";
-import { CorpBadge } from "../../roleplay-stats/corp-badge/CorpBadge";
 import { MostWanted } from "./most-wanted/MostWanted";
 import { PoliceCall } from "./police-call/PoliceCall";
+import { CorpBadge } from "../../left-side/roleplay-stats/corp-badge/CorpBadge";
 
 interface PoliceApp {
     key: string;

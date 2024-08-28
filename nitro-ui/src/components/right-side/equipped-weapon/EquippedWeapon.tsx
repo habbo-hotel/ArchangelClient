@@ -5,7 +5,7 @@ export function EquippedWeapon() {
         <div className="nitro-equipped-weapon glass-panel">
             <div className="weapon-hud">
                 <div className="weapon-info">
-                    <img src="https://i.imgur.com/ztmIqUl.png" alt="M4" className="weapon-icon" />
+                    <img src="https://i.imgur.com/LrPw0Zx.png" alt="M4" className="weapon-icon" />
                     <div className="attachments">
                         <div className="attachment purple"></div>
                     </div>

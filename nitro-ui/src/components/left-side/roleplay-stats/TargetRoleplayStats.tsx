@@ -1,6 +1,6 @@
 import { RoleplayStatsContainer } from "./roleplay-stats-container/RoleplayStatsContainer";
-import { useAvatarInfoWidget } from "../../hooks";
-import { AvatarInfoUser } from "../../api";
+import { useAvatarInfoWidget } from "../../../hooks";
+import { AvatarInfoUser } from "../../../api";
 import { useEffect, useState } from "react";
 
 export function TargetRoleplayStats() {

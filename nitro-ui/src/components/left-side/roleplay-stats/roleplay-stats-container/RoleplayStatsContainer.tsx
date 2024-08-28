@@ -1,7 +1,7 @@
 import { RoleplayStatsContainerProps } from "./RoleplayStatsContainer.types";
-import { useRoleplayStats } from "../../../hooks/roleplay/use-rp-stats";
+import { useRoleplayStats } from "../../../../hooks/roleplay/use-rp-stats";
 import { useMemo } from "react";
-import { Flex, LayoutAvatarImageView, Text } from "../../../common";
+import { Flex, LayoutAvatarImageView, Text } from "../../../../common";
 
 export function RoleplayStatsContainer({ userID, onToggle }: RoleplayStatsContainerProps) {
     const roleplayStats = useRoleplayStats(userID);

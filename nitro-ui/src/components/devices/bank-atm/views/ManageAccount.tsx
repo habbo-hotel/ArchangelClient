@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useSessionInfo } from "../../../../hooks";
 import { FaInfoCircle } from "react-icons/fa";
 import { Column, Grid, Text } from "../../../../common";
-import { CorpBadge } from "../../../roleplay-stats/corp-badge/CorpBadge";
+import { CorpBadge } from "../../../left-side/roleplay-stats/corp-badge/CorpBadge";
 import { Button } from "react-bootstrap";
 import { useRoleplayStats } from "../../../../hooks/roleplay/use-rp-stats";
 import { useBankAccount } from "../../../../hooks/roleplay/use-bank-account";

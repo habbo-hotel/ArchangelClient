@@ -1,6 +1,6 @@
+import { LayoutBadgeImageView } from "../../../../common";
+import { useCorpData } from "../../../../hooks/roleplay/use-corp-data";
 import { CorpBadgeProps } from "./CorpBadge.types";
-import { useCorpData } from "../../../hooks/roleplay/use-corp-data";
-import { LayoutBadgeImageView } from "../../../common";
 
 export function CorpBadge({ corpID }: CorpBadgeProps) {
     const corpData = useCorpData(corpID);

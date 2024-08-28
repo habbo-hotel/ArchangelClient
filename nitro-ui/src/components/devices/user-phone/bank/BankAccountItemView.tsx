@@ -1,5 +1,5 @@
 import { Column, Text } from "../../../../common";
-import { CorpBadge } from "../../../roleplay-stats/corp-badge/CorpBadge";
+import { CorpBadge } from "../../../left-side/roleplay-stats/corp-badge/CorpBadge";
 import { BankListRow } from "@nitro-rp/renderer";
 import { useSessionInfo } from "../../../../hooks";
 import { useBankAccount } from "../../../../hooks/roleplay/use-bank-account";

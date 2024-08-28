@@ -71,11 +71,9 @@ $nitro-card-tabs-height: 33px;
         }
 
         .nitro-card-tabs {
-            background-color: $secondary;
 
             .nav-item {
                 padding: $nav-link-padding-y $nav-link-padding-x;
-                background-color: $muted;
                 color: $black;
                 z-index: 1;
                 margin-bottom: -1px;
@@ -118,12 +116,14 @@ $nitro-card-tabs-height: 33px;
             position: relative;
             min-height: 28px;
             max-height: 28px;
-            background: repeating-linear-gradient($tertiary, $tertiary 50%, $quaternary 50%, $quaternary 100%);
-            border-bottom: 2px solid darken($quaternary, 5);
-            box-shadow: 0 2px white;
+            background: rgba(0, 15, 30, 0.6);
+            backdrop-filter: blur(10px);
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            box-shadow: 0 8px 32px 0 rgba(0, 247, 255, 0.2);
             width: 100%;
             margin: 0;
-            padding-top:2px;
+            padding: 4px;
 
             &:before {
                 position: absolute;
@@ -197,7 +197,11 @@ $nitro-card-tabs-height: 33px;
         }
 
         .content-area {
-            background-color: $light;
+            background: rgba(0, 15, 30, 0.6);
+            backdrop-filter: blur(10px);
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            box-shadow: 0 8px 32px 0 rgba(0, 247, 255, 0.2);
         }
     }
 }

@@ -6,7 +6,7 @@ import { HotBarListItems } from "../../../api/roleplay/items/HotBarListItems";
 import { FaTimes } from "react-icons/fa";
 import { DeviceOpen } from "../../../api/roleplay/device/DeviceOpen";
 import { HotBarPickupItem } from "../../../api/roleplay/items/HotBarPickupItem";
-import { GetRoomEngine } from "../../../api";
+import { CreateLinkEvent, GetRoomEngine } from "../../../api";
 
 export function HotBarView() {
     const [items, setItems] = useState<HotBarItem[]>([]);
@@ -34,7 +34,7 @@ export function HotBarView() {
                             const item = items[i]
                             const iconURL = item?.spriteId && GetRoomEngine().getFurnitureFloorIconUrl(item.spriteId);
                             return (
-                                <div className="hotbar-slot" key={`hotbar-item_${i}`} onClick={() => item ? DeviceOpen(item.id) : null}>
+                                <div className="hotbar-slot" key={`hotbar-item_${i}`} onClick={() => item ? DeviceOpen(item.id) : CreateLinkEvent('inventory/toggle')}>
                                     {
                                         item && (
                                             <>

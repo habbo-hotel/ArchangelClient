@@ -1,4 +1,4 @@
-import { FaMapPin } from 'react-icons/fa';
+import { FaMapPin, FaSkull } from 'react-icons/fa';
 import { TurfTimer } from './turf-timer/TurfTimer';
 import { useNavigator, useSessionInfo } from '../../hooks';
 import { Flex, LayoutAvatarImageView, Text } from '../../common';
@@ -15,11 +15,14 @@ export function MiddleView() {
             <div className="middle-bar">
                 <div className="top-bar glass-panel ">
                     <div className="location-info">
-                        <FaMapPin />  {navigatorData?.enteredGuestRoom?.roomName}
+                        <FaMapPin />
+                        <Text fontSize={4} variant="white">
+                            {navigatorData?.enteredGuestRoom?.roomName}
+                        </Text>
                         <Flex gap={4}>
                             {
                                 navigatorData?.enteredGuestRoom?.tags?.map(_ => (
-                                    <Text fontSize={6} variant="white">
+                                    <Text fontSize={5} variant="white">
                                         #{_}
                                     </Text>
                                 ))
@@ -27,14 +30,10 @@ export function MiddleView() {
                         </Flex>
                     </div>
                     <div className="player-info">
-
-                        <div className="avatar">
-                            <div className="avatar-image" >
-                                <LayoutAvatarImageView figure={userInfo?.figure} direction={2} style={{ height: 125, marginTop: -35 }} />
-                            </div>
-                        </div>
-                        <Text bold className="level-badge" variant="white" fontSize={6}>LVL 1</Text>
-                        <Text bold variant="white" fontSize={5}>{userInfo?.username}</Text>
+                        <Text bold className="level-badge" variant="white" fontSize={6}>
+                            <FaSkull style={{ fontSize: 14, marginRight: 8 }} />
+                            CRIPS
+                        </Text>
                     </div>
                 </div>
             </div>

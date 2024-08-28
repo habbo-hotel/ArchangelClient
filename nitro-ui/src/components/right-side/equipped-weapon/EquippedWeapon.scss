@@ -1,7 +1,7 @@
 .nitro-equipped-weapon {
     position: absolute;
-    bottom: 65px;
-    right:  345px;
+    bottom: 18px;
+    right:  245px;
     width: 400px;
     height: fit-content;
     padding: 14px;
@@ -9,6 +9,8 @@
 .weapon-hud {
     display: flex;
     padding: 10px;
+    pointer-events: all;
+    cursor: pointer;
 }
 
 .weapon-info {
@@ -26,27 +28,8 @@
     border-radius: 5px; 
 }
 
-.attachments {
-    display: flex;
-    gap: 5px;
-}
-
-.attachment {
-    width: 10px;
-    height: 10px;
-    border-radius: 2px;
-    background-color: grey;
-}
-
-.attachment.purple {
-    background-color: #b755cc;
-}
-
-.attachment.blue {
-    background-color: #4b9bff;
-}
-
 .weapon-name {
+    display: inline;
     color: #b3bdb6;
     font-size: 14px;
     margin-left: 10px;
@@ -62,19 +45,6 @@
     color: white;
     font-size: 24px;
     margin-right: 10px;
-}
-
-.ammo-icon {
-    display: flex;
-    align-items: center;
-    margin-right: 10px;
-}
-
-.ammo-img {
-    width: 25px;
-    height: 25px;
-    background-color: #394942;
-    border-radius: 5px;
 }
 
 .reserve-ammo {

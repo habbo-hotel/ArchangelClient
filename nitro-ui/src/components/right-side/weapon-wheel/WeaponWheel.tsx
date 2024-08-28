@@ -1,9 +1,47 @@
+import { useEffect, useRef, useState } from "react";
 import { Text } from "../../../common";
+import { ILinkEventTracker } from "@nitro-rp/renderer";
+import { AddEventLinkTracker, RemoveLinkEventTracker } from "../../../api";
 
 export function WeaponWheel() {
+    const [visible, setVisible] = useState(false);
+
+    useEffect(() => {
+        const linkTracker: ILinkEventTracker = {
+            linkReceived: (url: string) => {
+                const parts = url.split('/');
+
+                if (parts.length < 2) return;
+
+                switch (parts[1]) {
+                    case 'show':
+                        setVisible(true);
+                        return;
+                    case 'hide':
+                        setVisible(false);
+                        return;
+                    case 'toggle':
+                        setVisible(_ => !_);
+                        return;
+                }
+            },
+            eventUrlPrefix: 'weapon-wheel/'
+        };
+
+        AddEventLinkTracker(linkTracker);
+
+        return () => {
+            RemoveLinkEventTracker(linkTracker);
+        };
+    }, []);
+
+    if (!visible) {
+        return null;
+    }
+
     return (
-        <div id="weapon-wheel" className="modal">
-            <div className="wheel">
+        <div id="weapon-wheel" className="modal" onClick={() => setVisible(false)}>
+            <div className="wheel" onClick={e => e.stopPropagation()}>
                 <div className="wheel-item" id="item1">
                     <img src="https://i.imgur.com/ln9rPLu.png" alt="Weapon 1" />
                 </div>
@@ -41,6 +79,6 @@ export function WeaponWheel() {
                     </Text>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }

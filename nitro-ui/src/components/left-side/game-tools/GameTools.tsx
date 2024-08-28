@@ -13,7 +13,7 @@ export function GameTools() {
                 <div className="menu-button glass-panel " onClick={() => CreateLinkEvent('catalog/toggle')} >
                     <FaStore size={20} />
                 </div>
-                <div className="menu-button glass-panel " onClick={() => CreateLinkEvent('inventory/toggle')}>
+                <div className="menu-button glass-panel" onClick={() => CreateLinkEvent('inventory/toggle')}>
                     <FaBox size={20} />
                 </div>
                 <div className="menu-button glass-panel " onClick={() => CreateLinkEvent('camera/toggle')} >

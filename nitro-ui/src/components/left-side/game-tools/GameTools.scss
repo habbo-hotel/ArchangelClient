@@ -1,4 +1,5 @@
  .quick-menu {
+        pointer-events: all;
             position: absolute;
             left: 20px;
             top: 250px;
@@ -8,19 +9,20 @@
         }
 
         .menu-button {
+            cursor: pointer;
             width: 60px;
             height: 60px;
             font-size: 28px;
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: all 0.3s ease;
+            transition: all 0.015s ease;
             color: #00f7ff;
             position: relative;
             overflow: hidden;
 
             &:hover {
-                color: red !important;
+                color: rgb(61, 100, 183) !important;
             }
         }
 
@@ -33,7 +35,7 @@
             height: 200%;
             background: radial-gradient(circle, #00f7ff 10%, transparent 10%);
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.015s ease;
         }
 
         .menu-button:hover::after {

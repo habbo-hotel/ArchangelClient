@@ -34,6 +34,9 @@
     align-items: center;
     cursor: pointer;
     transition: transform 0.3s;
+    &:hover {
+        background-color: rgba(0, 247, 255, 0.651);
+    }
 }
 
 .wheel-item img {

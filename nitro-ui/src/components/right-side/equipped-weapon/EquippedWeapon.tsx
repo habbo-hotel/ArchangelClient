@@ -19,7 +19,7 @@ export function EquippedWeapon() {
                 <div className="weapon-info">
                     {equippedWeapon && (
                         <>
-                            <img src={`${NitroConfiguration.getValue('image.library.url')}/weapon_icons/${equippedWeapon.uniqueName}.png`} alt={equippedWeapon.uniqueName} className="weapon-icon" />
+                            <img src={`${NitroConfiguration.getValue('image.library.url')}/weapon_icons/${equippedWeapon.uniqueName}.png`} alt={equippedWeapon.uniqueName} className="weapon-icon" style={{ width: 200 }} />
                             <div className="weapon-name">
                                 <Text bold center variant="white" fontSize={4} style={{ paddingTop: 20 }}>
                                     {equippedWeapon.displayName}

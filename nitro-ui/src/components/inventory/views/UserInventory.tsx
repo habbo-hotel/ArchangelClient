@@ -1,8 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import { NitroCardContentView, NitroCardTabsItemView, NitroCardTabsView } from '../../../common';
 import { Tab } from '../Inventory.types';
 import { InventoryFurnitureView } from '../components/furniture/InventoryFurnitureView';
-import { InventoryWeaponsView } from '../components/weapon-item-view/InventoryWeaponsView';
 import { IRoomSession, RoomPreviewer } from '@nitro-rp/renderer';
 import { InventoryBotView } from '../components/bot-item-view/InventoryBotView';
 import { InventoryBadgeView } from '../components/badge-item-view/InventoryBadgeView';
@@ -17,10 +16,6 @@ export function UserInventory({ roomSession, roomPreviewer }: UserInventoryProps
         {
             label: 'Furniture',
             children: <InventoryFurnitureView roomSession={roomSession} roomPreviewer={roomPreviewer} />
-        },
-        {
-            label: 'Weapons',
-            children: <InventoryWeaponsView />
         },
         {
             label: 'Bots',

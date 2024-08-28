@@ -1,9 +1,10 @@
 import { RoleplayStatsContainer } from "./roleplay-stats-container/RoleplayStatsContainer";
-import { useAvatarInfoWidget } from "../../../hooks";
+import { useAvatarInfoWidget, useSessionInfo } from "../../../hooks";
 import { AvatarInfoUser } from "../../../api";
 import { useEffect, useState } from "react";
 
 export function TargetRoleplayStats() {
+    const session = useSessionInfo();
     const [targetUserID, setTargetUserID] = useState<number>();
     const { avatarInfo = null, setAvatarInfo } = useAvatarInfoWidget();
 
@@ -14,7 +15,7 @@ export function TargetRoleplayStats() {
 
     useEffect(() => {
         if (avatarInfo?.type === AvatarInfoUser.PEER) {
-            if ((avatarInfo as AvatarInfoUser).webID === targetUserID) {
+            if ((avatarInfo as AvatarInfoUser).webID === session?.userInfo?.userId) {
                 return;
             }
             setTargetUserID((avatarInfo as AvatarInfoUser).webID)
@@ -26,4 +27,5 @@ export function TargetRoleplayStats() {
     }
 
     return <RoleplayStatsContainer userID={targetUserID} onToggle={onToggle} />
+
 }

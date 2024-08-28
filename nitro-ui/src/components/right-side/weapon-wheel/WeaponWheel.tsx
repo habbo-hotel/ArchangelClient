@@ -60,17 +60,14 @@ export function WeaponWheel() {
                     ))
                 }
             </div>
-            {
-                hoveredItem && (
-                    <div className="center-info">
-                        <div className="weapon-name">
-                            <Text bold fontSize={5} variant="white">
-                                {hoveredItem.displayName}
-                            </Text>
-                        </div>
-                    </div>
-                )
-            }
+            <div className="center-info">
+                <div className="weapon-name">
+                    <Text bold fontSize={5} variant="white">
+                        {hoveredItem ? hoveredItem.displayName : ''}
+                        {!weapons.length ? "You don't own any weapons" : ''}
+                    </Text>
+                </div>
+            </div>
         </div >
     )
 }

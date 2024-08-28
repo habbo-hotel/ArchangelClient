@@ -16,6 +16,8 @@ export interface UserRoleplayStatsChangeData {
     energyMax: number;
     hungerNow: number;
     hungerMax: number;
+    equippedWeaponID?: number;
+    equippedWeaponAmmoLeft?: number;
     corporationID: number;
     corporationPositionID: number;
     isWorking: boolean;
@@ -23,8 +25,7 @@ export interface UserRoleplayStatsChangeData {
 }
 
 
-export class UserRoleplayStatsChangeParser implements IMessageParser
-{
+export class UserRoleplayStatsChangeParser implements IMessageParser {
     private _userID: number;
     private _username: string;
     private _figure: string;
@@ -41,12 +42,13 @@ export class UserRoleplayStatsChangeParser implements IMessageParser
     private _energyMax: number;
     private _hungerNow: number;
     private _hungerMax: number;
+    private _equippedWeaponID?: number;
+    private _equippedWeaponAmmoLeft?: number;
     private _corporationID: number;
     private _corporationPositionID: number;
     private _gangID?: number;
 
-    public flush(): boolean
-    {
+    public flush(): boolean {
         this._userID = 0;
         this._username = '';
         this._figure = '';
@@ -63,15 +65,16 @@ export class UserRoleplayStatsChangeParser implements IMessageParser
         this._energyMax = 0;
         this._hungerNow = 0;
         this._hungerMax = 0;
+        this._equippedWeaponID = 0;
+        this._equippedWeaponAmmoLeft = 0;
         this._corporationID = 0;
         this._corporationPositionID = 0;
         this._gangID = 0;
         return true;
     }
 
-    public parse(wrapper: IMessageDataWrapper): boolean
-    {
-        if(!wrapper) return false;
+    public parse(wrapper: IMessageDataWrapper): boolean {
+        if (!wrapper) return false;
 
         this._userID = wrapper.readInt();
         this._username = wrapper.readString();
@@ -89,6 +92,8 @@ export class UserRoleplayStatsChangeParser implements IMessageParser
         this._energyMax = wrapper.readInt();
         this._hungerNow = wrapper.readInt();
         this._hungerMax = wrapper.readInt();
+        this._equippedWeaponID = wrapper.readInt();
+        this._equippedWeaponAmmoLeft = wrapper.readInt();
         this._corporationID = wrapper.readInt();
         this._corporationPositionID = wrapper.readInt();
         this._gangID = wrapper.readInt();
@@ -114,6 +119,8 @@ export class UserRoleplayStatsChangeParser implements IMessageParser
             energyMax: this._energyMax,
             hungerNow: this._hungerNow,
             hungerMax: this._hungerMax,
+            equippedWeaponID: this._equippedWeaponID,
+            equippedWeaponAmmoLeft: this._equippedWeaponAmmoLeft,
             corporationID: this._corporationID,
             corporationPositionID: this._corporationPositionID,
             gangID: this._gangID,

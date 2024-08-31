@@ -2,6 +2,7 @@ import { RoleplayStatsContainerProps } from "./RoleplayStatsContainer.types";
 import { useRoleplayStats } from "../../../../hooks/roleplay/use-rp-stats";
 import { useMemo } from "react";
 import { Flex, LayoutAvatarImageView, Text } from "../../../../common";
+import { CreateLinkEvent } from "../../../../api";
 
 export function RoleplayStatsContainer({ userID, onToggle }: RoleplayStatsContainerProps) {
     const roleplayStats = useRoleplayStats(userID);
@@ -15,7 +16,9 @@ export function RoleplayStatsContainer({ userID, onToggle }: RoleplayStatsContai
     return (
         <div className="stats glass-panel">
             <Flex alignItems="center" fullWidth>
-                <LayoutAvatarImageView figure={roleplayStats.figure} direction={2} style={{ height: 55, marginLeft: -10 }} />
+                <div style={{ cursor: 'pointer', width: 120 }} onClick={() => CreateLinkEvent(`/user-profile/${roleplayStats.username}`)}>
+                    <LayoutAvatarImageView figure={roleplayStats.figure} direction={2} style={{ height: 55, marginLeft: -10 }} />
+                </div>
                 <Flex column fullWidth gap={2}>
                     <Flex fullWidth justifyContent="between" alignItems="center">
                         <b>LVL 1</b>

@@ -104,7 +104,7 @@ export function InventoryFurnitureView({ roomSession = null, roomPreviewer = nul
                                 }
                             </Column>
                             <Column grow justifyContent="between" gap={2}>
-                                <Text grow truncate>{selectedItem.name}</Text>
+                                <Text grow truncate variant="white">{selectedItem.name}</Text>
                                 <Column gap={1}>
                                     {selectedItem.getLastItem().isUsable && (
                                         <>

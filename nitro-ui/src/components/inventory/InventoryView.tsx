@@ -1,54 +1,17 @@
 import { BadgePointLimitsEvent, ILinkEventTracker, IRoomSession, RoomEngineObjectEvent, RoomEngineObjectPlacedEvent, RoomPreviewer, RoomSessionEvent } from '@nitro-rp/renderer';
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { AddEventLinkTracker, GetLocalization, GetRoomEngine, LocalizeText, RemoveLinkEventTracker, isObjectMoverRequested, setObjectMoverRequested } from '../../api';
-import { AutoGrid, Column, Grid, LayoutAvatarImageView, LayoutGridItem, NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../common';
-import { useInventoryTrade, useMessageEvent, useRoomEngineEvent, useRoomSessionManagerEvent, useSessionInfo } from '../../hooks';
+import { NitroCardContentView, NitroCardHeaderView, NitroCardView } from '../../common';
+import { useInventoryTrade, useMessageEvent, useRoomEngineEvent, useRoomSessionManagerEvent } from '../../hooks';
 import { UserInventory } from './views/UserInventory';
-import { Tab } from './Inventory.types';
-import { CorpInventory } from './views/CorpInventory';
-import { GangInventory } from './views/GangInventory';
-import { useRoleplayStats } from '../../hooks/roleplay/use-rp-stats';
-import { GangBadge } from '../left-side/roleplay-stats/gang-badge/GangBadge';
-import { CorpBadge } from '../left-side/roleplay-stats/corp-badge/CorpBadge';
+import { InventoryFurnitureView } from './components/furniture/InventoryFurnitureView';
 
 
 export const InventoryView: FC<{}> = () => {
-    const { userInfo } = useSessionInfo();
-    const roleplayStats = useRoleplayStats(userInfo?.userId);
     const [isVisible, setIsVisible] = useState(false);
     const { isTrading = false, stopTrading = null } = useInventoryTrade();
     const [roomSession, setRoomSession] = useState<IRoomSession>(null);
     const [roomPreviewer, setRoomPreviewer] = useState<RoomPreviewer>(null);
-    const inventoryTabs: Tab[] = useMemo(() => {
-        const allTabs: Tab[] = [
-            {
-                label: (
-                    <LayoutAvatarImageView figure={roleplayStats.figure} direction={4} />
-                ),
-                children: <UserInventory roomSession={roomSession} roomPreviewer={roomPreviewer} />
-            },
-        ]
-
-        if (roleplayStats.corporationID) {
-            allTabs.push(
-                {
-                    label: <CorpBadge corpID={roleplayStats.corporationID} />,
-                    children: <CorpInventory />
-                });
-        }
-
-        if (roleplayStats.gangID) {
-            allTabs.push(
-                {
-                    label: <GangBadge gangID={roleplayStats.gangID} />,
-                    children: <GangInventory />
-                });
-        }
-
-        return allTabs;
-    }, [roleplayStats, roomSession, roomPreviewer]);
-    const [currentTab, setCurrentTab] = useState<Tab>(inventoryTabs[0]);
-
     const onClose = () => {
         if (isTrading) stopTrading();
 
@@ -127,34 +90,13 @@ export const InventoryView: FC<{}> = () => {
         if (!isVisible && isTrading) setIsVisible(true);
     }, [isVisible, isTrading]);
 
-    useEffect(() => {
-        setCurrentTab(inventoryTabs[0]);
-    }, [inventoryTabs]);
-
     if (!isVisible) return null;
 
     return (
         <NitroCardView uniqueKey={'inventory'} className="nitro-inventory" theme={isTrading ? 'primary-slim' : ''} >
-
             <NitroCardHeaderView headerText={LocalizeText('inventory.title')} onCloseClick={onClose} />
-
             <NitroCardContentView>
-                <Grid gap={2}>
-                    <Column alignItems="center" size={2} overflow="auto">
-                        <AutoGrid overflow={null} columnCount={1} columnMinHeight={50} className="user-groups-container">
-                            {inventoryTabs.map((tab, index) => {
-                                return (
-                                    <LayoutGridItem key={index} overflow="unset" itemActive={(currentTab === tab)} onClick={() => setCurrentTab(tab)} className="p-1">
-                                        {tab.label}
-                                    </LayoutGridItem>
-                                );
-                            })}
-                        </AutoGrid>
-                    </Column>
-                    <Column size={10} overflow="hidden">
-                        {currentTab.children}
-                    </Column>
-                </Grid>
+                <InventoryFurnitureView roomSession={roomSession} roomPreviewer={roomPreviewer} />
             </NitroCardContentView>
         </NitroCardView >
     );

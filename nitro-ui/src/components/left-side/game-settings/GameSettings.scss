@@ -1,0 +1,97 @@
+#habbo-roleplay-menu {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 1014px;
+  height: 600px;
+  background: rgba(6, 55, 61, 0.9);
+  padding: 20px;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 1.4rem;
+}
+
+.menu-header {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.menu-tabs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  .tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px 0;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid #444;
+
+    &.active {
+      background: #ccc;
+      color: #000;
+    }
+  }
+}
+
+.menu-content {
+  display: flex;
+
+  .menu-sidebar {
+    flex: 1;
+    margin-right: 20px;
+
+    .menu-item {
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.1);
+      margin-bottom: 5px;
+      cursor: pointer;
+
+      &.active {
+        background: #ccc;
+        color: #000;
+      }
+    }
+  }
+
+  .menu-settings {
+    flex: 3;
+
+    .video-memory {
+      margin-bottom: 20px;
+      font-size: 1.2rem;
+    }
+
+    .settings-list {
+      .setting-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        margin-bottom: 5px;
+
+        .slider {
+          width: 60%;
+          height: 10px;
+          background: rgba(255, 255, 255, 0.3);
+          margin-left: 10px;
+          position: relative;
+
+          .slider-fill {
+            height: 100%;
+            background: #fff;
+            position: absolute;
+            top: 0;
+            left: 0;
+          }
+        }
+      }
+    }
+  }
+}

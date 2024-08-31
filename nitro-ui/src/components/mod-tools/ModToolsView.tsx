@@ -130,9 +130,12 @@ export const ModToolsView: FC<{}> = props => {
                         <Button gap={1} onClick={() => setIsTicketsVisible(prevValue => !prevValue)} className="position-relative">
                             <Base className="icon icon-tickets position-absolute start-1" /> Report Tool
                         </Button>
-                        <hr />
+                        <div style={{ width: '100%', height: 2, background: 'white', marginTop: 4, marginBottom: 4 }} />
                         <Button gap={1} onClick={() => setShowSuperhire(_ => !_)} className="position-relative">
                             <Base className="position-absolute start-1" /> Superhire Tool
+                        </Button>
+                        <Button gap={1} onClick={() => CreateLinkEvent('catalog/toggle')} className="position-relative">
+                            <Base className="position-absolute start-1" /> Open Catalog
                         </Button>
                     </NitroCardContentView>
                 </NitroCardView>}

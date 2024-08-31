@@ -10,7 +10,6 @@ import { ChatHistoryView } from '../chat-history/ChatHistoryView';
 import { FloorplanEditorView } from '../floorplan-editor/FloorplanEditorView';
 import { GroupsView } from '../groups/GroupsView';
 import { HcCenterView } from '../hc-center/HcCenterView';
-import { HelpView } from '../help/HelpView';
 import { ModToolsView } from '../mod-tools/ModToolsView';
 import { NavigatorView } from '../navigator/NavigatorView';
 import { NitropediaView } from '../nitropedia/NitropediaView';
@@ -56,7 +55,6 @@ export function MainView() {
             <UserProfileView />
             <GroupsView />
             <CameraWidgetView />
-            <HelpView />
             <NitropediaView />
             <HcCenterView />
             <CampaignView />

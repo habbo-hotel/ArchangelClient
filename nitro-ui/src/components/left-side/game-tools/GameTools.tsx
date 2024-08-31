@@ -10,9 +10,6 @@ export function GameTools() {
                 <div className="menu-button glass-panel " onClick={() => CreateLinkEvent('navigator/toggle')} >
                     <FaTaxi size={20} />
                 </div>
-                <div className="menu-button glass-panel " onClick={() => CreateLinkEvent('catalog/toggle')} >
-                    <FaStore size={20} />
-                </div>
                 <div className="menu-button glass-panel" onClick={() => CreateLinkEvent('inventory/toggle')}>
                     <FaBox size={20} />
                 </div>
@@ -26,11 +23,8 @@ export function GameTools() {
                         </div>
                     )
                 }
-                <div className="menu-button glass-panel " onClick={() => CreateLinkEvent('navigator/toggle-room-info')} >
+                <div className="menu-button glass-panel " onClick={() => CreateLinkEvent('game-settings/toggle')} >
                     <FaCog size={20} />
-                </div>
-                <div className="menu-button glass-panel " onClick={() => CreateLinkEvent('help/toggle')} >
-                    <FaInfo size={20} />
                 </div>
                 <div className="menu-button glass-panel " onClick={() => CreateLinkEvent('speech-wheel/toggle')} >
                     <FaMicrophone size={20} />

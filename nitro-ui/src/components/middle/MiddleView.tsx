@@ -2,6 +2,7 @@ import { FaMapPin, FaSkull } from 'react-icons/fa';
 import { TurfTimer } from './turf-timer/TurfTimer';
 import { useNavigator, useSessionInfo } from '../../hooks';
 import { Flex, LayoutAvatarImageView, Text } from '../../common';
+import { CreateLinkEvent } from '../../api';
 
 export function MiddleView() {
     const { navigatorData = null } = useNavigator();
@@ -14,7 +15,7 @@ export function MiddleView() {
             </div>
             <div className="middle-bar">
                 <div className="top-bar glass-panel ">
-                    <div className="location-info">
+                    <div className="location-info" onClick={() => CreateLinkEvent('navigator/toggle-room-info')} style={{ cursor: 'pointer' }}>
                         <FaMapPin />
                         <Text fontSize={4} variant="white">
                             {navigatorData?.enteredGuestRoom?.roomName}

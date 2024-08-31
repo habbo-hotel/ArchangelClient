@@ -1,4 +1,5 @@
 .modal {
+    pointer-events: all !important;
     display: none; /* Hidden by default */
     position: fixed;
     z-index: 1000;

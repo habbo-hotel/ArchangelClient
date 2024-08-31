@@ -1,8 +1,10 @@
 @import './game-tools/GameTools';
-@import './roleplay-stats/progress-bar/ProgressBar.scss';
-@import './roleplay-stats/roleplay-stats-container/RoleplayStatsContainer.scss';
+@import './speech-wheel/SpeechWheel';
+@import './roleplay-stats/progress-bar/ProgressBar';
+@import './roleplay-stats/roleplay-stats-container/RoleplayStatsContainer';
 
 .nitro-left-side {
+    pointer-events: all;
     position: absolute;
     top:50px;
     left: 0px;

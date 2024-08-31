@@ -20,7 +20,7 @@ export function ArchangelAboutPanel() {
             <Flex column gap={2}>
                 <Text bold fontSize={4} variant="white">About</Text>
                 <Text fontSize={5} variant="white">
-                    <b>Archangel</b> is a custom game built by <a href="https://github.com/HabboCodes" target="_blank">LeChris</a>.  It's forked off Nitro and MS4 with extensive modifications to provide the most comphrensive roleplay suite yet spanning hundreds of features.
+                    <b>Archangel</b> is a custom game engine built by <a href="https://github.com/HabboCodes" target="_blank">LeChris</a>.  It's forked off Nitro and MS4 with extensive modifications to provide the most comphrensive roleplay suite yet spanning hundreds of features.
                 </Text>
                 <Text bold fontSize={4} variant="white">Version</Text>
                 <Text fontSize={5} variant="white">0.06</Text>

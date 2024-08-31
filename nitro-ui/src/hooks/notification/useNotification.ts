@@ -1,4 +1,4 @@
-import { AchievementNotificationMessageEvent, ActivityPointNotificationMessageEvent, ClubGiftNotificationEvent, ClubGiftSelectedEvent, ConnectionErrorEvent, HabboBroadcastMessageEvent, HotelClosedAndOpensEvent, HotelClosesAndWillOpenAtEvent, HotelWillCloseInMinutesEvent, InfoFeedEnableMessageEvent, MaintenanceStatusMessageEvent, ModeratorCautionEvent, ModeratorMessageEvent, MOTDNotificationEvent, NotificationDialogMessageEvent, PetLevelNotificationEvent, PetReceivedMessageEvent, RespectReceivedEvent, RoomEnterEffect, RoomEnterEvent, SimpleAlertMessageEvent, UserArrestedEvent, UserBannedMessageEvent, UserDiedEvent, Vector3d } from '@nitro-rp/renderer';
+import { AchievementNotificationMessageEvent, ActivityPointNotificationMessageEvent, ClubGiftNotificationEvent, ClubGiftSelectedEvent, ConnectionErrorEvent, HabboBroadcastMessageEvent, HotelClosedAndOpensEvent, HotelClosesAndWillOpenAtEvent, HotelWillCloseInMinutesEvent, InfoFeedEnableMessageEvent, MaintenanceStatusMessageEvent, ModeratorCautionEvent, ModeratorMessageEvent, MOTDNotificationEvent, NotificationDialogMessageEvent, PetLevelNotificationEvent, PetReceivedMessageEvent, RespectReceivedEvent, SimpleAlertMessageEvent, UserArrestedEvent, UserBannedMessageEvent, UserDiedEvent, Vector3d } from '@nitro-rp/renderer';
 import { useCallback, useState } from 'react';
 import { useBetween } from 'use-between';
 import { GetConfiguration, GetNitroInstance, GetRoomEngine, GetSessionDataManager, LocalizeBadgeName, LocalizeText, NotificationAlertItem, NotificationAlertType, NotificationBubbleItem, NotificationBubbleType, NotificationConfirmItem, PlaySound, ProductImageUtility, TradingNotificationType } from '../../api';
@@ -11,8 +11,6 @@ const getTimeZeroPadded = (time: number) => {
 
     return text.substr((text.length - 2), text.length);
 }
-
-let modDisclaimerTimeout: ReturnType<typeof setTimeout> = null;
 
 const useNotificationState = () => {
     const [alerts, setAlerts] = useState<NotificationAlertItem[]>([]);
@@ -364,31 +362,6 @@ const useNotificationState = () => {
 
         simpleAlert(LocalizeText(parser.alertMessage), NotificationAlertType.DEFAULT, null, null, LocalizeText(parser.titleMessage ? parser.titleMessage : 'notifications.broadcast.title'));
     });
-
-    const onRoomEnterEvent = useCallback(() => {
-        if (modDisclaimerShown) return;
-
-        if (RoomEnterEffect.isRunning()) {
-            if (modDisclaimerTimeout) return;
-
-            modDisclaimerTimeout = setTimeout(() => {
-                onRoomEnterEvent();
-            }, (RoomEnterEffect.totalRunningTime + 5000));
-        }
-        else {
-            if (modDisclaimerTimeout) {
-                clearTimeout(modDisclaimerTimeout);
-
-                modDisclaimerTimeout = null;
-            }
-
-            showSingleBubble(LocalizeText('mod.chatdisclaimer'), NotificationBubbleType.INFO);
-
-            setModDisclaimerShown(true);
-        }
-    }, [modDisclaimerShown, showSingleBubble]);
-
-    useMessageEvent<RoomEnterEvent>(RoomEnterEvent, onRoomEnterEvent);
 
     return { alerts, bubbleAlerts, confirms, simpleAlert, showNitroAlert, showTradeAlert, showConfirm, showSingleBubble, closeAlert, closeBubbleAlert, closeConfirm };
 }

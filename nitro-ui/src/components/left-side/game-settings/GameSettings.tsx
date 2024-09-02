@@ -1,136 +1,48 @@
 import { ILinkEventTracker } from "@nitro-rp/renderer";
 import { ReactNode, useEffect, useMemo, useState } from "react";
-import { FaBox, FaBuilding, FaInfoCircle, FaKeyboard, FaLock, FaMicrophone, FaScroll, FaSkull, FaStar, FaUserCheck, FaUserCircle, FaUserLock, FaWrench } from "react-icons/fa";
+import { FaInfoCircle, FaKeyboard, FaLock, FaMicrophone, FaScroll, FaStar, FaUserLock, FaWrench } from "react-icons/fa";
 import { AddEventLinkTracker, RemoveLinkEventTracker } from "../../../api";
 import { ArchangelAboutPanel } from './archangel-section/AboutPanel';
-import { ArchangelChangelogPanel } from "./archangel-section/Changelog";
-import { SecurityPanel } from "./profile-section/SecurityPanel";
-import { PrivacyPanel } from "./profile-section/PrivacyPanel";
-import { MyJobPanel } from "./profile-section/MyJobPanel";
-import { MyGangPanel } from "./profile-section/MyGangPanel";
-import { InventoryPanel } from "./profile-section/InventoryPanel";
-import { ExperiencePanel } from "./profile-section/ExperiencePanel";
-import { ProfilePanel } from "./profile-section/ProfilePanel";
 import { useSessionInfo } from "../../../hooks";
-import { Flex, LayoutAvatarImageView, Text } from "../../../common";
 import { useRoleplayStats } from "../../../hooks/roleplay/use-rp-stats";
+import { SecurityPanel } from "./settings-section/SecurityPanel";
+import { PrivacyPanel } from "./settings-section/PrivacyPanel";
+import { SoundPanel } from "./settings-section/SoundPanel";
+import { ControlsPanel } from "./settings-section/ContorlsPanel";
 
-interface SettingParent {
+export interface SettingParent {
     type: 'parent';
     label: ReactNode;
     value: string;
     children: SettingOption[];
 }
 
-interface SettingPrimary {
+export interface SettingPrimary {
     type: 'primary';
     label: ReactNode;
     value: string;
-    view: ReactNode;
+    view: () => ReactNode;
 }
 
-type SettingTop = SettingParent | SettingPrimary;
+export type SettingTop = SettingParent | SettingPrimary;
 
-type SettingOption = SettingChild | SettingDivider;
+export type SettingOption = SettingChild | SettingDivider;
 
-interface SettingChild {
+export interface SettingChild {
     type: 'child';
     label: ReactNode;
-    view: ReactNode;
+    view: () => ReactNode;
 }
 
-type SettingPanel = SettingPrimary | SettingChild;
+export type SettingPanel = SettingPrimary | SettingChild;
 
-type SettingDivider = { type: 'divider'; };
+export type SettingDivider = { type: 'divider'; };
 
 export function GameSettings() {
     const { userInfo } = useSessionInfo();
     const roleplayStats = useRoleplayStats(userInfo?.userId);
     const [visible, setVisible] = useState(false);
     const settingOptions: SettingTop[] = useMemo(() => [
-        {
-            type: 'parent',
-            label: (
-                <>
-                    <FaUserCircle style={{ marginRight: 8 }} />
-                    Profile
-                </>
-            ),
-            value: "profile",
-            children: [
-                {
-                    type: 'child',
-                    label: (
-                        <Flex style={{ height: 50, overflow: 'hidden' }}>
-                            <LayoutAvatarImageView figure={roleplayStats.figure} direction={2} headOnly style={{ height: 80, width: 80 }} />
-                            <Text bold fontSize={4} style={{ marginTop: 15 }} variant="white">{userInfo?.username}</Text>
-                        </Flex>
-                    ),
-                    view: <ProfilePanel />
-                },
-                {
-                    type: 'child',
-                    label: (
-                        <>
-                            <FaLock style={{ marginRight: 8 }} />
-                            Security
-                        </>
-                    ),
-                    view: <SecurityPanel />
-                },
-                {
-                    type: 'child',
-                    label: (
-                        <>
-                            <FaUserLock style={{ marginRight: 8 }} />
-                            Privacy
-                        </>
-                    ),
-                    view: <PrivacyPanel />
-                },
-                { type: 'divider' },
-                {
-                    type: 'child',
-                    label: (
-                        <>
-                            <FaStar style={{ marginRight: 8 }} />
-                            Experience
-                        </>
-                    ),
-                    view: <ExperiencePanel />
-                },
-                {
-                    type: 'child',
-                    label: (
-                        <>
-                            <FaBox style={{ marginRight: 8 }} />
-                            Inventory
-                        </>
-                    ),
-                    view: <InventoryPanel />
-                },
-                {
-                    type: 'child',
-                    label: (
-                        <>
-                            <FaBuilding style={{ marginRight: 8 }} />
-                            My Job
-                        </>
-                    ),
-                    view: <MyJobPanel />
-                },
-                {
-                    type: 'child',
-                    label: (
-                        <>
-                            <FaSkull style={{ marginRight: 8 }} />
-                            My Gang
-                        </>
-                    ),
-                    view: <MyGangPanel />
-                },
-            ]
-        },
         {
             type: 'parent',
             label: (
@@ -145,11 +57,31 @@ export function GameSettings() {
                     type: 'child',
                     label: (
                         <>
+                            <FaLock style={{ marginRight: 8 }} />
+                            Security
+                        </>
+                    ),
+                    view: () => <SecurityPanel />
+                },
+                {
+                    type: 'child',
+                    label: (
+                        <>
+                            <FaUserLock style={{ marginRight: 8 }} />
+                            Privacy
+                        </>
+                    ),
+                    view: () => <PrivacyPanel />
+                },
+                {
+                    type: 'child',
+                    label: (
+                        <>
                             <FaMicrophone style={{ marginRight: 8 }} />
                             Sound
                         </>
                     ),
-                    view: 'sound'
+                    view: () => <SoundPanel />
                 },
                 {
                     type: 'child',
@@ -159,7 +91,7 @@ export function GameSettings() {
                             Controls
                         </>
                     ),
-                    view: 'sound'
+                    view: () => 'sound'
                 },
                 {
                     type: 'child',
@@ -169,7 +101,7 @@ export function GameSettings() {
                             Macros
                         </>
                     ),
-                    view: 'sound'
+                    view: () => <ControlsPanel />
                 },
             ]
         },
@@ -183,11 +115,11 @@ export function GameSettings() {
             ),
             value: "help",
             children: [
-                { type: 'child', label: "Storyline", view: 'storyline' },
-                { type: 'child', label: "How to fight", view: 'how-to-fight' },
-                { type: 'child', label: "Making money", view: 'making money' },
-                { type: 'child', label: "Advanced Weaponry", view: 'advanced weaponry' },
-                { type: 'child', label: "Joining a gang", view: 'gang warfare' },
+                { type: 'child', label: "Storyline", view: () => 'storyline' },
+                { type: 'child', label: "How to fight", view: () => 'how-to-fight' },
+                { type: 'child', label: "Making money", view: () => 'making money' },
+                { type: 'child', label: "Advanced Weaponry", view: () => 'advanced weaponry' },
+                { type: 'child', label: "Joining a gang", view: () => 'gang warfare' },
             ]
         },
         {
@@ -199,7 +131,7 @@ export function GameSettings() {
                 </>
             ),
             value: "archangel",
-            view: <ArchangelAboutPanel />,
+            view: () => <ArchangelAboutPanel />,
         }
     ], [userInfo?.username, roleplayStats.figure]);
 
@@ -277,7 +209,7 @@ export function GameSettings() {
                     )
                 }
                 <div className="menu-settings">
-                    {panel?.view}
+                    {panel.view ? panel.view() : ''}
                 </div>
             </div>
         </div>

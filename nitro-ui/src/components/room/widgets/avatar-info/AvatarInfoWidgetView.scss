@@ -26,12 +26,11 @@
     position: absolute;
     right: 10px;
     bottom: 20px;
-    pointer-events: none;
     z-index: $infostand-zindex;
     color: $white;
 
     .nitro-infostand {
-    pointer-events: all;
+        pointer-events: all !important;
         position: relative;
         min-width: 190px;
         max-width: 190px;

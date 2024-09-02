@@ -26,6 +26,7 @@ import { Devices } from '../devices/Devices';
 import { RoleplayEffects } from '../roleplay-effects/RoleplayEffects';
 import { MiddleView } from '../middle/MiddleView';
 import { HotBarView } from './hotbar/HotBarView';
+import { RoleplayWidgets } from '../roleplay-widgets/RoleplayWidgets';
 
 export function MainView() {
 
@@ -63,6 +64,7 @@ export function MainView() {
             <Billing />
             <Devices />
             <RoleplayEffects />
+            <RoleplayWidgets />
         </Base>
     );
 }

@@ -1,4 +1,5 @@
 @import './game-tools/GameTools';
+@import './user-profile/UserProfile';
 @import './game-settings/GameSettings';
 @import './roleplay-stats/progress-bar/ProgressBar';
 @import './roleplay-stats/roleplay-stats-container/RoleplayStatsContainer';
@@ -12,5 +13,4 @@
     max-width: 200px;
     height: calc(100% - #{$toolbar-height} - 45px);
     z-index: $leftside-zindex;
-    pointer-events: none;
 }

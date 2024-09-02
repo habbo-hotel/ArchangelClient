@@ -9,6 +9,13 @@ export function GameControls() {
     const controlRef = useRef<HTMLDivElement>(null);
 
     function onMove(direction: MovementDirection) {
+        if (direction === activeDirection) {
+            setActiveKey(null);
+            UserMovement(MovementDirection.STOP);
+            setActiveDirection(MovementDirection.STOP);
+            return;
+        }
+
         if (direction !== activeDirection) {
             UserMovement(direction);
             setActiveDirection(direction);
@@ -50,9 +57,9 @@ export function GameControls() {
         const key = event.key.toLowerCase();
 
         if (key === activeKey) {
-            setActiveKey(null);  // Reset the active key when it is released
-            onMove(MovementDirection.STOP);  // Send stop command when any of the movement keys are released
-            setActiveDirection(null);  // Reset active direction
+            setActiveKey(null);
+            onMove(MovementDirection.STOP);
+            setActiveDirection(null);
         }
 
         event.stopPropagation();
@@ -60,14 +67,14 @@ export function GameControls() {
 
     function onTabPress(event: KeyboardEvent) {
         if (event.key === 'Tab') {
-            controlRef.current?.blur();  // Remove focus when Tab is pressed
+            controlRef.current?.blur();
         }
     }
 
     useEffect(() => {
         window.addEventListener('keydown', onKeyDown);
         window.addEventListener('keyup', onKeyUp);
-        window.addEventListener('keydown', onTabPress);  // Listen for Tab key to remove focus
+        window.addEventListener('keydown', onTabPress);
 
         return () => {
             window.removeEventListener('keydown', onKeyDown);
@@ -81,6 +88,7 @@ export function GameControls() {
             ref={controlRef}
             tabIndex={0}
             style={{
+                zIndex: 100,
                 pointerEvents: 'all',
                 position: 'absolute',
                 bottom: 40,

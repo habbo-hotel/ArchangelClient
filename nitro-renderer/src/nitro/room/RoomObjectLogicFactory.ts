@@ -3,16 +3,14 @@ import { EventDispatcher } from '../../core';
 import { RoomObjectLogicBase } from '../../room';
 import { AvatarLogic, FurnitureAchievementResolutionLogic, FurnitureBadgeDisplayLogic, FurnitureChangeStateWhenStepOnLogic, FurnitureClothingChangeLogic, FurnitureCounterClockLogic, FurnitureCrackableLogic, FurnitureCraftingGizmoLogic, FurnitureCreditLogic, FurnitureCuckooClockLogic, FurnitureCustomStackHeightLogic, FurnitureDiceLogic, FurnitureEcotronBoxLogic, FurnitureEditableInternalLinkLogic, FurnitureEditableRoomLinkLogic, FurnitureEffectBoxLogic, FurnitureExternalImageLogic, FurnitureFireworksLogic, FurnitureFloorHoleLogic, FurnitureGroupForumTerminalLogic, FurnitureGuildCustomizedLogic, FurnitureHabboWheelLogic, FurnitureHighScoreLogic, FurnitureHockeyScoreLogic, FurnitureHweenLovelockLogic, FurnitureIceStormLogic, FurnitureInternalLinkLogic, FurnitureJukeboxLogic, FurnitureLogic, FurnitureLoveLockLogic, FurnitureMannequinLogic, FurnitureMonsterplantSeedLogic, FurnitureMultiHeightLogic, FurnitureMultiStateLogic, FurnitureMysteryBoxLogic, FurnitureMysteryTrophyLogic, FurnitureOneWayDoorLogic, FurniturePetCustomizationLogic, FurniturePlaceholderLogic, FurniturePlanetSystemLogic, FurniturePresentLogic, FurniturePurchaseableClothingLogic, FurniturePushableLogic, FurnitureRandomStateLogic, FurnitureRandomTeleportLogic, FurnitureRentableSpaceLogic, FurnitureRoomBackgroundColorLogic, FurnitureRoomBackgroundLogic, FurnitureRoomBillboardLogic, FurnitureRoomDimmerLogic, FurnitureScoreLogic, FurnitureSongDiskLogic, FurnitureSoundBlockLogic, FurnitureSoundMachineLogic, FurnitureStickieLogic, FurnitureTrophyLogic, FurnitureVoteCounterLogic, FurnitureVoteMajorityLogic, FurnitureWelcomeGiftLogic, FurnitureWindowLogic, FurnitureYoutubeLogic, PetLogic, RoomLogic, SelectionArrowLogic, TileCursorLogic } from './object';
 
-export class RoomObjectLogicFactory implements IRoomObjectLogicFactory
-{
+export class RoomObjectLogicFactory implements IRoomObjectLogicFactory {
     private _events: IEventDispatcher;
 
     private _cachedEvents: Map<string, boolean>;
     private _registeredEvents: Map<string, boolean>;
     private _functions: Function[];
 
-    constructor()
-    {
+    constructor() {
         this._events = new EventDispatcher();
 
         this._cachedEvents = new Map();
@@ -20,27 +18,24 @@ export class RoomObjectLogicFactory implements IRoomObjectLogicFactory
         this._functions = [];
     }
 
-    public getLogic(type: string): IRoomObjectEventHandler
-    {
+    public getLogic(type: string): IRoomObjectEventHandler {
         const logic = this.getLogicType(type);
 
-        if(!logic) return null;
+        if (!logic) return null;
 
         const instance = (new logic() as IRoomObjectEventHandler);
 
-        if(!instance) return null;
+        if (!instance) return null;
 
         instance.eventDispatcher = this._events;
 
-        if(!this._cachedEvents.get(type))
-        {
+        if (!this._cachedEvents.get(type)) {
             this._cachedEvents.set(type, true);
 
             const eventTypes = instance.getEventTypes();
 
-            for(const eventType of eventTypes)
-            {
-                if(!eventType) continue;
+            for (const eventType of eventTypes) {
+                if (!eventType) continue;
 
                 this.registerEventType(eventType);
             }
@@ -49,70 +44,56 @@ export class RoomObjectLogicFactory implements IRoomObjectLogicFactory
         return instance;
     }
 
-    private registerEventType(type: string): void
-    {
-        if(this._registeredEvents.get(type)) return;
+    private registerEventType(type: string): void {
+        if (this._registeredEvents.get(type)) return;
 
         this._registeredEvents.set(type, true);
 
-        for(const func of this._functions)
-        {
-            if(!func) continue;
+        for (const func of this._functions) {
+            if (!func) continue;
 
             this._events.addEventListener(type, func);
         }
     }
 
-    public registerEventFunction(func: Function): void
-    {
-        if(!func) return;
+    public registerEventFunction(func: Function): void {
+        if (!func) return;
 
-        if(this._functions.indexOf(func) >= 0) return;
+        if (this._functions.indexOf(func) >= 0) return;
 
         this._functions.push(func);
 
-        for(const eventType of this._registeredEvents.keys())
-        {
-            if(!eventType) continue;
+        for (const eventType of this._registeredEvents.keys()) {
+            if (!eventType) continue;
 
             this._events.addEventListener(eventType, func);
         }
     }
 
-    public removeEventFunction(func: Function): void
-    {
-        if(!func) return;
+    public removeEventFunction(func: Function): void {
+        if (!func) return;
 
         const index = this._functions.indexOf(func);
 
-        if(index === -1) return;
+        if (index === -1) return;
 
         this._functions.splice(index, 1);
 
-        for(const event of this._registeredEvents.keys())
-        {
-            if(!event) continue;
+        for (const event of this._registeredEvents.keys()) {
+            if (!event) continue;
 
             this._events.removeEventListener(event, func);
         }
     }
 
-    public getLogicType(type: string): typeof RoomObjectLogicBase
-    {
-        if(!type) return null;
+    public getLogicType(type: string): typeof RoomObjectLogicBase {
+        if (!type) return null;
 
         let logic: typeof RoomObjectLogicBase = null;
 
-        switch(type)
-        {
+        switch (type) {
             case RoomObjectLogicType.ROOM:
                 logic = RoomLogic;
-                break;
-            case RoomObjectLogicType.TILE_CURSOR:
-                logic = TileCursorLogic;
-                break;
-            case RoomObjectLogicType.SELECTION_ARROW:
-                logic = SelectionArrowLogic;
                 break;
             case RoomObjectLogicType.USER:
             case RoomObjectLogicType.BOT:
@@ -307,8 +288,7 @@ export class RoomObjectLogicFactory implements IRoomObjectLogicFactory
                 break;
         }
 
-        if(!logic)
-        {
+        if (!logic) {
             NitroLogger.warn('Unknown Logic', type);
 
             return null;
@@ -317,8 +297,7 @@ export class RoomObjectLogicFactory implements IRoomObjectLogicFactory
         return logic;
     }
 
-    public get events(): IEventDispatcher
-    {
+    public get events(): IEventDispatcher {
         return this._events;
     }
 }

@@ -8,5 +8,4 @@ export * from './RoomPlaneBitmapMask';
 export * from './RoomPlaneRectangleMask';
 export * from './RoomVisualization';
 export * from './RoomVisualizationData';
-export * from './TileCursorVisualization';
 export * from './utils';

@@ -23,12 +23,6 @@ export class RoomEngine extends NitroManager implements IRoomEngine, IRoomCreato
     public static ROOM_OBJECT_ID: number = -1;
     public static ROOM_OBJECT_TYPE: string = 'room';
 
-    public static CURSOR_OBJECT_ID: number = -2;
-    public static CURSOR_OBJECT_TYPE: string = 'tile_cursor';
-
-    public static ARROW_OBJECT_ID: number = -3;
-    public static ARROW_OBJECT_TYPE: string = 'selection_arrow';
-
     public static OVERLAY: string = 'overlay';
     public static OBJECT_ICON_SPRITE: string = 'object_icon_sprite';
 
@@ -385,9 +379,6 @@ export class RoomEngine extends NitroManager implements IRoomEngine, IRoomCreato
                 doorIndex++;
             }
         }
-
-        instance.createRoomObjectAndInitalize(RoomEngine.CURSOR_OBJECT_ID, RoomEngine.CURSOR_OBJECT_TYPE, RoomObjectCategory.CURSOR);
-        if (NitroConfiguration.getValue('enable.avatar.arrow', false)) instance.createRoomObjectAndInitalize(RoomEngine.ARROW_OBJECT_ID, RoomEngine.ARROW_OBJECT_TYPE, RoomObjectCategory.CURSOR);
 
         return instance;
     }

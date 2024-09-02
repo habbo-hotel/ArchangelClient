@@ -1,41 +1,33 @@
 import { IAssetData, IObjectVisualizationData, IRoomObjectGraphicVisualization, IRoomObjectVisualizationFactory, NitroLogger, RoomObjectVisualizationType } from '../../../api';
 import { RoomObjectSpriteVisualization } from '../../../room';
 import { Nitro } from '../../Nitro';
-import { AvatarVisualization, AvatarVisualizationData, FurnitureAnimatedVisualization, FurnitureAnimatedVisualizationData, FurnitureBadgeDisplayVisualization, FurnitureBBVisualization, FurnitureBottleVisualization, FurnitureBuilderPlaceholderVisualization, FurnitureCounterClockVisualization, FurnitureCuboidVisualization, FurnitureExternalImageVisualization, FurnitureFireworksVisualization, FurnitureGiftWrappedFireworksVisualization, FurnitureGiftWrappedVisualization, FurnitureGuildCustomizedVisualization, FurnitureGuildIsometricBadgeVisualization, FurnitureHabboWheelVisualization, FurnitureIsometricBBVisualization, FurnitureMannequinVisualization, FurnitureMannequinVisualizationData, FurniturePartyBeamerVisualization, FurniturePlanetSystemVisualization, FurniturePosterVisualization, FurnitureQueueTileVisualization, FurnitureResettingAnimatedVisualization, FurnitureRoomBackgroundVisualization, FurnitureScoreBoardVisualization, FurnitureSoundBlockVisualization, FurnitureStickieVisualization, FurnitureValRandomizerVisualization, FurnitureVisualization, FurnitureVisualizationData, FurnitureVoteCounterVisualization, FurnitureVoteMajorityVisualization, FurnitureWaterAreaVisualization, FurnitureYoutubeVisualization, PetVisualization, PetVisualizationData, RoomVisualization, RoomVisualizationData, TileCursorVisualization } from './visualization';
+import { AvatarVisualization, AvatarVisualizationData, FurnitureAnimatedVisualization, FurnitureAnimatedVisualizationData, FurnitureBadgeDisplayVisualization, FurnitureBBVisualization, FurnitureBottleVisualization, FurnitureBuilderPlaceholderVisualization, FurnitureCounterClockVisualization, FurnitureCuboidVisualization, FurnitureExternalImageVisualization, FurnitureFireworksVisualization, FurnitureGiftWrappedFireworksVisualization, FurnitureGiftWrappedVisualization, FurnitureGuildCustomizedVisualization, FurnitureGuildIsometricBadgeVisualization, FurnitureHabboWheelVisualization, FurnitureIsometricBBVisualization, FurnitureMannequinVisualization, FurnitureMannequinVisualizationData, FurniturePartyBeamerVisualization, FurniturePlanetSystemVisualization, FurniturePosterVisualization, FurnitureQueueTileVisualization, FurnitureResettingAnimatedVisualization, FurnitureRoomBackgroundVisualization, FurnitureScoreBoardVisualization, FurnitureSoundBlockVisualization, FurnitureStickieVisualization, FurnitureValRandomizerVisualization, FurnitureVisualization, FurnitureVisualizationData, FurnitureVoteCounterVisualization, FurnitureVoteMajorityVisualization, FurnitureWaterAreaVisualization, FurnitureYoutubeVisualization, PetVisualization, PetVisualizationData, RoomVisualization, RoomVisualizationData } from './visualization';
 
-export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationFactory
-{
+export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationFactory {
     private static CACHING_ENABLED: boolean = true;
 
     private _visualizationDatas: Map<string, IObjectVisualizationData>;
 
-    constructor()
-    {
+    constructor() {
         this._visualizationDatas = new Map();
     }
 
-    public getVisualization(type: string): IRoomObjectGraphicVisualization
-    {
+    public getVisualization(type: string): IRoomObjectGraphicVisualization {
         const visualization = this.getVisualizationType(type);
 
-        if(!visualization) return null;
+        if (!visualization) return null;
 
         return new visualization();
     }
 
-    public getVisualizationType(type: string): typeof RoomObjectSpriteVisualization
-    {
-        if(!type) return null;
+    public getVisualizationType(type: string): typeof RoomObjectSpriteVisualization {
+        if (!type) return null;
 
         let visualization: typeof RoomObjectSpriteVisualization = null;
 
-        switch(type)
-        {
+        switch (type) {
             case RoomObjectVisualizationType.ROOM:
                 visualization = RoomVisualization;
-                break;
-            case RoomObjectVisualizationType.TILE_CURSOR:
-                visualization = TileCursorVisualization;
                 break;
             case RoomObjectVisualizationType.USER:
             case RoomObjectVisualizationType.BOT:
@@ -140,8 +132,7 @@ export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationF
                 break;
         }
 
-        if(!visualization)
-        {
+        if (!visualization) {
             NitroLogger.log('Unknown Visualization', type);
 
             return null;
@@ -150,16 +141,14 @@ export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationF
         return visualization;
     }
 
-    public getVisualizationData(type: string, visualization: string, asset: IAssetData): IObjectVisualizationData
-    {
+    public getVisualizationData(type: string, visualization: string, asset: IAssetData): IObjectVisualizationData {
         const existing = this._visualizationDatas.get(type);
 
-        if(existing) return existing;
+        if (existing) return existing;
 
         let visualizationData: IObjectVisualizationData = null;
 
-        switch(visualization)
-        {
+        switch (visualization) {
             case RoomObjectVisualizationType.FURNITURE_STATIC:
             case RoomObjectVisualizationType.FURNITURE_GIFT_WRAPPED:
             case RoomObjectVisualizationType.FURNITURE_BB:
@@ -191,7 +180,6 @@ export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationF
             case RoomObjectVisualizationType.FURNITURE_BADGE_DISPLAY:
             case RoomObjectVisualizationType.FURNITURE_EXTERNAL_IMAGE:
             case RoomObjectVisualizationType.FURNITURE_YOUTUBE:
-            case RoomObjectVisualizationType.TILE_CURSOR:
                 visualizationData = new FurnitureAnimatedVisualizationData();
                 break;
             case RoomObjectVisualizationType.FURNITURE_MANNEQUIN:
@@ -210,21 +198,19 @@ export class RoomObjectVisualizationFactory implements IRoomObjectVisualizationF
                 break;
         }
 
-        if(!visualizationData) return null;
+        if (!visualizationData) return null;
 
-        if(!visualizationData.initialize(asset))
-        {
+        if (!visualizationData.initialize(asset)) {
             visualizationData.dispose();
 
             return null;
         }
 
-        if((visualizationData instanceof AvatarVisualizationData) || (visualizationData instanceof FurnitureMannequinVisualizationData))
-        {
+        if ((visualizationData instanceof AvatarVisualizationData) || (visualizationData instanceof FurnitureMannequinVisualizationData)) {
             visualizationData.avatarManager = Nitro.instance.avatar;
         }
 
-        if(RoomObjectVisualizationFactory.CACHING_ENABLED) this._visualizationDatas.set(type, visualizationData);
+        if (RoomObjectVisualizationFactory.CACHING_ENABLED) this._visualizationDatas.set(type, visualizationData);
 
         return visualizationData;
     }

@@ -1,5 +1,4 @@
-export class RoomObjectVisualizationType
-{
+export class RoomObjectVisualizationType {
     public static FURNITURE_STATIC = 'furniture_static';
     public static FURNITURE_ANIMATED = 'furniture_animated';
     public static FURNITURE_RESETTING_ANIMATED = 'furniture_resetting_animated';
@@ -36,5 +35,4 @@ export class RoomObjectVisualizationType
     public static PET_ANIMATED = 'pet_animated';
     public static BOT = 'bot';
     public static RENTABLE_BOT = 'rentable_bot';
-    public static TILE_CURSOR = 'tile_cursor';
 }

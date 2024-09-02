@@ -1,5 +1,4 @@
-export class RoomObjectLogicType
-{
+export class RoomObjectLogicType {
     public static FURNITURE_BASIC = 'furniture_basic';
     public static FURNITURE_MULTISTATE = 'furniture_multistate';
     public static FURNITURE_MULTIHEIGHT = 'furniture_multiheight';
@@ -67,8 +66,6 @@ export class RoomObjectLogicType
     public static BOT = 'bot';
     public static RENTABLE_BOT = 'rentable_bot';
     public static PET = 'pet';
-    public static TILE_CURSOR = 'tile_cursor';
-    public static SELECTION_ARROW = 'selection_arrow';
     public static GAME_SNOWBALL = 'game_snowball';
     public static GAME_SNOWSPLASH = 'game_snowsplash';
 }

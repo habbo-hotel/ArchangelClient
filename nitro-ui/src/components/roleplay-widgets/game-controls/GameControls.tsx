@@ -30,19 +30,23 @@ export function GameControls() {
         }
 
         if (key !== activeKey) {
-            setActiveKey(key);  // Update the active key only if it's a new key
+            setActiveKey(key);
 
             switch (key) {
                 case 'w':
+                case "arrowup":
                     onMove(MovementDirection.UP);
                     break;
                 case 'a':
+                case "arrowleft":
                     onMove(MovementDirection.LEFT);
                     break;
                 case 's':
+                case "arrowdown":
                     onMove(MovementDirection.DOWN);
                     break;
                 case 'd':
+                case "arrowright":
                     onMove(MovementDirection.RIGHT);
                     break;
                 default:

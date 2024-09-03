@@ -1,8 +1,8 @@
-import { CrackableDataType, GroupInformationComposer, GroupInformationEvent, NowPlayingEvent, RoomControllerLevel, RoomObjectCategory, RoomObjectOperationType, RoomObjectVariable, RoomWidgetEnumItemExtradataParameter, RoomWidgetFurniInfoUsagePolicyEnum, SetObjectDataMessageComposer, SongInfoReceivedEvent, StringDataType } from '@nitro-rp/renderer';
+import { CrackableDataType, GroupInformationComposer, GroupInformationEvent, NowPlayingEvent, RoomControllerLevel, RoomObjectCategory, RoomObjectOperationType, RoomObjectVariable, RoomWidgetEnumItemExtradataParameter, SetObjectDataMessageComposer, SongInfoReceivedEvent, StringDataType } from '@nitro-rp/renderer';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { AvatarInfoFurni, CreateLinkEvent, GetGroupInformation, GetNitroInstance, GetRoomEngine, LocalizeText, SendMessageComposer } from '../../../../../api';
-import { Base, Button, Column, Flex, LayoutBadgeImageView, LayoutLimitedEditionCompactPlateView, LayoutRarityLevelView, Text, UserProfileIconView } from '../../../../../common';
+import { Base, Button, Column, Flex, LayoutBadgeImageView, LayoutLimitedEditionCompactPlateView, LayoutRarityLevelView, Text } from '../../../../../common';
 import { useMessageEvent, useRoom, useSoundEvent } from '../../../../../hooks';
 
 interface InfoStandWidgetFurniViewProps {
@@ -19,9 +19,6 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
     const { roomSession = null } = useRoom();
 
     const [pickupMode, setPickupMode] = useState(0);
-    const [canMove, setCanMove] = useState(false);
-    const [canRotate, setCanRotate] = useState(false);
-    const [canUse, setCanUse] = useState(false);
     const [furniKeys, setFurniKeys] = useState<string[]>([]);
     const [furniValues, setFurniValues] = useState<string[]>([]);
     const [customKeys, setCustomKeys] = useState<string[]>([]);
@@ -30,7 +27,6 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
     const [crackableHits, setCrackableHits] = useState(0);
     const [crackableTarget, setCrackableTarget] = useState(0);
     const [godMode, setGodMode] = useState(false);
-    const [canSeeFurniId, setCanSeeFurniId] = useState(false);
     const [groupName, setGroupName] = useState<string>(null);
     const [isJukeBox, setIsJukeBox] = useState<boolean>(false);
     const [isSongDisk, setIsSongDisk] = useState<boolean>(false);
@@ -55,9 +51,6 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
 
     useEffect(() => {
         let pickupMode = PICKUP_MODE_NONE;
-        let canMove = false;
-        let canRotate = false;
-        let canUse = false;
         let furniKeyss: string[] = [];
         let furniValuess: string[] = [];
         let customKeyss: string[] = [];
@@ -66,7 +59,6 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
         let crackableHits = 0;
         let crackableTarget = 0;
         let godMode = false;
-        let canSeeFurniId = false;
         let furniIsJukebox = false;
         let furniIsSongDisk = false;
         let furniSongId = -1;
@@ -74,23 +66,14 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
         const isValidController = (avatarInfo.roomControllerLevel >= RoomControllerLevel.GUEST);
 
         if (isValidController || avatarInfo.isOwner || avatarInfo.isRoomOwner || avatarInfo.isAnyRoomController) {
-            canMove = true;
-            canRotate = !avatarInfo.isWallItem;
 
             if (avatarInfo.roomControllerLevel >= RoomControllerLevel.MODERATOR) godMode = true;
         }
-
-        if (avatarInfo.isAnyRoomController) {
-            canSeeFurniId = true;
-        }
-
-        if ((((avatarInfo.usagePolicy === RoomWidgetFurniInfoUsagePolicyEnum.EVERYBODY) || ((avatarInfo.usagePolicy === RoomWidgetFurniInfoUsagePolicyEnum.CONTROLLER) && isValidController)) || ((avatarInfo.extraParam === RoomWidgetEnumItemExtradataParameter.JUKEBOX) && isValidController)) || ((avatarInfo.extraParam === RoomWidgetEnumItemExtradataParameter.USABLE_PRODUCT) && isValidController)) canUse = true;
 
         if (avatarInfo.extraParam) {
             if (avatarInfo.extraParam === RoomWidgetEnumItemExtradataParameter.CRACKABLE_FURNI) {
                 const stuffData = (avatarInfo.stuffData as CrackableDataType);
 
-                canUse = true;
                 isCrackable = true;
                 crackableHits = stuffData.hits;
                 crackableTarget = stuffData.target;
@@ -153,9 +136,6 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
         if (avatarInfo.isStickie) pickupMode = PICKUP_MODE_NONE;
 
         setPickupMode(pickupMode);
-        setCanMove(canMove);
-        setCanRotate(canRotate);
-        setCanUse(canUse);
         setFurniKeys(furniKeyss);
         setFurniValues(furniValuess);
         setCustomKeys(customKeyss);
@@ -164,7 +144,6 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
         setCrackableHits(crackableHits);
         setCrackableTarget(crackableTarget);
         setGodMode(godMode);
-        setCanSeeFurniId(canSeeFurniId);
         setGroupName(null);
         setIsJukeBox(furniIsJukebox);
         setIsSongDisk(furniIsSongDisk);
@@ -227,8 +206,6 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
 
     const processButtonAction = useCallback((action: string) => {
         if (!action || (action === '')) return;
-
-        let objectData: string = null;
 
         switch (action) {
             case 'buy_one':
@@ -387,22 +364,10 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
                     </Column>
                 </Column>
             </Column>
-            <Flex gap={1} justifyContent="end">
-                {canMove &&
-                    <Button variant="dark" onClick={event => processButtonAction('move')}>
-                        {LocalizeText('infostand.button.move')}
-                    </Button>}
-                {canRotate &&
-                    <Button variant="dark" onClick={event => processButtonAction('rotate')}>
-                        {LocalizeText('infostand.button.rotate')}
-                    </Button>}
+            <Flex gap={1} justifyContent="end" style={{ padding: 4 }}>
                 {(pickupMode !== PICKUP_MODE_NONE) &&
                     <Button variant="dark" onClick={event => processButtonAction('pickup')}>
                         {LocalizeText((pickupMode === PICKUP_MODE_EJECT) ? 'infostand.button.eject' : 'infostand.button.pickup')}
-                    </Button>}
-                {canUse &&
-                    <Button variant="dark" onClick={event => processButtonAction('use')}>
-                        {LocalizeText('infostand.button.use')}
                     </Button>}
                 {((furniKeys.length > 0 && furniValues.length > 0) && (furniKeys.length === furniValues.length)) &&
                     <Button variant="dark" onClick={() => processButtonAction('save_branding_configuration')}>

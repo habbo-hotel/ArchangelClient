@@ -742,7 +742,7 @@ export class RoomEngine extends NitroManager implements IRoomEngine, IRoomCreato
         const instanceData = this.getRoomInstanceData(this._activeRoomId);
 
         if (instanceData && instanceData.hasButtonMouseCursorOwners()) {
-            document.body.style.cursor = 'pointer';
+            document.body.style.cursor = 'crosshair'; // dd
         }
         else {
             document.body.style.cursor = 'auto';

@@ -17,17 +17,18 @@ export function GameControls() {
         }
 
         if (direction !== activeDirection) {
+            controlRef.current.focus();
             UserMovement(direction);
             setActiveDirection(direction);
         }
     }
 
     function onKeyDown(event: KeyboardEvent) {
-        const key = event.key.toLowerCase();
-
-        if (controlRef.current && key !== 'tab') {
-            controlRef.current.focus();  // Take focus when WASD keys are pressed
+        if (!controlRef.current || document.activeElement?.classList?.contains('chat-input')) {
+            return;
         }
+
+        const key = event.key.toLowerCase();
 
         if (key !== activeKey) {
             setActiveKey(key);
@@ -35,18 +36,22 @@ export function GameControls() {
             switch (key) {
                 case 'w':
                 case "arrowup":
+                    controlRef.current.focus();
                     onMove(MovementDirection.UP);
                     break;
                 case 'a':
                 case "arrowleft":
+                    controlRef.current.focus();
                     onMove(MovementDirection.LEFT);
                     break;
                 case 's':
                 case "arrowdown":
+                    controlRef.current.focus();
                     onMove(MovementDirection.DOWN);
                     break;
                 case 'd':
                 case "arrowright":
+                    controlRef.current.focus();
                     onMove(MovementDirection.RIGHT);
                     break;
                 default:
@@ -69,21 +74,13 @@ export function GameControls() {
         event.stopPropagation();
     }
 
-    function onTabPress(event: KeyboardEvent) {
-        if (event.key === 'Tab') {
-            controlRef.current?.blur();
-        }
-    }
-
     useEffect(() => {
         window.addEventListener('keydown', onKeyDown);
         window.addEventListener('keyup', onKeyUp);
-        window.addEventListener('keydown', onTabPress);
 
         return () => {
             window.removeEventListener('keydown', onKeyDown);
             window.removeEventListener('keyup', onKeyUp);
-            window.removeEventListener('keydown', onTabPress);
         };
     }, [activeDirection, activeKey]);
 

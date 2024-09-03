@@ -6,7 +6,6 @@ export enum MovementDirection {
     DOWN = "down",
     RIGHT = "right",
     STOP = "stop"
-
 }
 
 export class UserMovementComposer implements IMessageComposer<ConstructorParameters<typeof UserMovementComposer>> {

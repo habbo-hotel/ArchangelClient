@@ -10,7 +10,6 @@ export function WeaponWheel() {
     const [visible, setVisible] = useState(false);
     const [hoveredItem, setHoveredItem] = useState<MyWeaponData>();
 
-
     const onEquip = useCallback((uniqueName: string) => {
         EquipWeapon(uniqueName);
         setVisible(false);

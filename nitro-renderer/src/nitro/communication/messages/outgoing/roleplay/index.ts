@@ -11,6 +11,7 @@ export * from './billing/PayBillComposer';
 export * from './combat/AttackUserComposer';
 export * from './combat/CombatDelayComposer';
 export * from './combat/EquipWeaponComposer';
+export * from './controls/UserAttackComposer';
 export * from './controls/UserMovementComposer';
 export * from './corp/CorpAcceptJobComposer';
 export * from './corp/CorpCreatePositionComposer';

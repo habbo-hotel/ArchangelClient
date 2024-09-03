@@ -599,4 +599,6 @@ export class OutgoingHeader {
     public static TURF_TIMER_QUERY_COMPOSER = 8065;
 
     public static USER_MOVEMENT_COMPOSER = 8066;
+
+    public static USER_ATTACK_COMPOSER = 8067;
 }

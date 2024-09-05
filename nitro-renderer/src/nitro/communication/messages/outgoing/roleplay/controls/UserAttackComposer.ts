@@ -3,8 +3,8 @@ import { IMessageComposer } from "../../../../../../api";
 export class UserAttackComposer implements IMessageComposer<ConstructorParameters<typeof UserAttackComposer>> {
     private _data: ConstructorParameters<typeof UserAttackComposer>;
 
-    constructor(x: number, y: number) {
-        this._data = [x, y];
+    constructor(x: number, y: number, z: number) {
+        this._data = [x, y, z];
     }
 
     public getMessageArray() {

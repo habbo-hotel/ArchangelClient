@@ -2,7 +2,7 @@ import { IFurnitureStackingHeightMap, ILegacyWallGeometry, IObjectData, IRoomCan
 import { Disposable } from '../../core';
 import { RoomEngineDimmerStateEvent, RoomEngineObjectEvent, RoomEngineObjectPlacedEvent, RoomEngineObjectPlacedOnUserEvent, RoomEngineObjectPlaySoundEvent, RoomEngineRoomAdEvent, RoomEngineSamplePlaybackEvent, RoomEngineTriggerWidgetEvent, RoomEngineUseProductEvent, RoomObjectBadgeAssetEvent, RoomObjectDataRequestEvent, RoomObjectDimmerStateUpdateEvent, RoomObjectEvent, RoomObjectFloorHoleEvent, RoomObjectFurnitureActionEvent, RoomObjectHSLColorEnabledEvent, RoomObjectHSLColorEnableEvent, RoomObjectMouseEvent, RoomObjectMoveEvent, RoomObjectPlaySoundIdEvent, RoomObjectRoomAdEvent, RoomObjectSamplePlaybackEvent, RoomObjectSoundMachineEvent, RoomObjectStateChangedEvent, RoomObjectTileMouseEvent, RoomObjectWallMouseEvent, RoomObjectWidgetRequestEvent, RoomSpriteMouseEvent } from '../../events';
 import { RoomEnterEffect, RoomId, RoomObjectUpdateMessage } from '../../room';
-import { BotPlaceComposer, FurnitureColorWheelComposer, FurnitureDiceActivateComposer, FurnitureDiceDeactivateComposer, FurnitureFloorUpdateComposer, FurnitureGroupInfoComposer, FurnitureMultiStateComposer, FurnitureOneWayDoorComposer, FurniturePickupComposer, FurniturePlaceComposer, FurniturePostItPlaceComposer, FurnitureRandomStateComposer, FurnitureWallMultiStateComposer, FurnitureWallUpdateComposer, GetItemDataComposer, GetResolutionAchievementsMessageComposer, PetMoveComposer, PetPlaceComposer, RemoveWallItemComposer, RoomUnitLookComposer, RoomUnitWalkComposer, SetItemDataMessageComposer, SetObjectDataMessageComposer } from '../communication';
+import { AttackUserComposer, BotPlaceComposer, FurnitureColorWheelComposer, FurnitureDiceActivateComposer, FurnitureDiceDeactivateComposer, FurnitureFloorUpdateComposer, FurnitureGroupInfoComposer, FurnitureMultiStateComposer, FurnitureOneWayDoorComposer, FurniturePickupComposer, FurniturePlaceComposer, FurniturePostItPlaceComposer, FurnitureRandomStateComposer, FurnitureWallMultiStateComposer, FurnitureWallUpdateComposer, GetItemDataComposer, GetResolutionAchievementsMessageComposer, PetMoveComposer, PetPlaceComposer, RemoveWallItemComposer, RoomUnitLookComposer, RoomUnitWalkComposer, SetItemDataMessageComposer, SetObjectDataMessageComposer, UserAttackComposer } from '../communication';
 import { Nitro } from '../Nitro';
 import { ObjectAvatarSelectedMessage, ObjectDataUpdateMessage, ObjectSelectedMessage, ObjectTileCursorUpdateMessage, ObjectVisibilityUpdateMessage } from './messages';
 import { SelectedRoomObjectData } from './utils';
@@ -938,7 +938,7 @@ export class RoomObjectEventHandler extends Disposable implements IRoomCanvasMou
 
         if (!session || session.isSpectator) return;
 
-        this.sendWalkUpdate(event.tileXAsInt, event.tileYAsInt);
+        this.attackTarget(event.tileX, event.tileY, event.tileZ);
     }
 
     private handleObjectMove(event: RoomObjectMouseEvent, roomId: number): void {
@@ -1307,10 +1307,11 @@ export class RoomObjectEventHandler extends Disposable implements IRoomCanvasMou
         return true;
     }
 
-    private sendWalkUpdate(x: number, y: number): void {
+    private attackTarget(x: number, y: number, z: number): void {
         if (!this._roomEngine || !this._roomEngine.connection) return;
 
-        this._roomEngine.connection.send(new RoomUnitWalkComposer(x, y));
+        console.log({ x, y, z })
+        this._roomEngine.connection.send(new UserAttackComposer(x, y, z));
     }
 
     private handleMouseOverObject(category: number, roomId: number, event: RoomObjectMouseEvent): ObjectTileCursorUpdateMessage {
@@ -1340,12 +1341,6 @@ export class RoomObjectEventHandler extends Disposable implements IRoomCanvasMou
 
         const _local_3 = this._roomEngine.getRoomObject(k, _arg_2.objectId, RoomObjectCategory.FLOOR);
         const _local_4 = this.getActiveSurfaceLocation(_local_3, _arg_2);
-
-        if (_local_4) {
-            this.sendWalkUpdate(_local_4.x, _local_4.y);
-
-            return true;
-        }
 
         return false;
     }

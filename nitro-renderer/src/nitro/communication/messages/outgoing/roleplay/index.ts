@@ -8,7 +8,6 @@ export * from './bank/BankConnectATMComposer';
 export * from './bank/BankConnectComputerComposer';
 export * from './bank/BankListComposer';
 export * from './billing/PayBillComposer';
-export * from './combat/AttackUserComposer';
 export * from './combat/CombatDelayComposer';
 export * from './combat/EquipWeaponComposer';
 export * from './controls/UserAttackComposer';

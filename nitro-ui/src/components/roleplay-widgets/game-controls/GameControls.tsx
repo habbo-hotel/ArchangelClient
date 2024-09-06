@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { MovementDirection } from "@nitro-rp/renderer";
 import { UserMovement } from "../../../api/roleplay/controls/UserMovement";
-import { FaCaretSquareDown, FaCaretSquareLeft, FaCaretSquareRight, FaCaretSquareUp, FaSpinner, FaThermometerThreeQuarters } from "react-icons/fa";
+import { FaCaretSquareDown, FaCaretSquareLeft, FaCaretSquareRight, FaCaretSquareUp } from "react-icons/fa";
 import { WeaponReload } from "../../../api/roleplay/combat/WeaponReload";
-import { Button, Text } from "../../../common";
+import { Button } from "../../../common";
 
 export function GameControls() {
     const [activeKey, setActiveKey] = useState<string | null>(null);  // Track the active key

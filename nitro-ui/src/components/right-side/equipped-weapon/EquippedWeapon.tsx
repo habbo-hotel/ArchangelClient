@@ -11,29 +11,31 @@ export function EquippedWeapon() {
     const weapons = useMyWeaponList();
     const roleplayStats = useRoleplayStats(session?.userInfo?.userId);
 
-    const equippedWeapon = useMemo(() => weapons.find(_ => _.itemID === roleplayStats.equippedWeaponID), [roleplayStats.equippedWeaponID]);
+    const equippedWeapon = useMemo(() => {
+        const matchingWeapon = weapons.find(_ => _.itemID === roleplayStats.equippedWeaponID)
+        if (matchingWeapon) {
+            return matchingWeapon;
+        }
+
+        return {
+            itemID: 0,
+            uniqueName: 'unarmed',
+            displayName: 'Unarmed',
+            equipEffect: 0,
+            magazineSize: 0,
+        }
+    }, [roleplayStats.equippedWeaponID]);
 
     return (
-        <div className="nitro-equipped-weapon glass-panel">
-            <div className="weapon-hud" onClick={() => CreateLinkEvent('weapon-wheel/toggle')} >
+        <div className="nitro-equipped-weapon glass-panel" onClick={() => CreateLinkEvent('weapon-wheel/toggle')} style={{ zIndex: 1000, cursor: 'pointer' }}>
+            <div className="weapon-hud">
                 <div className="weapon-info">
-                    {equippedWeapon && (
-                        <>
-                            <img src={`${NitroConfiguration.getValue('image.library.url')}/weapon_icons/${equippedWeapon.uniqueName}.png`} alt={equippedWeapon.uniqueName} className="weapon-icon" style={{ width: 200 }} />
-                            <div className="weapon-name">
-                                <Text bold center variant="white" fontSize={4} style={{ paddingTop: 20 }}>
-                                    {equippedWeapon.displayName}
-                                </Text>
-                            </div>
-                        </>
-                    )}
-                    {
-                        !equippedWeapon && (
-                            <>
-                                <div className="weapon-icon" style={{ width: 129 }} onClick={() => CreateLinkEvent('weapon-wheel/toggle')} />
-                            </>
-                        )
-                    }
+                    <img src={`${NitroConfiguration.getValue('image.library.url')}/weapon_icons/${equippedWeapon.uniqueName}.png`} alt={equippedWeapon.uniqueName} className="weapon-icon" style={{ width: 200 }} />
+                    <div className="weapon-name">
+                        <Text bold center variant="white" fontSize={4} style={{ paddingTop: 20 }}>
+                            {equippedWeapon.displayName}
+                        </Text>
+                    </div>
                 </div>
                 {
                     equippedWeapon?.magazineSize ? (

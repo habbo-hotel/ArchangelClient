@@ -5,10 +5,11 @@
             border-radius: 15px;
             border: 1px solid rgba(0, 247, 255, 0.3);
             box-shadow: 0 8px 32px 0 rgba(0, 247, 255, 0.2);
+            z-index: 1000;
+            pointer-events: all !important;
         }
         
         .stats {
-            pointer-events: all !important;
             width: 240px;
             padding: 8px;
         }

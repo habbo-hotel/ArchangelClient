@@ -272,29 +272,17 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
     return (
         <Column gap={1} alignItems="end">
             <Column className="nitro-infostand rounded glass-panel">
-                <Column overflow="visible" className="container-fluid content-area" gap={1}>
-                    <Column gap={1}>
-                        <Flex alignItems="center" justifyContent="between" gap={1}>
-                            <Text variant="white" small wrap>{avatarInfo.name}</Text>
-                            <FaTimes className="cursor-pointer fa-icon" onClick={onClose} />
-                        </Flex>
-                        <hr className="m-0" />
-                    </Column>
-                    <Column gap={1}>
-                        <Flex position="relative" gap={1}>
-                            {avatarInfo.stuffData.isUnique &&
-                                <div className="position-absolute end-0">
-                                    <LayoutLimitedEditionCompactPlateView uniqueNumber={avatarInfo.stuffData.uniqueNumber} uniqueSeries={avatarInfo.stuffData.uniqueSeries} />
-                                </div>}
-                            {(avatarInfo.stuffData.rarityLevel > -1) &&
-                                <div className="position-absolute end-0">
-                                    <LayoutRarityLevelView level={avatarInfo.stuffData.rarityLevel} />
-                                </div>}
+                <Column overflow="visible" className="container-fluid content-area">
+                    <Flex alignItems="center">
+                        <Column fullWidth>
                             {avatarInfo.image && avatarInfo.image.src.length &&
-                                <img className="d-block mx-auto" src={avatarInfo.image.src} alt="" />}
-                        </Flex>
-                        <hr className="m-0" />
-                    </Column>
+                                <img className="d-block" src={avatarInfo.image.src} alt="" style={{ width: 50, height: 50, objectFit: 'cover' }} />}
+                        </Column>
+                        <Column fullWidth>
+                            <Text variant="white" fontSize={6} wrap>{avatarInfo.name.toLowerCase()}</Text>
+                        </Column>
+
+                    </Flex>
                     {(isJukeBox || isSongDisk) &&
                         <Column gap={1}>
                             <hr className="m-0" />
@@ -366,9 +354,18 @@ export const InfoStandWidgetFurniView: FC<InfoStandWidgetFurniViewProps> = props
             </Column>
             <Flex gap={1} justifyContent="end" style={{ padding: 4 }}>
                 {(pickupMode !== PICKUP_MODE_NONE) &&
-                    <Button variant="dark" onClick={event => processButtonAction('pickup')}>
-                        {LocalizeText((pickupMode === PICKUP_MODE_EJECT) ? 'infostand.button.eject' : 'infostand.button.pickup')}
-                    </Button>}
+                    <>
+                        <Button variant="dark" onClick={() => processButtonAction('use')}>
+                            {LocalizeText('infostand.button.use')}
+                        </Button>
+                        <Button variant="dark" onClick={() => processButtonAction('move')}>
+                            {LocalizeText('infostand.button.move')}
+                        </Button>
+                        <Button variant="dark" onClick={() => processButtonAction('pickup')}>
+                            {LocalizeText((pickupMode === PICKUP_MODE_EJECT) ? 'infostand.button.eject' : 'infostand.button.pickup')}
+                        </Button>
+                    </>
+                }
                 {((furniKeys.length > 0 && furniValues.length > 0) && (furniKeys.length === furniValues.length)) &&
                     <Button variant="dark" onClick={() => processButtonAction('save_branding_configuration')}>
                         {LocalizeText('save')}

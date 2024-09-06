@@ -10,6 +10,8 @@ export * from './bank/BankListComposer';
 export * from './billing/PayBillComposer';
 export * from './combat/CombatDelayComposer';
 export * from './combat/EquipWeaponComposer';
+export * from './combat/ListMyWeaponsComposer';
+export * from './combat/WeaponReloadComposer';
 export * from './controls/UserAttackComposer';
 export * from './controls/UserMovementComposer';
 export * from './corp/CorpAcceptJobComposer';

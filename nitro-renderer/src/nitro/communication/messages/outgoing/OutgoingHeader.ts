@@ -600,4 +600,7 @@ export class OutgoingHeader {
     public static USER_MOVEMENT_COMPOSER = 8066;
 
     public static USER_ATTACK_COMPOSER = 8067;
+
+    public static WEAPON_RELOAD_COMPOSER = 8068;
+
 }

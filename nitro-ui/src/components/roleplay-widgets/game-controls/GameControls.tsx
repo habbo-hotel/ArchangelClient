@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { MovementDirection } from "@nitro-rp/renderer";
 import { UserMovement } from "../../../api/roleplay/controls/UserMovement";
-import { FaCaretSquareDown, FaCaretSquareLeft, FaCaretSquareRight, FaCaretSquareUp } from "react-icons/fa";
+import { FaCaretSquareDown, FaCaretSquareLeft, FaCaretSquareRight, FaCaretSquareUp, FaSpinner, FaThermometerThreeQuarters } from "react-icons/fa";
+import { WeaponReload } from "../../../api/roleplay/combat/WeaponReload";
+import { Button, Text } from "../../../common";
 
 export function GameControls() {
     const [activeKey, setActiveKey] = useState<string | null>(null);  // Track the active key
@@ -23,6 +25,10 @@ export function GameControls() {
         }
     }
 
+    function onReload() {
+        WeaponReload();
+    }
+
     function onKeyDown(event: KeyboardEvent) {
         if (!controlRef.current || document.activeElement?.classList?.contains('chat-input')) {
             return;
@@ -32,6 +38,8 @@ export function GameControls() {
 
         if (key !== activeKey) {
             setActiveKey(key);
+
+            console.log(key)
 
             switch (key) {
                 case 'w':
@@ -53,6 +61,9 @@ export function GameControls() {
                 case "arrowright":
                     controlRef.current.focus();
                     onMove(MovementDirection.RIGHT);
+                    break;
+                case 'r':
+                    onReload();
                     break;
                 default:
                     break;
@@ -97,7 +108,7 @@ export function GameControls() {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                outline: 'none',  // Remove default outline when focused
+                outline: 'none',
             }}
         >
             <div onClick={() => onMove(MovementDirection.UP)} style={{ cursor: 'pointer', color: activeDirection === MovementDirection.UP ? 'cyan' : 'white' }}>
@@ -114,6 +125,11 @@ export function GameControls() {
                     <FaCaretSquareRight size={40} />
                 </div>
             </div>
-        </div>
+            <div onClick={onReload} style={{ cursor: 'pointer', color: activeKey === 'r' ? 'cyan' : 'white', fontSize: 20, marginLeft: 30, position: 'absolute', top: 50, right: -100 }}>
+                <Button variant={activeKey === 'r' ? 'primary' : 'secondary'}>
+                    Reload
+                </Button>
+            </div>
+        </div >
     );
 }

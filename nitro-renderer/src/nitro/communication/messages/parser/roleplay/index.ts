@@ -5,7 +5,8 @@ export * from './bank/BankOpenComputerEventParser';
 export * from './billing/BillingInvoiceQueryEventParser';
 export * from './combat/CombatDelayParser';
 export * from './combat/MyWeaponListParser';
-export * from './combat/UserDiedEventParser';
+export * from './combat/UserDiedEventParser'
+export * from './combat/WeaponActionEventParser';
 export * from './corp/CashRegisterParser';
 export * from './corp/CorpEmployeeListEventParser';
 export * from './corp/CorpInfoParser';

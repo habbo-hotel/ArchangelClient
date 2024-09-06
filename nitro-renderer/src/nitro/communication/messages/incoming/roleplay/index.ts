@@ -6,6 +6,7 @@ export * from './billing/BillingInvoiceQueryEvent';
 export * from './combat/CombatDelayEvent';
 export * from './combat/MyWeaponListEvent';
 export * from './combat/UserDiedEvent';
+export * from './combat/WeaponActionEvent';
 export * from './corp/CorpInfoQueryEvent';
 export * from './corp/CorpListEvent';
 export * from './corp/CorpOpenComputerEvent';

@@ -1,0 +1,151 @@
+
+    .profile-card {
+      background-color: #2e3c4d;
+      border-radius: 10px;
+      overflow: hidden;
+      color: white;
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+    }
+
+    .profile-header {
+      background-color: #2e3c4d;
+      padding: 15px;
+      text-align: center;
+      position: relative;
+      flex: 1;
+    }
+
+    .avatar-placeholder {
+      background-color: #a1b0c7;
+      width: 80px;
+      height: 130px;
+      border-radius: 8px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    .profile-header h2 {
+      margin: 10px 0 5px;
+      font-size: 20px;
+    }
+
+    .profile-header p {
+      margin: 0;
+      font-style: italic;
+      color: #d9e1e8;
+    }
+
+    .profile-details {
+      background-color: #3c5063;
+      padding: 10px 20px;
+      font-size: 14px;
+    }
+
+    .profile-details p {
+      margin: 5px 0;
+    }
+
+    .profile-details .status {
+      color: #9ea7b2;
+    }
+
+    .profile-footer {
+      display: flex;
+      justify-content: space-between;
+      background-color: #fff;
+      color: #000;
+    }
+
+    .profile-footer div {
+      width: 50%;
+      padding: 10px 0;
+      text-align: center;
+    }
+
+    .profile-footer .level {
+      background-color: #f29331;
+      font-size: 18px;
+    }
+
+    .profile-footer .friends {
+      background-color: #a3c152;
+      font-size: 14px;
+    }
+    
+    .tabs {
+      display: flex;
+      justify-content: space-around;
+      border-radius: 10px 10px 0 0;
+      overflow: hidden;
+    }
+
+.tab {
+  width: 50%;
+  padding: 10px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-right: 1px solid #bfc5cd;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.tab:last-child {
+  border-right: none;
+}
+
+.tab.active {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: black;
+}
+
+.content {
+  background-color: rgba(15, 72, 129, 0.6);
+  border-radius: 0 0 10px 10px;
+  padding: 10px;
+  height: 100%;
+}
+
+.badge-item {
+  display: flex;
+  align-items: center;
+  background-color: rgba(0, 15, 30, 0.6);
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid rgba(10, 37, 63, 0.75);
+  border-radius: 5px;
+}
+
+.badge-image {
+  background-color: #a1b0c7;
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.badge-text {
+  font-size: 14px;
+  color: white;
+}
+
+.add-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(15, 72, 129, 0.6);
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(15, 72, 129, 0.6);
+  }
+}
+
+.add-icon {
+  font-size: 24px;
+  color: #bfc5cd;
+}

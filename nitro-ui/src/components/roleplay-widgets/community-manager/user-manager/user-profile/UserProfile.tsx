@@ -5,9 +5,9 @@ import { MyBadges } from "./my-badges/MyBadges";
 import { MyFriends } from "./my-friends/MyFriends";
 import { useCorpData } from "../../../../../hooks/roleplay/use-corp-data";
 import { useRoleplayStats } from "../../../../../hooks/roleplay/use-rp-stats";
-import { Button, Column, Grid, LayoutAvatarImageView, Text } from "../../../../../common";
+import { Button, Column, Flex, Grid, LayoutAvatarImageView, NitroCardAccordionSetView, NitroCardAccordionView, Text } from "../../../../../common";
 import { useCorpPositionData } from "../../../../../hooks/roleplay/use-corp-position-data";
-import { FaCaretLeft } from "react-icons/fa";
+import { FaCaretLeft, FaPencilAlt } from "react-icons/fa";
 import { CreateLinkEvent } from "../../../../../api";
 import { MySkills } from "./my-skills/MySkills";
 import { MyStats } from "./my-stats/MyStats";
@@ -60,12 +60,19 @@ export function UserProfile({ profileID }: UserProfileProps) {
     return (
         <Grid fullHeight fullWidth gap={4}>
             <Column size={4} fullHeight fullWidth>
-                <Button variant="secondary" style={{ width: 'fit-content' }} onClick={() => CreateLinkEvent('users/show')}>
-                    <FaCaretLeft style={{ marginRight: 8 }} />
-                    Go back
-                </Button>
+                <Flex justifyContent="between">
+                    <Button variant="secondary" style={{ width: 'fit-content' }} onClick={() => CreateLinkEvent('users/show')}>
+                        <FaCaretLeft style={{ marginRight: 8 }} />
+                        Go back
+                    </Button>
+                    <Button variant="success" style={{ width: 'fit-content' }} onClick={() => CreateLinkEvent('users/show')}>
+                        <FaPencilAlt style={{ marginRight: 8 }} />
+                        Edit Profile
+                    </Button>
+                </Flex>
                 <div className="profile-card">
-                    <div className="profile-header">
+                    <div className="profile-header" style={{ background: 'url(https://j.gifs.com/rR9pv4.gif)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+                        <div className="overlay" />
                         <div className="avatar-placeholder">
                             <LayoutAvatarImageView figure={roleplayStats.figure} direction={2} style={{ height: 200, marginTop: -30 }} />
                         </div>
@@ -92,12 +99,26 @@ export function UserProfile({ profileID }: UserProfileProps) {
                 </div>
             </Column>
             <Column size={8} fullHeight gap={4}>
-                <div style={{ overflow: 'auto', height: 310 }}>
-                    <TabWidget widgets={SOCIAL_WIDGETS} />
-                </div>
-                <div style={{ overflow: 'auto', height: 310 }}>
-                    <TabWidget widgets={ROLEPLAY_WIDGETS} />
-                </div>
+                <NitroCardAccordionView fullHeight overflow="hidden">
+                    <NitroCardAccordionSetView headerText="Badges" isExpanded>
+                        <MyBadges />
+                    </NitroCardAccordionSetView>
+                    <NitroCardAccordionSetView headerText="Friends">
+                        <MyFriends />
+                    </NitroCardAccordionSetView>
+                    <NitroCardAccordionSetView headerText="Groups">
+                        <MyGroups />
+                    </NitroCardAccordionSetView>
+                    <NitroCardAccordionSetView headerText="Stats">
+                        <MyStats />
+                    </NitroCardAccordionSetView>
+                    <NitroCardAccordionSetView headerText="Experience">
+                        <MySkills />
+                    </NitroCardAccordionSetView>
+                    <NitroCardAccordionSetView headerText="Properties">
+                        <MyRooms />
+                    </NitroCardAccordionSetView>
+                </NitroCardAccordionView>
             </Column>
         </Grid >
     )

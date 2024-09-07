@@ -67,7 +67,7 @@ export const NitroCardAccordionSetView: FC<NitroCardAccordionSetViewProps> = pro
                 {!isOpen && <FaCaretDown className="fa-icon" />}
             </Flex>
             {isOpen &&
-                <Column fullHeight overflow="auto" gap={0} className="nitro-card-accordion-set-content">
+                <Column fullHeight overflow="auto" gap={0} className="nitro-card-accordion-set-content" style={{ padding: 8 }}>
                     {children}
                 </Column>}
         </Column>

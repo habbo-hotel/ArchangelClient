@@ -70,7 +70,8 @@ export function CommunityManager() {
                 }
 
                 setView(tab);
-                setProfileID(parts[1] ? Number(parts[1]) : undefined);
+                console.log(parts);
+                setProfileID(Number.isInteger(parts[1]) ? Number(parts[1]) : undefined);
             },
             eventUrlPrefix: ''
         };

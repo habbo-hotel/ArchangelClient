@@ -7,7 +7,7 @@ export function CorpBadge({ corpID }: CorpBadgeProps) {
     const corpData = useCorpData(corpID);
 
     return (
-        <div style={{ cursor: 'pointer', background: 'red', pointerEvents: 'all' }} onClick={() => CreateLinkEvent(`/corp-profile/${corpID}`)} >
+        <div style={{ cursor: 'pointer', background: 'red', pointerEvents: 'all' }} onClick={() => CreateLinkEvent(`corp-profile/${corpID}`)} >
             <LayoutBadgeImageView badgeCode={corpData.badgeCode} showInfo={true} isGroup customTitle={corpData.name} />
         </div>
     )

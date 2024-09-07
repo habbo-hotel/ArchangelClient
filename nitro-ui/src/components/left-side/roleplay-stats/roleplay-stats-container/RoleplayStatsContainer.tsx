@@ -16,7 +16,7 @@ export function RoleplayStatsContainer({ userID, onToggle }: RoleplayStatsContai
     return (
         <div className="stats glass-panel">
             <Flex alignItems="center" fullWidth>
-                <div style={{ cursor: 'pointer', width: 120 }} onClick={() => CreateLinkEvent(`/user-profile/${roleplayStats.userID}`)}>
+                <div style={{ cursor: 'pointer', width: 120 }} onClick={() => CreateLinkEvent(`users/${roleplayStats.userID}`)}>
                     <LayoutAvatarImageView figure={roleplayStats.figure} direction={2} style={{ height: 55, marginLeft: -10 }} />
                 </div>
                 <Flex column fullWidth gap={2}>

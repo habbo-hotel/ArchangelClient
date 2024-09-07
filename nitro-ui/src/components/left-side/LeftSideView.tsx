@@ -2,7 +2,6 @@ import { GameTools } from './game-tools/GameTools';
 import { GameSettings } from './game-settings/GameSettings';
 import { SpeechWheel } from './speech-wheel/SpeechWheel';
 import { RoleplayStatsView } from './roleplay-stats/RoleplayStatsView';
-import { UserProfile } from './user-profile/UserProfile';
 
 export function LeftSideView() {
     return (
@@ -11,7 +10,6 @@ export function LeftSideView() {
             <GameTools />
             <SpeechWheel />
             <GameSettings />
-            <UserProfile />
         </div>
     );
 }

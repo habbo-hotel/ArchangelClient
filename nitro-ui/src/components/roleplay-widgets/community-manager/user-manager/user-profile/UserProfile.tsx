@@ -1,27 +1,23 @@
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import { MyRooms } from "./my-rooms/MyRooms";
 import { MyGroups } from "./my-groups/MyGroups";
 import { MyBadges } from "./my-badges/MyBadges";
 import { MyFriends } from "./my-friends/MyFriends";
-import { MyGuestbook } from "./my-guestbook/MyGuestbook";
 import { useCorpData } from "../../../../../hooks/roleplay/use-corp-data";
 import { useRoleplayStats } from "../../../../../hooks/roleplay/use-rp-stats";
-import { Button, Column, Flex, Grid, LayoutAvatarImageView, Text } from "../../../../../common";
+import { Button, Column, Grid, LayoutAvatarImageView, Text } from "../../../../../common";
 import { useCorpPositionData } from "../../../../../hooks/roleplay/use-corp-position-data";
 import { FaCaretLeft } from "react-icons/fa";
 import { CreateLinkEvent } from "../../../../../api";
+import { MySkills } from "./my-skills/MySkills";
+import { MyStats } from "./my-stats/MyStats";
+import { TabWidget } from "../../../../../common/TabWidget";
 
 interface UserProfileProps {
     profileID: number;
 }
 
-interface UserProfileWidget {
-    key: string;
-    label: ReactNode;
-    view: () => ReactNode;
-}
-
-const USER_PROFILE_WIDGETS: UserProfileWidget[] = [
+const SOCIAL_WIDGETS: TabWidget[] = [
     {
         key: 'badges',
         label: 'Badges',
@@ -37,24 +33,29 @@ const USER_PROFILE_WIDGETS: UserProfileWidget[] = [
         label: 'Groups',
         view: () => <MyGroups />,
     },
+]
+
+const ROLEPLAY_WIDGETS: TabWidget[] = [
     {
-        key: 'guestbook',
-        label: 'Guestbook',
-        view: () => <MyGuestbook />,
+        key: 'stats',
+        label: 'Stats',
+        view: () => <MyStats />,
+    },
+    {
+        key: 'experience',
+        label: 'Experience',
+        view: () => <MySkills />,
     },
     {
         key: 'rooms',
-        label: 'Rooms',
+        label: 'Properties',
         view: () => <MyRooms />,
     },
 ]
-
 export function UserProfile({ profileID }: UserProfileProps) {
     const roleplayStats = useRoleplayStats(profileID);
     const corp = useCorpData(roleplayStats.corporationID);
     const corpPosition = useCorpPositionData(roleplayStats.corporationID, roleplayStats.corporationPositionID)
-
-    const [widget, setWidget] = useState<UserProfileWidget>(USER_PROFILE_WIDGETS[0]);
 
     return (
         <Grid fullHeight fullWidth gap={4}>
@@ -90,20 +91,14 @@ export function UserProfile({ profileID }: UserProfileProps) {
                     </div>
                 </div>
             </Column>
-            <Column size={8} fullHeight gap={0}>
-                <div className="tabs">
-                    {
-                        USER_PROFILE_WIDGETS.map(_ => (
-                            <div className={`tab ${widget.key === _.key ? 'active' : ''}`} key={`widget_${_.key}`} onClick={() => setWidget(_)}>
-                                {_.label}
-                            </div>
-                        ))
-                    }
+            <Column size={8} fullHeight gap={4}>
+                <div style={{ overflow: 'auto', height: 310 }}>
+                    <TabWidget widgets={SOCIAL_WIDGETS} />
                 </div>
-                <div className="content">
-                    {widget.view()}
+                <div style={{ overflow: 'auto', height: 310 }}>
+                    <TabWidget widgets={ROLEPLAY_WIDGETS} />
                 </div>
             </Column>
-        </Grid>
+        </Grid >
     )
 }

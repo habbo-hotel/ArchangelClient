@@ -27,7 +27,8 @@
     "dotenv": "16.4.7",
     "react-qr-code": "2.0.15",
     "otpauth": "9.3.5",
-    "leaflet": "1.9.4"
+    "leaflet": "1.9.4",
+    "react-leaflet": "5.0.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.1",

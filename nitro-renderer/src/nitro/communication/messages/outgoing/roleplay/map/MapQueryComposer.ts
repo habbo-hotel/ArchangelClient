@@ -1,10 +1,10 @@
 import { IMessageComposer } from "../../../../../../api";
 
 export class MapQueryComposer implements IMessageComposer<ConstructorParameters<typeof MapQueryComposer>> {
-    private _data: number[];
+    private _data: ConstructorParameters<typeof MapQueryComposer>;
 
-    constructor(roomId: number, includeConnections: boolean = true) {
-        this._data = [roomId, includeConnections ? 1 : 0];
+    constructor() {
+        this._data = [];
     }
 
     public getMessageArray() {

@@ -1,6 +1,6 @@
-import './GameMap.scss';
+import React, { useEffect } from "react";
 import L from "leaflet";
-import { useEffect } from "react";
+import "leaflet/dist/leaflet.css";
 
 export function GameMap() {
     useEffect(() => {
@@ -229,5 +229,5 @@ export function GameMap() {
 
     }, []);
 
-    return <div id="map" />;
+    return <div id="map" className="glass-panel" />;
 }
